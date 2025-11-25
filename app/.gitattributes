@@ -1,0 +1,10 @@
+# .gitattributes
+# Auto-detect text files and perform LF normalization
+* text=auto
+
+# Custom for Windows users to behave nicely
+*.kt text eol=lf
+*.xml text eol=lf
+*.gradle text eol=lf
+*.md text eol=lf
+*.properties text eol=lf

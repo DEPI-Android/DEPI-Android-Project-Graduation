@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "871646571420",
+    "project_id": "egypt-tour-74212",
+    "storage_bucket": "egypt-tour-74212.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:871646571420:android:3302a1e11b6fd5981fb659",
+        "android_client_info": {
+          "package_name": "com.hfad.egypttour"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDIC8nvJSUQfALRxIIgNnhaLzVpnJwW74c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
