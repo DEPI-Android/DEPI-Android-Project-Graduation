@@ -86,7 +86,9 @@ class LandmarkRepository(
         // If thumbnail is null, use empty string "". Do NOT return null.
         val imageUrl = dto.thumbnail?.source ?: ""
         // ---------------------------
-
+        if (dto.thumbnail == null || dto.thumbnail.source.isBlank()) {
+            return null // This deletes the landmark from the final list
+        }
         val description = dto.extract
         if (description.isNullOrBlank()) {
             // We can optionally keep items without descriptions too,

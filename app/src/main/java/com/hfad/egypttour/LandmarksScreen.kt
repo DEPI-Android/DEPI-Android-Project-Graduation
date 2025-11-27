@@ -1,5 +1,6 @@
 package com.hfad.egypttour
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -12,12 +13,14 @@ import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Place
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
@@ -27,7 +30,6 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.hfad.egypttour.data.model.LandMark
 import com.hfad.egypttour.ui.theme.*
-
 
 // --- MAIN SCREEN ---
 @Composable
@@ -138,7 +140,7 @@ fun LandmarkItem(landmark: LandMark) {
             modifier = Modifier.fillMaxWidth().height(128.dp)
         ) {
             if (landmark.imageUrl.isNullOrEmpty()) {
-                // CASE 1: No Image URL -> Show Placeholder Icon
+                // CASE 1: No Image URL -> Show Gray Placeholder
                 Box(
                     modifier = Modifier.fillMaxSize().background(Color.LightGray),
                     contentAlignment = Alignment.Center
@@ -150,11 +152,23 @@ fun LandmarkItem(landmark: LandMark) {
                 AsyncImage(
                     model = ImageRequest.Builder(LocalContext.current)
                         .data(landmark.imageUrl)
+                        // FIX: Add User-Agent header so Wikipedia doesn't block the image request
+                        .addHeader("User-Agent", "EgyptTourApp/1.0")
                         .crossfade(true)
+                        .listener(
+                            onError = { _, result ->
+                                // This prints the EXACT error to your Logcat so we know why it fails
+                                Log.e("CoilError", "Failed to load ${landmark.name}: ${result.throwable.message}")
+                            }
+                        )
                         .build(),
                     contentDescription = landmark.name,
                     contentScale = ContentScale.Crop,
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier.fillMaxSize(),
+                    // While loading, show the pin icon
+                    placeholder = rememberVectorPainter(Icons.Default.Place),
+                    // If loading fails, show a warning icon (Red)
+                    error = rememberVectorPainter(Icons.Default.Warning)
                 )
             }
         }
