@@ -5,7 +5,7 @@ plugins {
     id("com.google.gms.google-services")
     alias(libs.plugins.hilt.android)    // Hilt
     alias(libs.plugins.ksp)             // KSP (Needed for Hilt)
-
+    alias(libs.plugins.compose.compiler)
 }
 
 android {
@@ -41,14 +41,28 @@ android {
     buildFeatures {
         compose = true
     }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.14"
-    }
+//    composeOptions {
+//        kotlinCompilerExtensionVersion = "1.5.14"
+//    }
 
 
 }
 
 dependencies {
+    implementation(libs.converter.gson.v290)
+
+
+    // OkHttp (for User-Agent interceptor)
+    implementation(libs.okhttp)
+    implementation(libs.logging.interceptor.v532)
+
+    // Coroutines
+    implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.kotlinx.coroutines.core)
+    // Lifecycle (for ViewModels)
+
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.lifecycle.runtime.ktx.v262)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
