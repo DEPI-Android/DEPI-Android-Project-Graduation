@@ -41,12 +41,16 @@ interface WikiApiService {
         @Query("gcmtype") categoryType: String = "page",
         @Query("gcmlimit") limit: Int = Constants.DEFAULT_LANDMARK_LIMIT,
 
-        // Properties: What data to fetch for each page
-        @Query("prop") properties: String = "pageimages|coordinates|extracts",
+
+        // UPDATED: Added "images" prop for multi-photo support
+        @Query("prop") properties: String = "pageimages|images|coordinates|extracts",
 
         // Page Images configuration
         @Query("pilimit") pageImageLimit: Int = Constants.DEFAULT_LANDMARK_LIMIT, // CRITICAL: Required with generators
         @Query("pithumbsize") thumbnailSize: Int = Constants.THUMBNAIL_SIZE_PX,
+
+        // NEW: Images prop (gallery for detail view)
+        @Query("imlimit") imageLimit: Int = 10,  // Max 10 images per landmark
 
         // Extracts configuration
         @Query("exintro") extractIntroOnly: Boolean = true,     // Only get intro paragraph

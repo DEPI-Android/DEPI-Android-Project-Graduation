@@ -7,39 +7,6 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-object RetrofitInstance {
-//    private val okHttpClient : OkHttpClient by lazy {
-//        okHttpClient.newBuilder()
-//            .addInterceptor {
-//                val original  = it.request()
-//                val requestBuilder = original.newBuilder()
-//                    .header("User-Agent", Constants.USER_AGENT)
-//                    .build()
-//                it.proceed(requestBuilder)
-//            }
-//            .addInterceptor(
-//                HttpLoggingInterceptor().apply {
-//                    level = HttpLoggingInterceptor.Level.BODY
-//                }
-//            ).connectTimeout(Constants.CONNECT_TIMEOUT_SECONDS, TimeUnit.SECONDS)
-//            .readTimeout(Constants.READ_TIMEOUT_SECONDS, TimeUnit.SECONDS)
-//            .writeTimeout(Constants.WRITE_TIMEOUT_SECONDS, TimeUnit.SECONDS)
-//            .build()
-//    }
-//
-//
-//    private val retrofit: Retrofit by lazy {
-//        Retrofit.Builder()
-//            .baseUrl(Constants.WIKIPEDIA_BASE_URL)
-//            .client(okHttpClient)
-//            .addConverterFactory(GsonConverterFactory.create())
-//            .build()
-//    }
-//
-//    val api: WikiApiService by lazy {
-//        retrofit.create(WikiApiService::class.java)
-//    }
-//}
 
 
     object RetrofitInstance {
@@ -79,4 +46,4 @@ object RetrofitInstance {
         val api: WikiApiService by lazy {
             retrofit.create(WikiApiService::class.java)
         }
-    }}
+    }
