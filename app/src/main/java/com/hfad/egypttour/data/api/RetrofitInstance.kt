@@ -7,7 +7,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-object RetrofitInstance {
+//object RetrofitInstance {
 //    private val okHttpClient : OkHttpClient by lazy {
 //        okHttpClient.newBuilder()
 //            .addInterceptor {
@@ -79,4 +79,4 @@ object RetrofitInstance {
         val api: WikiApiService by lazy {
             retrofit.create(WikiApiService::class.java)
         }
-    }}
+    }

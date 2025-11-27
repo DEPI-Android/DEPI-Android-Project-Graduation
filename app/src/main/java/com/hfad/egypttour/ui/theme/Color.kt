@@ -2,11 +2,12 @@ package com.hfad.egypttour.ui.theme
 import androidx.compose.ui.graphics.Color
 
 // --- PRIMARY COLORS (From Screenshot) ---
-val EgyptGold = Color(0xFFE4B643)      // The main Yellow/Gold color
-val EgyptGoldDark = Color(0xFFC59B35)  // A slightly darker version for borders/shadows
+val EgyptGold = Color(0xFFF2D178)      // The main Yellow/Gold color
+val EgyptGoldDark = Color(0xFFD7B455)  // A slightly darker version for borders/shadows
+val EgyptLightGold = Color(0xFFF3D778)
 
 // --- SECONDARY COLORS ---
-val SoftPeach = Color(0xFFF8D8B6)      // The background color of the Category Cards
+val SoftPeach = Color(0xFFEDAB72)      // The background color of the Category Cards
 val SoftWhite = Color(0xFFFAFAFA)      // The main background color
 val PureWhite = Color(0xFFFFFFFF)
 

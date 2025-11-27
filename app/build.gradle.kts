@@ -110,7 +110,7 @@ dependencies {
     implementation(libs.glide.compose)
 
     // Option B: Coil (Recommended for Compose)
-    // implementation(libs.coil.compose)
+     implementation(libs.coil.compose)
 
     // --- Dependency Injection (Hilt) ---
     implementation(libs.hilt.android)
@@ -120,5 +120,8 @@ dependencies {
     // --- Maps ---
     implementation(libs.maps.compose)
     implementation(libs.play.services.maps)
+
+    // --- Coil ---
+    implementation("io.coil-kt:coil-compose:2.5.0")
 
 }

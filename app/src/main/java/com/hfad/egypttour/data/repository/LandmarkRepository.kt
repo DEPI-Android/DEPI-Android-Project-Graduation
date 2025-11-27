@@ -79,32 +79,25 @@ class LandmarkRepository(
     private fun mapDtoToLandmark(dto: WikiPageDto, governorate: Governorate): LandMark? {
         val title = dto.title
         if (title.isNullOrBlank()) {
-            Log.w(Constants.LOG_TAG, "Skipping page ${dto.pageId}: No title")
-            return null
-        }
-// i want to put a place holder image if there is no thumbnail  <-----------------------------------
-        val thumbnail = dto.thumbnail
-        if (thumbnail == null) {
-            Log.w(Constants.LOG_TAG, "Skipping '$title': No thumbnail image")
             return null
         }
 
+        // --- UPDATED IMAGE LOGIC ---
+        // If thumbnail is null, use empty string "". Do NOT return null.
+        val imageUrl = dto.thumbnail?.source ?: ""
+        // ---------------------------
+
         val description = dto.extract
         if (description.isNullOrBlank()) {
-            Log.w(Constants.LOG_TAG, "Skipping '$title': No description")
+            // We can optionally keep items without descriptions too,
+            // but usually a title without info isn't useful.
             return null
         }
 
         val coordinates = dto.coordinates?.firstOrNull()
-        if (coordinates == null) {
-            Log.d(Constants.LOG_TAG, "'$title' has no coordinates (this is okay)")
-        }
-
-        // Use 'source' for thumbnail image; change to 'url' if your DTO exposes that field
-        val imageUrl = thumbnail.source
 
         return LandMark(
-            id = dto.pageId,
+            id = dto.pageId ?: 0, // Handle nullable pageId safely
             name = title,
             description = description,
             imageUrl = imageUrl,
@@ -114,7 +107,7 @@ class LandmarkRepository(
         )
     }
 
-    suspend fun getAllLandmarks(): Result<List<LandMark>> {
+    /* suspend fun getAllLandmarks(): Result<List<LandMark>> {
         return withContext(Dispatchers.IO) {
             try {
                 val allLandmarks = mutableListOf<LandMark>()
@@ -123,7 +116,7 @@ class LandmarkRepository(
                     when (val result = getLandmarks(governorate)) {
                         is Result.Success -> allLandmarks.addAll(result.data)
                         is Result.Error -> {
-                            Log.w(Constants.LOG_TAG, "Failed to fetch ${governorate.displayName}: ${result.massage}")
+                            Log.w(Constants.LOG_TAG, "Failed to fetch ${governorate.displayName}: ${result.message}")
                         }
                         is Result.Loading -> { /* No-op */ }
                     }
@@ -138,4 +131,5 @@ class LandmarkRepository(
             }
         }
     }
+     */
 }
