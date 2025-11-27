@@ -8,3 +8,5 @@
 *.gradle text eol=lf
 *.md text eol=lf
 *.properties text eol=lf
+
+*.kt linguist-generated
