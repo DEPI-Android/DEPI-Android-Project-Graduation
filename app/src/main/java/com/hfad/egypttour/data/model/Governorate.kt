@@ -1,137 +1,349 @@
+//package com.hfad.egypttour.data.model
+//
+///**
+// * Enhanced Governorate enum with multiple data sources:
+// * - Wikipedia categories (primary)
+// * - Geographic coordinates (fallback)
+// * - Known landmark names (manual fallback)
+// */
+//enum class Governorate(
+//    val id: String,
+//    val displayName: String,
+//    val wikiCategory: String?,  // NULL if no category exists
+//    val latitude: Double,
+//    val longitude: Double,
+//    val knownLandmarks: List<String> = emptyList() // Manual fallback
+//) {
+//    CAIRO(
+//        id = "cairo",
+//        displayName = "Cairo",
+//        wikiCategory = "Category:Tourist_attractions_in_Cairo",
+//        latitude = 30.0444,
+//        longitude = 31.2357
+//    ),
+//
+//    ALEXANDRIA(
+//        id = "alexandria",
+//        displayName = "Alexandria",
+//        wikiCategory = "Category:Tourist_attractions_in_Alexandria",
+//        latitude = 31.2001,
+//        longitude = 29.9187
+//    ),
+//
+//    GIZA(
+//        id = "giza",
+//        displayName = "Giza",
+//        wikiCategory = "Category:Buildings_and_structures_in_Giza",
+//        latitude = 30.0131,
+//        longitude = 31.2089,
+//        knownLandmarks = listOf(
+//            "Great Pyramid of Giza",
+//            "Sphinx",
+//            "Pyramid of Khafre",
+//            "Pyramid of Menkaure"
+//        )
+//    ),
+//
+//    LUXOR(
+//        id = "luxor",
+//        displayName = "Luxor",
+//        wikiCategory = "Category:Buildings_and_structures_in_Luxor",
+//        latitude = 25.6872,
+//        longitude = 32.6396,
+//        knownLandmarks = listOf(
+//            "Karnak Temple",
+//            "Luxor Temple",
+//            "Valley of the Kings",
+//            "Valley of the Queens",
+//            "Hatshepsut Temple"
+//        )
+//    ),
+//
+//    ASWAN(
+//        id = "aswan",
+//        displayName = "Aswan",
+//        wikiCategory = "Category:Buildings_and_structures_in_Aswan",
+//        latitude = 24.0889,
+//        longitude = 32.8998,
+//        knownLandmarks = listOf(
+//            "Abu Simbel",
+//            "Philae Temple",
+//            "Aswan High Dam",
+//            "Unfinished Obelisk"
+//        )
+//    ),
+//
+//    FAIYUM(
+//        id = "faiyum",
+//        displayName = "Faiyum",
+//        wikiCategory = null, // NO CATEGORY - Will use fallbacks
+//        latitude = 29.3084,
+//        longitude = 30.8428,
+//        knownLandmarks = listOf(
+//            "Wadi El Rayan",
+//            "Lake Qarun",
+//            "Hawara Pyramid",
+//            "Lahun Pyramid",
+//            "Karanis"
+//        )
+//    ),
+//
+//    PORT_SAID(
+//        id = "port_said",
+//        displayName = "Port Said",
+//        wikiCategory = null, // NO CATEGORY
+//        latitude = 31.2653,
+//        longitude = 32.3019,
+//        knownLandmarks = listOf(
+//            "Port Said Lighthouse",
+//            "Military Museum",
+//            "Port Said National Museum"
+//        )
+//    ),
+//
+//    SUEZ(
+//        id = "suez",
+//        displayName = "Suez",
+//        wikiCategory = null, // NO CATEGORY
+//        latitude = 29.9668,
+//        longitude = 32.5498,
+//        knownLandmarks = listOf(
+//            "Suez Canal",
+//            "Ahmed Hamdi Tunnel"
+//        )
+//    ),
+//
+//    SHARM_EL_SHEIKH(
+//        id = "sharm_el_sheikh",
+//        displayName = "Sharm El Sheikh",
+//        wikiCategory = null, // NO CATEGORY
+//        latitude = 27.9158,
+//        longitude = 34.3300,
+//        knownLandmarks = listOf(
+//            "Ras Muhammad National Park",
+//            "Naama Bay",
+//            "Nabq Protected Area"
+//        )
+//    ),
+//
+//    HURGHADA(
+//        id = "hurghada",
+//        displayName = "Hurghada",
+//        wikiCategory = null, // NO CATEGORY
+//        latitude = 27.2579,
+//        longitude = 33.8116,
+//        knownLandmarks = listOf(
+//            "Giftun Island",
+//            "Hurghada Grand Aquarium",
+//            "Makadi Bay"
+//        )
+//    );
+//
+//    companion object {
+//        fun fromId(id: String): Governorate? {
+//            return entries.find { it.id.equals(id, ignoreCase = true) }
+//        }
+//    }
+//
+//    /**
+//     * Returns true if this governorate has a Wikipedia category
+//     */
+//    fun hasCategory(): Boolean = wikiCategory != null
+//
+//    /**
+//     * Returns coordinate string for API: "lat|lon"
+//     */
+//    fun getCoordinateString(): String = "$latitude|$longitude"
+//
+//    /**
+//     * Generates search queries for text-based fallback
+//     */
+//    fun getSearchQueries(): List<String> = listOf(
+//        "$displayName tourism Egypt",
+//        "$displayName landmarks",
+//        "$displayName attractions Egypt",
+//        "Places to visit in $displayName"
+//    )
+//}
+
 package com.hfad.egypttour.data.model
 
+/**
+ * Enhanced Governorate enum with multiple data sources:
+ * - Wikipedia categories (primary)
+ * - Geographic coordinates (fallback)
+ * - Known landmark names (manual fallback)
+ * - Image URLs for visual representation
+ */
 enum class Governorate(
     val id: String,
     val displayName: String,
-    val wikiCategory: String,
-    val imageUrl: String
+    val wikiCategory: String?,  // NULL if no category exists
+    val latitude: Double,
+    val longitude: Double,
+    val imageUrl: String,  // Image URL for the governorate
+    val knownLandmarks: List<String> = emptyList() // Manual fallback
 ) {
     CAIRO(
         id = "cairo",
         displayName = "Cairo",
         wikiCategory = "Category:Tourist_attractions_in_Cairo",
-        imageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Cairo_Skyline_2011.jpg/640px-Cairo_Skyline_2011.jpg"
-    ),
-
-    LUXOR(
-        id = "luxor",
-        displayName = "Luxor",
-        wikiCategory = "Category:Tourist_attractions_in_Luxor",
-        imageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Luxor_Temple_Egypt.jpg/640px-Luxor_Temple_Egypt.jpg"
-    ),
-
-    ASWAN(
-        id = "aswan",
-        displayName = "Aswan",
-        wikiCategory = "Category:Tourist_attractions_in_Aswan",
-        imageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Felucca_on_the_Nile_at_Aswan.jpg/640px-Felucca_on_the_Nile_at_Aswan.jpg"
-    ),
-
-    GIZA(
-        id = "giza",
-        displayName = "Giza",
-        wikiCategory = "Category:Tourist_attractions_in_Giza",
-        imageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/All_Gizah_Pyramids.jpg/640px-All_Gizah_Pyramids.jpg"
+        latitude = 30.0444,
+        longitude = 31.2357,
+        imageUrl = "https://images.unsplash.com/photo-1572252009286-268acec5ca0a?w=800&q=80", // Cairo cityscape with mosques
+        knownLandmarks = emptyList()
     ),
 
     ALEXANDRIA(
         id = "alexandria",
         displayName = "Alexandria",
         wikiCategory = "Category:Tourist_attractions_in_Alexandria",
-        imageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Alexandria_Citadel_of_Qaitbay.jpg/640px-Alexandria_Citadel_of_Qaitbay.jpg"
+        latitude = 31.2001,
+        longitude = 29.9187,
+        imageUrl = "https://images.unsplash.com/photo-1553913861-c0fddf2619ee?w=800&q=80", // Alexandria coastline
+        knownLandmarks = emptyList()
     ),
 
-    ISMAILIA(
-        id = "ismailia",
-        displayName = "Ismailia",
-        wikiCategory = "Category:Tourist_attractions_in_Ismailia",
-        imageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Ismailia_Corniche.jpg/640px-Ismailia_Corniche.jpg"
+    GIZA(
+        id = "giza",
+        displayName = "Giza",
+        wikiCategory = "Category:Buildings_and_structures_in_Giza",
+        latitude = 30.0131,
+        longitude = 31.2089,
+        imageUrl = "https://images.unsplash.com/photo-1568322445389-f64ac2515020?w=800&q=80", // Great Pyramids of Giza
+        knownLandmarks = listOf(
+            "Great Pyramid of Giza",
+            "Sphinx",
+            "Pyramid of Khafre",
+            "Pyramid of Menkaure"
+        )
+    ),
+
+    LUXOR(
+        id = "luxor",
+        displayName = "Luxor",
+        wikiCategory = "Category:Buildings_and_structures_in_Luxor",
+        latitude = 25.6872,
+        longitude = 32.6396,
+        imageUrl = "https://images.unsplash.com/photo-1539768942893-daf53e448371?w=800&q=80", // Luxor Temple columns
+        knownLandmarks = listOf(
+            "Karnak Temple",
+            "Luxor Temple",
+            "Valley of the Kings",
+            "Valley of the Queens",
+            "Hatshepsut Temple"
+        )
+    ),
+
+    ASWAN(
+        id = "aswan",
+        displayName = "Aswan",
+        wikiCategory = "Category:Buildings_and_structures_in_Aswan",
+        latitude = 24.0889,
+        longitude = 32.8998,
+        imageUrl = "https://images.unsplash.com/photo-1590068213685-586146781e63?w=800&q=80", // Nile at Aswan with feluccas
+        knownLandmarks = listOf(
+            "Abu Simbel",
+            "Philae Temple",
+            "Aswan High Dam",
+            "Unfinished Obelisk"
+        )
+    ),
+
+    FAIYUM(
+        id = "faiyum",
+        displayName = "Faiyum",
+        wikiCategory = null, // NO CATEGORY - Will use fallbacks
+        latitude = 29.3084,
+        longitude = 30.8428,
+        imageUrl = "https://images.unsplash.com/photo-1473496169904-658ba7c44d8a?w=800&q=80", // Desert oasis/waterfall
+        knownLandmarks = listOf(
+            "Wadi El Rayan",
+            "Lake Qarun",
+            "Hawara Pyramid",
+            "Lahun Pyramid",
+            "Karanis"
+        )
+    ),
+
+    PORT_SAID(
+        id = "port_said",
+        displayName = "Port Said",
+        wikiCategory = null, // NO CATEGORY
+        latitude = 31.2653,
+        longitude = 32.3019,
+        imageUrl = "https://images.unsplash.com/photo-1606840574311-ba25cb63b6be?w=800&q=80", // Port/harbor view
+        knownLandmarks = listOf(
+            "Port Said Lighthouse",
+            "Military Museum",
+            "Port Said National Museum"
+        )
     ),
 
     SUEZ(
         id = "suez",
         displayName = "Suez",
-        wikiCategory = "Category:Tourist_attractions_in_Suez",
-        imageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Suez_Canal_lighthouse.jpg/640px-Suez_Canal_lighthouse.jpg"
+        wikiCategory = null, // NO CATEGORY
+        latitude = 29.9668,
+        longitude = 32.5498,
+        imageUrl = "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&q=80", // Suez Canal ships
+        knownLandmarks = listOf(
+            "Suez Canal",
+            "Ahmed Hamdi Tunnel"
+        )
     ),
 
-    NORTH_SINAI(
-        id = "north_sinai",
-        displayName = "North Sinai",
-        wikiCategory = "Category:Tourist_attractions_in_North_Sinai",
-        imageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Saint_Catherine_Monastery.jpg/640px-Saint_Catherine_Monastery.jpg"
+    SHARM_EL_SHEIKH(
+        id = "sharm_el_sheikh",
+        displayName = "Sharm El Sheikh",
+        wikiCategory = null, // NO CATEGORY
+        latitude = 27.9158,
+        longitude = 34.3300,
+        imageUrl = "https://images.unsplash.com/photo-1583771063440-8e628178a045?w=800&q=80", // Red Sea underwater/coral
+        knownLandmarks = listOf(
+            "Ras Muhammad National Park",
+            "Naama Bay",
+            "Nabq Protected Area"
+        )
     ),
 
-    SOUTH_SINAI(
-        id = "south_sinai",
-        displayName = "South Sinai",
-        wikiCategory = "Category:Tourist_attractions_in_South_Sinai",
-        imageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Sharm_El_Sheikh_Beach.jpg/640px-Sharm_El_Sheikh_Beach.jpg"
-    ),
-
-    RED_SEA(
-        id = "red_sea",
-        displayName = "Red Sea",
-        wikiCategory = "Category:Tourist_attractions_in_Red_Sea",
-        imageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Hurghada_Marina.jpg/640px-Hurghada_Marina.jpg"
-    ),
-
-    MATROUH(
-        id = "matrouh",
-        displayName = "Matruh",
-        wikiCategory = "Category:Tourist_attractions_in_Matrouh",
-        imageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Siwa_Oasis.jpg/640px-Siwa_Oasis.jpg"
-    ),
-
-    QENA(
-        id = "qena",
-        displayName = "Qena",
-        wikiCategory = "Category:Tourist_attractions_in_Qena",
-        imageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Dendera_Temple.jpg/640px-Dendera_Temple.jpg"
-    ),
-
-    SOHAG(
-        id = "sohag",
-        displayName = "Sohag",
-        wikiCategory = "Category:Tourist_attractions_in_Sohag",
-        imageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Abydos_Temple.jpg/640px-Abydos_Temple.jpg"
-    ),
-
-    ASYUT(
-        id = "asyut",
-        displayName = "Asyut",
-        wikiCategory = "Category:Tourist_attractions_in_Asyut",
-        imageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Asyut_Barrage.jpg/640px-Asyut_Barrage.jpg"
-    ),
-
-    MINYA(
-        id = "minya",
-        displayName = "Minya",
-        wikiCategory = "Category:Tourist_attractions_in_Minya",
-        imageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Beni_Hassan_Tombs.jpg/640px-Beni_Hassan_Tombs.jpg"
-    ),
-
-    FAYOUM(
-        id = "fayoum",
-        displayName = "Fayoum",
-        wikiCategory = "Category:Tourist_attractions_in_Fayoum",
-        imageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Fayoum_Oasis.jpg/640px-Fayoum_Oasis.jpg"
-    ),
-
-    BENI_SUEF(
-        id = "beni_suef",
-        displayName = "Beni Suef",
-        wikiCategory = "Category:Tourist_attractions_in_Beni_Suef",
-        imageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Beni_Suef_Nile.jpg/640px-Beni_Suef_Nile.jpg"
+    HURGHADA(
+        id = "hurghada",
+        displayName = "Hurghada",
+        wikiCategory = null, // NO CATEGORY
+        latitude = 27.2579,
+        longitude = 33.8116,
+        imageUrl = "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80", // Red Sea beach resort
+        knownLandmarks = listOf(
+            "Giftun Island",
+            "Hurghada Grand Aquarium",
+            "Makadi Bay"
+        )
     );
 
     companion object {
-        /**
-         * Safely retrieves a Governorate by its ID string.
-         * Returns null if not found (prevents crashes from invalid routing).
-         */
         fun fromId(id: String): Governorate? {
-            return Governorate.entries.find { it.id.equals(id, ignoreCase = true) }
+            return entries.find { it.id.equals(id, ignoreCase = true) }
         }
     }
+
+    /**
+     * Returns true if this governorate has a Wikipedia category
+     */
+    fun hasCategory(): Boolean = wikiCategory != null
+
+    /**
+     * Returns coordinate string for API: "lat|lon"
+     */
+    fun getCoordinateString(): String = "$latitude|$longitude"
+
+    /**
+     * Generates search queries for text-based fallback
+     */
+    fun getSearchQueries(): List<String> = listOf(
+        "$displayName tourism Egypt",
+        "$displayName landmarks",
+        "$displayName attractions Egypt",
+        "Places to visit in $displayName"
+    )
 }

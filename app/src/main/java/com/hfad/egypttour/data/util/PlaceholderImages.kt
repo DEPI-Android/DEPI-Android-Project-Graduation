@@ -9,7 +9,7 @@ object PlaceholderImages {
      * Uses the governorate's cover image as fallback.
      */
     fun getPlaceholderForGovernorate(governorate: Governorate): String {
-        return governorate.imageUrl
+        return getGenericPlaceholder()
     }
 
     /**
