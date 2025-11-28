@@ -3,7 +3,7 @@ import androidx.compose.ui.graphics.Color
 
 // --- PRIMARY COLORS (From Screenshot) ---
 val EgyptGold = Color(0xFFE4B643)      // The main Yellow/Gold color
-val EgyptGoldDark = Color(0xFFC59B35)  // A slightly darker version for borders/shadows
+val EgyptGoldDark = Color(0xFFF5F4F4)  // A slightly darker version for borders/shadows
 
 // --- SECONDARY COLORS ---
 val SoftPeach = Color(0xFFF8D8B6)      // The background color of the Category Cards
