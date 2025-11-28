@@ -110,6 +110,16 @@ dependencies {
     implementation(libs.glide.compose)
 
     // Option B: Coil (Recommended for Compose)
+    implementation("io.coil-kt:coil-compose:2.5.0")
+    implementation("io.coil-kt:coil:2.5.0")
+    
+    
+    // for the icon.defaults usage
+    implementation("androidx.compose.material:material-icons-extended")
+    implementation("androidx.compose.material:material-icons-extended:1.7.5")
+
+
+
     // implementation(libs.coil.compose)
 
     // --- Dependency Injection (Hilt) ---
