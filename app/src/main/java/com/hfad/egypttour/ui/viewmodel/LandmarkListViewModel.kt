@@ -203,6 +203,7 @@ import kotlinx.coroutines.launch
  */
 class LandmarkListViewModel : ViewModel() {
 
+
     private val repository = LandmarkRepository(RetrofitInstance.api)
 
     private val _landmarksState = MutableStateFlow<Result<List<LandMark>>>(Result.Loading)
@@ -249,22 +250,37 @@ class LandmarkListViewModel : ViewModel() {
     }
 
 
+//    fun loadLandmarkDetails(id: Int) {
+//        _selectedLandmark.value = Result.Loading
+//
+//        viewModelScope.launch {
+//            val state = _landmarksState.value
+//            Log.d("LandmarkVM", "Landmarks state: $state")
+//
+//            val existingLandmark = (state as? Result.Success)?.data?.find { it.id == id }
+//            Log.d("LandmarkVM", "Existing landmark found: $existingLandmark")
+//            if (existingLandmark != null) {
+//                // Correct: assign LandMark? inside Result.Success
+//                _selectedLandmark.value = Result.Success(existingLandmark)
+//            } else {
+//                // Error if not found
+//                _selectedLandmark.value = Result.Error(Exception("Landmark not found"))
+//            }
+//        }
+//    }
+
     fun loadLandmarkDetails(id: Int) {
-        _selectedLandmark.value = Result.Loading
-
         viewModelScope.launch {
-            val state = _landmarksState.value
-            Log.d("LandmarkVM", "Landmarks state: $state")
+            val currentState = _landmarksState.value
+            val landmark = (currentState as? Result.Success)?.data?.find { it.id == id }
+                ?: run {
+                    // Not loaded yet — fetch from repository
+                    val result = repository.getLandmarkById(id)
+                    if (result is Result.Success) result.data else null
+                }
 
-            val existingLandmark = (state as? Result.Success)?.data?.find { it.id == id }
-            Log.d("LandmarkVM", "Existing landmark found: $existingLandmark")
-            if (existingLandmark != null) {
-                // Correct: assign LandMark? inside Result.Success
-                _selectedLandmark.value = Result.Success(existingLandmark)
-            } else {
-                // Error if not found
-                _selectedLandmark.value = Result.Error(Exception("Landmark not found"))
-            }
+            Log.d("LandmarkVM", "Existing landmark found: $landmark")
+            _selectedLandmark.value = Result.Success(landmark)
         }
     }
 

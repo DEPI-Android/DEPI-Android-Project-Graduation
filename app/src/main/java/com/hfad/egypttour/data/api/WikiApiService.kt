@@ -94,4 +94,6 @@ interface WikiApiService {
         @Query("explaintext") extractPlainText: Boolean = true,
         @Query("exlimit") extractLimit: Int = Constants.DEFAULT_LANDMARK_LIMIT
     ): WikiResponse
+
+    companion object
 }
