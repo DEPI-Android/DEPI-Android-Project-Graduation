@@ -16,16 +16,25 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EgyptTour">
         <activity
-            android:name=".MainActivity"
+            android:name=".Login.LoginActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.EgyptTour">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity 
+            android:name=".MainActivity"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.EgyptTour"/>
+
+        <!-- Added Activities to resolve ActivityNotFoundException -->
+        <!-- WARNING: This will cause a new crash because the files do not exist. -->
+        <activity android:name=".Login.SignInActivity" />
+        <activity android:name=".Login.SignUpActivity" />
+
     </application>
 
 </manifest>

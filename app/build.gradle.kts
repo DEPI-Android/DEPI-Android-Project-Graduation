@@ -1,11 +1,10 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-//    alias(libs.plugins.kotlin.compose)
-    id("com.google.gms.google-services")
-    alias(libs.plugins.hilt.android)    // Hilt
-    alias(libs.plugins.ksp)             // KSP (Needed for Hilt)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.google.services)
+    alias(libs.plugins.hilt.android)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -41,97 +40,70 @@ android {
     buildFeatures {
         compose = true
     }
-//    composeOptions {
-//        kotlinCompilerExtensionVersion = "1.5.14"
-//    }
-
-
 }
 
 dependencies {
-    implementation(libs.converter.gson.v290)
+    // AndroidX
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
 
+    // Compose
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.compose.foundation)
+    implementation(libs.androidx.compose.material.icons.extended)
+    implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.compose.ui)
+    implementation(libs.androidx.compose.ui.graphics)
+    implementation(libs.androidx.compose.ui.tooling.preview)
+    debugImplementation(libs.androidx.compose.ui.tooling)
 
-    // OkHttp (for User-Agent interceptor)
-    implementation(libs.okhttp)
-    implementation(libs.logging.interceptor.v532)
+    // ConstraintLayout
+    implementation(libs.androidx.constraintlayout)
 
     // Coroutines
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlinx.coroutines.core)
-    // Lifecycle (for ViewModels)
 
-    implementation(libs.androidx.lifecycle.viewmodel.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx.v262)
-
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.ui)
-    implementation(libs.androidx.ui.graphics)
-    implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.material3)
-    implementation(libs.androidx.compose.foundation)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.ui.test.junit4)
-    debugImplementation(libs.androidx.ui.tooling)
-    debugImplementation(libs.androidx.ui.test.manifest)
+    // Firebase
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
-
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.ui)
-    implementation(libs.androidx.ui.graphics)
-    implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.material3)
-     debugImplementation(libs.androidx.ui.tooling)
-    implementation(libs.androidx.navigation.compose)
-
-    // --- Networking (API) ---
-    implementation(libs.retrofit)
-    implementation(libs.retrofit.converter.gson)
-    implementation(libs.okhttp.logging)
-
-    // --- Firebase ---
-    implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.auth)
     implementation(libs.firebase.firestore)
-    implementation(libs.firebase.analytics)
 
-    // --- Image Loading (CHOOSE ONE) ---
+    // Hilt
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
+    implementation(libs.androidx.hilt.navigation.compose)
 
-    // Option A: Glide (As requested)
+    // Image Loading
     implementation(libs.glide.compose)
+
+    // Lottie
+    implementation(libs.lottie.compose)
+
+    // Maps
+    implementation(libs.maps.compose)
+    implementation(libs.play.services.maps)
+
+    // Navigation
+    implementation(libs.androidx.navigation.compose)
+
+    // Networking
+    implementation(libs.okhttp.logging.interceptor)
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converter.gson)
+
+    // Testing
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(platform(libs.androidx.compose.bom))
+    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
+    debugImplementation(libs.androidx.compose.ui.test.manifest)
 
     // Option B: Coil (Recommended for Compose)
     implementation("io.coil-kt:coil-compose:2.5.0")
     implementation("io.coil-kt:coil:2.5.0")
-    
-    
-    // for the icon.defaults usage
-    implementation("androidx.compose.material:material-icons-extended")
-    implementation("androidx.compose.material:material-icons-extended:1.7.5")
-
-
-
-    // implementation(libs.coil.compose)
-
-    // --- Dependency Injection (Hilt) ---
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.compiler) // Uses KSP, not KAPT
-    implementation(libs.androidx.hilt.navigation.compose)
-
-    // --- Maps ---
-    implementation(libs.maps.compose)
-    implementation(libs.play.services.maps)
-
-
-
 }
