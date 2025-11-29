@@ -253,23 +253,21 @@ class LandmarkListViewModel : ViewModel() {
         _selectedLandmark.value = Result.Loading
 
         viewModelScope.launch {
-            // 1. Try to find the landmark in the existing list first (Optimization)
-            val existingLandmark = (_landmarksState.value as? Result.Success)?.data?.find { it.id == id }
+            val state = _landmarksState.value
+            Log.d("LandmarkVM", "Landmarks state: $state")
 
+            val existingLandmark = (state as? Result.Success)?.data?.find { it.id == id }
+            Log.d("LandmarkVM", "Existing landmark found: $existingLandmark")
             if (existingLandmark != null) {
+                // Correct: assign LandMark? inside Result.Success
                 _selectedLandmark.value = Result.Success(existingLandmark)
             } else {
-                // 2. If not found in list, check repository (e.g., for deep links)
-                // Since your repo currently fetches by category, we can simulate a "Not Found" or try to fetch if you add that capability later.
-
-                // FIX: Correctly passing Exception as first parameter, String as second
-                _selectedLandmark.value = Result.Error(
-                    exception = Exception("Landmark not found"),
-                    massage = "Landmark not found"
-                )
+                // Error if not found
+                _selectedLandmark.value = Result.Error(Exception("Landmark not found"))
             }
         }
     }
+
 
 
     fun retry() {

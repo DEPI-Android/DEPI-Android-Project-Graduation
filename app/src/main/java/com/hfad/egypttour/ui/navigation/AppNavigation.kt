@@ -45,24 +45,30 @@ fun AppNavigation(navController: NavHostController) {
 
             LandmarksListScreen(
                 governorateId = governorateId,
-                onLandmarkClick = { landmarkId ->
-                    navController.navigate("landmark/$landmarkId")
+                onLandmarkClick = { landmark ->
+                    // Pass the whole object to the next screen
+                    navController.currentBackStackEntry?.savedStateHandle?.set("landmark", landmark)
+                    navController.navigate(NavigationDestinations.LANDMARK_DETAIL)
                 },
-                // You must add this line to handle the back button click
-                onBackClick = {
-                    navController.popBackStack()
-                }
+                onBackClick = { navController.popBackStack() }
+
             )
         }
 
         // Landmark detail screen
-        composable(NavigationDestinations.LANDMARK_DETAIL) { backStackEntry ->
-            val landmarkId = backStackEntry.arguments?.getString("landmarkId") ?: "0"
-
-             LandmarkDetailScreen(
-                 landmarkId = landmarkId.toInt(),
-                 onBackClick = { navController.popBackStack() },
-             )
+//        composable(NavigationDestinations.LANDMARK_DETAIL) { backStackEntry ->
+//            val landmarkId = backStackEntry.arguments?.getString("landmarkId") ?: "0"
+//
+//             LandmarkDetailScreen(
+//                 landmarkId = landmarkId.toInt(),
+//                 onBackClick = { navController.popBackStack() },
+//             )
+//        }
+        composable(NavigationDestinations.LANDMARK_DETAIL) {
+            LandmarkDetailScreen(
+                navController = navController,
+                onBackClick = { navController.popBackStack() }
+            )
         }
     }
 }

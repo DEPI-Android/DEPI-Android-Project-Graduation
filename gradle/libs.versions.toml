@@ -47,6 +47,7 @@ hilt = "2.51.1"
 mapsCompose = "6.4.0"
 playServicesMaps = "19.0.0"
 retrofitVersion = "2.9.0"
+foundation = "1.9.5"
 
 [libraries]
 
@@ -97,6 +98,7 @@ androidx-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navig
 maps-compose = { group = "com.google.maps.android", name = "maps-compose", version.ref = "mapsCompose" }
 play-services-maps = { group = "com.google.android.gms", name = "play-services-maps", version.ref = "playServicesMaps" }
 retrofit-v290 = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofitVersion" }
+androidx-compose-foundation = { group = "androidx.compose.foundation", name = "foundation", version.ref = "foundation" }
 [plugins]
 # Add the Compose Compiler plugin here (Required for Kotlin 2.0+)
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }

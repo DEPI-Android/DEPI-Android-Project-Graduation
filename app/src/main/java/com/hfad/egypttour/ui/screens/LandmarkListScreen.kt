@@ -1098,8 +1098,9 @@ fun LandmarksListScreen(
                     } else {
                         LandmarkGrid(
                             landmarks = filteredLandmarks,
-                            onLandmarkClick = onLandmarkClick
-                        )
+                            onLandmarkClick = { landmark ->
+                                navController.navigate("landmark/${landmark.id}")
+                            }                        )
                     }
                 }
 
@@ -1196,7 +1197,7 @@ private fun SearchBar(
 @Composable
 private fun LandmarkGrid(
     landmarks: List<LandMark>,
-    onLandmarkClick: (Int) -> Unit
+    onLandmarkClick: (LandMark) -> Unit
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
@@ -1208,7 +1209,10 @@ private fun LandmarkGrid(
         items(landmarks) { landmark ->
             LandmarkItem(
                 landmark = landmark,
-                onClick = { onLandmarkClick(landmark.id) }
+                onClick = {
+                    Log.d("Debug", "Clicked landmark ID: ${landmark.id}")  // <-- Add this
+                    navController.navigate("landmark/${landmark.id}")
+                }
             )
         }
     }
@@ -1219,6 +1223,7 @@ private fun LandmarkGrid(
 private fun LandmarkItem(
     landmark: LandMark,
     onClick: () -> Unit
+
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -1317,7 +1322,7 @@ private fun EmptyState(message: String) {
 
 // --- ERROR STATE ---
 @Composable
-private fun ErrorState(
+fun ErrorState(
     message: String,
     onRetryClick: () -> Unit
 ) {
