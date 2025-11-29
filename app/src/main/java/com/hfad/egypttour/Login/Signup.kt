@@ -42,6 +42,8 @@ import com.hfad.egypttour.R
 import com.hfad.egypttour.ui.theme.EgyptTourTheme
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withTimeout
+import kotlinx.coroutines.TimeoutCancellationException
 
 class SignUpActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,14 +51,14 @@ class SignUpActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             EgyptTourTheme {
-                SignUpScreen()
+                SignUpScreen(onSignUpSuccess = {}, onBackClicked = {})
             }
         }
     }
 }
 
 @Composable
-fun SignUpScreen() {
+fun SignUpScreen(onSignUpSuccess: () -> Unit, onBackClicked: () -> Unit) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     val auth = FirebaseAuth.getInstance()
@@ -220,26 +222,27 @@ fun SignUpScreen() {
                                 isLoading = true
                                 scope.launch {
                                     try {
-                                        val result = auth.createUserWithEmailAndPassword(email, password).await()
-                                        val userId = result.user?.uid
-                                        if (userId != null) {
-                                            val userMap = hashMapOf(
-                                                "username" to username,
-                                                "email" to email
-                                            )
-                                            db.collection("users").document(userId).set(userMap).await()
+                                        withTimeout(5000L) { // 5-second timeout
+                                            val result = auth.createUserWithEmailAndPassword(email, password).await()
+                                            val userId = result.user?.uid
+                                            if (userId != null) {
+                                                val userMap = hashMapOf(
+                                                    "username" to username,
+                                                    "email" to email
+                                                )
+                                                db.collection("users").document(userId).set(userMap).await()
 
-                                            // Save session and navigate
-                                            val sharedPreferences = context.getSharedPreferences("user_session", Context.MODE_PRIVATE)
-                                            with(sharedPreferences.edit()) {
-                                                putBoolean("isLoggedIn", true)
-                                                apply()
+                                                // Save session and notify success
+                                                val sharedPreferences = context.getSharedPreferences("user_session", Context.MODE_PRIVATE)
+                                                with(sharedPreferences.edit()) {
+                                                    putBoolean("isLoggedIn", true)
+                                                    apply()
+                                                }
+                                                onSignUpSuccess()
                                             }
-                                            val intent = Intent(context, MainActivity::class.java).apply {
-                                                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                                            }
-                                            context.startActivity(intent)
                                         }
+                                    } catch (e: TimeoutCancellationException) {
+                                        Toast.makeText(context, "Signup timed out. Please try again.", Toast.LENGTH_SHORT).show()
                                     } catch (e: Exception) {
                                         val message = e.message ?: "An unknown error occurred."
                                         Toast.makeText(context, message, Toast.LENGTH_LONG).show()
@@ -261,7 +264,7 @@ fun SignUpScreen() {
 
                     Row {
                         Text("Already have an account? ", color = Color.White.copy(alpha = 0.8f))
-                        TextButton(onClick = { context.startActivity(Intent(context, SignInActivity::class.java)) }) {
+                        TextButton(onClick = onBackClicked) {
                             Text("Sign in!", color = Color.White, fontWeight = FontWeight.Bold)
                         }
                     }
@@ -290,6 +293,6 @@ fun SignUpScreen() {
 @Composable
 fun SignUpScreenPreview() {
     EgyptTourTheme {
-        SignUpScreen()
+        SignUpScreen(onSignUpSuccess = {}, onBackClicked = {})
     }
 }
