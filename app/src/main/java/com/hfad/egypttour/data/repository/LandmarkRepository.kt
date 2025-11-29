@@ -12,12 +12,17 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import java.io.IOException
+import java.util.concurrent.ConcurrentHashMap
 import kotlin.math.*
 
 class LandmarkRepository(
     private val apiService: WikiApiService
 ) {
-
+    // 1. STATIC CACHE: Use 'companion object' so this map is SHARED by all instances.
+    // This fixes the "Landmark not found" error when switching screens.
+    companion object {
+        private val landmarkCache = ConcurrentHashMap<Int, LandMark>()
+    }
     /**
      * SMART FETCHING with STRICT FILTERING
      */
@@ -25,7 +30,33 @@ class LandmarkRepository(
         return withContext(Dispatchers.IO) {
             try {
                 Log.d(Constants.LOG_TAG, "🔍 Fetching landmarks for ${governorate.displayName}")
+/////////////////////////////////////////////////////////////////////
+                val category = governorate.wikiCategory
+                if (category == null) {
+                    Log.w(Constants.LOG_TAG, "No category defined for ${governorate.displayName}")
+                    return@withContext Result.Success(emptyList())
+                }
+                // -------------------------------------
 
+                val response = apiService.getCategoryMembers(
+                    categoryName = category // Now safe because we checked for null above
+                )
+
+                val pages = response.query?.pages
+
+                if (pages.isNullOrEmpty()) {
+                    return@withContext Result.Success(emptyList())
+                }
+
+                val landmarks = pages.values
+                    .mapNotNull { dto -> mapDtoToLandmark(dto, governorate) }
+                    .sortedByDescending { it.imageUrl?.isNotEmpty() }
+
+                // Save to the shared cache
+                landmarks.forEach { landmarkCache[it.id] = it }
+
+                Result.Success(landmarks)
+                ////////////////////////////////////////////////////////
                 val allResults = mutableListOf<LandMark>()
 
                 // STRATEGY 1: Known landmarks FIRST (highest quality)
@@ -77,6 +108,7 @@ class LandmarkRepository(
                     .filter { isWithinGovernorate(it, governorate) }
                     .sortedByDescending { it.relevanceScore(governorate) }
                     .take(15) // Limit to top 15 most relevant
+                filteredResults.forEach { landmarkCache[it.id] = it }
 
                 Log.d(
                     Constants.LOG_TAG,
@@ -448,9 +480,18 @@ class LandmarkRepository(
         val primaryImageUrl = if (PlaceholderImages.isValidImageUrl(dto.thumbnail?.source)) {
             dto.thumbnail!!.source
         } else {
-            Log.d(Constants.LOG_TAG, "📷 '$title' has no thumbnail, using placeholder")
-            PlaceholderImages.getPlaceholderForGovernorate(governorate)
+            // If no thumbnail source exists, skip this item completely.
+            Log.w(Constants.LOG_TAG, "⚠️ Skipping '$title': No image available")
+            return null
         }
+//
+//        val primaryImageUrl = if (PlaceholderImages.isValidImageUrl(dto.thumbnail?.source)) {
+//            dto.thumbnail!!.source
+//        } else {
+//            Log.d(Constants.LOG_TAG, "📷 '$title' has no thumbnail, using placeholder")
+//            PlaceholderImages.getPlaceholderForGovernorate(governorate)
+//        }
+
 
         // Extract additional images
         val additionalImages = extractAdditionalImages(dto, primaryImageUrl)
@@ -634,32 +675,68 @@ class LandmarkRepository(
     /**
      * Get landmark by ID
      */
+
+
     suspend fun getLandmarkById(id: Int): Result<LandMark?> {
         return withContext(Dispatchers.IO) {
             try {
-                Log.d(Constants.LOG_TAG, "🔍 Fetching landmark with ID: $id")
-
-                val allLandmarksResult = getAllLandmarks()
-
-                if (allLandmarksResult is Result.Success) {
-                    val landmark = allLandmarksResult.data.find { it.id == id }
-
-                    if (landmark != null) {
-                        Log.d(Constants.LOG_TAG, "✅ Found landmark: ${landmark.name}")
-                    } else {
-                        Log.w(Constants.LOG_TAG, "⚠️ No landmark found with ID: $id")
-                    }
-
-                    Result.Success(landmark)
-                } else {
-                    Result.Error(Exception("Failed to fetch landmarks"), "Fetch failed")
+                // Step A: Check Cache (Instant)
+                val cached = landmarkCache[id]
+                if (cached != null) {
+                    Log.d(Constants.LOG_TAG, "Found landmark $id in cache")
+                    return@withContext Result.Success(cached)
                 }
 
+                // Step B: Network Fallback (If cache missed, fetch single item)
+                Log.d(Constants.LOG_TAG, "Cache miss for $id. Fetching from network...")
+                val response = apiService.getPagesByIds(pageIds = id.toString())
+                val dto = response.query?.pages?.values?.firstOrNull()
+
+                if (dto != null) {
+                    // We need a governorate to map it. Since we don't know it, we pick Cairo or generic.
+                    // Ideally, the API would tell us, but here we assume Cairo for the fallback context.
+                    val governorate = Governorate.CAIRO
+                    val landmark = mapDtoToLandmark(dto, governorate)
+
+                    if (landmark != null) {
+                        landmarkCache[landmark.id] = landmark
+                        return@withContext Result.Success(landmark)
+                    }
+                }
+
+                Result.Error(Exception("Not found"), "Landmark not found")
+
             } catch (e: Exception) {
-                val errorMsg = "Failed to get landmark by ID: ${e.message}"
-                Log.e(Constants.LOG_TAG, errorMsg, e)
-                Result.Error(e, errorMsg)
+                Log.e(Constants.LOG_TAG, "Error fetching detail", e)
+                Result.Error(e, "Failed to load details")
             }
         }
     }
+//    suspend fun getLandmarkById(id: Int): Result<LandMark?> {
+//        return withContext(Dispatchers.IO) {
+//            try {
+//                Log.d(Constants.LOG_TAG, "🔍 Fetching landmark with ID: $id")
+//
+//                val allLandmarksResult = getAllLandmarks()
+//
+//                if (allLandmarksResult is Result.Success) {
+//                    val landmark = allLandmarksResult.data.find { it.id == id }
+//                    if (landmark != null) {
+//                        Log.d(Constants.LOG_TAG, "✅ Found landmark after refetch: ${landmark.name}")
+//                        landmarkCache[landmark.id] = landmark // Add to cache for next time
+//                    } else {
+//                        Log.w(Constants.LOG_TAG, "⚠️ No landmark found with ID: $id")
+//                    }
+//                    Result.Success(landmark)
+//                } else {
+//                    Result.Error(Exception("Failed to fetch landmarks"), "Fetch failed")
+//                }
+//
+//            } catch (e: Exception) {
+//                val errorMsg = "Failed to get landmark by ID: ${e.message}"
+//                Log.e(Constants.LOG_TAG, errorMsg, e)
+//                Result.Error(e, errorMsg)
+//            }
+//        }
+//    }
 }

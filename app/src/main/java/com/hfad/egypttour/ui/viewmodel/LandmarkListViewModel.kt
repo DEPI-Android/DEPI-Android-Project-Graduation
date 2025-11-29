@@ -208,6 +208,10 @@ class LandmarkListViewModel : ViewModel() {
     private val _landmarksState = MutableStateFlow<Result<List<LandMark>>>(Result.Loading)
     val landmarksState: StateFlow<Result<List<LandMark>>> = _landmarksState.asStateFlow()
 
+    // NEW: State for the selected single landmark (for Detail Screen)
+    private val _selectedLandmark = MutableStateFlow<Result<LandMark?>>(Result.Loading)
+    val selectedLandmark: StateFlow<Result<LandMark?>> = _selectedLandmark.asStateFlow()
+
     private val _currentGovernorate = MutableStateFlow<Governorate?>(null)
     val currentGovernorate: StateFlow<Governorate?> = _currentGovernorate.asStateFlow()
 
@@ -243,6 +247,30 @@ class LandmarkListViewModel : ViewModel() {
             }
         }
     }
+
+
+    fun loadLandmarkDetails(id: Int) {
+        _selectedLandmark.value = Result.Loading
+
+        viewModelScope.launch {
+            // 1. Try to find the landmark in the existing list first (Optimization)
+            val existingLandmark = (_landmarksState.value as? Result.Success)?.data?.find { it.id == id }
+
+            if (existingLandmark != null) {
+                _selectedLandmark.value = Result.Success(existingLandmark)
+            } else {
+                // 2. If not found in list, check repository (e.g., for deep links)
+                // Since your repo currently fetches by category, we can simulate a "Not Found" or try to fetch if you add that capability later.
+
+                // FIX: Correctly passing Exception as first parameter, String as second
+                _selectedLandmark.value = Result.Error(
+                    exception = Exception("Landmark not found"),
+                    massage = "Landmark not found"
+                )
+            }
+        }
+    }
+
 
     fun retry() {
         _currentGovernorate.value?.let { governorate ->

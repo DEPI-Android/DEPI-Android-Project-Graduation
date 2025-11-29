@@ -1,18 +1,20 @@
 package com.hfad.egypttour.ui.screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.Image // Import the Composable Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.Image
+//import androidx.compose.material.icons.filled.Image
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource // Needed for R.drawable loading
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -116,40 +118,49 @@ fun GovernorateCard(
             modifier = Modifier.fillMaxSize()
         ) {
             // IMAGES: This handles the network loading securely
-            SubcomposeAsyncImage(
-                model = governorate.imageUrl,
+//            SubcomposeAsyncImage(
+//                model = governorate.imageUrl,
+//                contentDescription = governorate.displayName,
+//                modifier = Modifier.fillMaxSize(),
+//                contentScale = ContentScale.Crop,
+//                alpha = 0.9f,
+//                loading = {
+//                    Box(
+//                        modifier = Modifier
+//                            .fillMaxSize()
+//                            .background(TextGray.copy(alpha = 0.3f)),
+//                        contentAlignment = Alignment.Center
+//                    ) {
+//                        CircularProgressIndicator(
+//                            modifier = Modifier.size(40.dp),
+//                            color = EgyptGold
+//                        )
+//                    }
+//                },
+//                error = {
+//                    Box(
+//                        modifier = Modifier
+//                            .fillMaxSize()
+//                            .background(TextGray.copy(alpha = 0.5f)),
+//                        contentAlignment = Alignment.Center
+//                    ) {
+//                        Icon(
+//                            imageVector = Icons.Default.Image,
+//                            contentDescription = "Image load error",
+//                            tint = TextBlack.copy(alpha = 0.5f),
+//                            modifier = Modifier.size(40.dp)
+//                        )
+//                    }
+//                }
+//            )
+
+            // In GovernorateListScreen.kt
+
+            Image(
+                painter = painterResource(id = governorate.imageRes),
                 contentDescription = governorate.displayName,
                 modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.Crop,
-                alpha = 0.9f,
-                loading = {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .background(TextGray.copy(alpha = 0.3f)),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        CircularProgressIndicator(
-                            modifier = Modifier.size(40.dp),
-                            color = EgyptGold
-                        )
-                    }
-                },
-                error = {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .background(TextGray.copy(alpha = 0.5f)),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Image,
-                            contentDescription = "Image load error",
-                            tint = TextBlack.copy(alpha = 0.5f),
-                            modifier = Modifier.size(40.dp)
-                        )
-                    }
-                }
+                contentScale = ContentScale.Crop
             )
 
             // Gradient Overlay for readability
