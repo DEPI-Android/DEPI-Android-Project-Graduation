@@ -12,6 +12,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import java.io.IOException
+import java.security.MessageDigest
 import kotlin.math.*
 
 class LandmarkRepository(
@@ -21,8 +22,18 @@ class LandmarkRepository(
     /**
      * SMART FETCHING with STRICT FILTERING
      */
+    // Cache fetched landmarks per governorate
+//    private val cachedLandmarks = mutableMapOf<Governorate, List<LandMark>>()
+
     suspend fun getLandmarks(governorate: Governorate): Result<List<LandMark>> {
-        return withContext(Dispatchers.IO) {
+
+        // Check cache first
+//        cachedLandmarks[governorate]?.let { cached ->
+//            Log.d(Constants.LOG_TAG, "📦 Returning cached landmarks for ${governorate.displayName}")
+//            return Result.Success(cached)
+//        }
+
+        val result = withContext(Dispatchers.IO) {
             try {
                 Log.d(Constants.LOG_TAG, "🔍 Fetching landmarks for ${governorate.displayName}")
 
@@ -106,6 +117,13 @@ class LandmarkRepository(
                 Result.Error(e, errorMsg)
             }
         }
+
+        // Cache the result if successful
+//        if (result is Result.Success) {
+//            cachedLandmarks[governorate] = result.data
+//        }
+
+        return result
     }
 
     // ============= STRATEGY IMPLEMENTATIONS =============
@@ -444,12 +462,12 @@ class LandmarkRepository(
             return null
         }
 
-        // Handle image
+        // Handle image.. skip the item if there is no image.
         val primaryImageUrl = if (PlaceholderImages.isValidImageUrl(dto.thumbnail?.source)) {
             dto.thumbnail!!.source
         } else {
-            Log.d(Constants.LOG_TAG, "📷 '$title' has no thumbnail, using placeholder")
-            PlaceholderImages.getPlaceholderForGovernorate(governorate)
+            Log.d(Constants.LOG_TAG, "Skipping '$title': No thumbnail image")
+            return null
         }
 
         // Extract additional images
@@ -481,50 +499,111 @@ class LandmarkRepository(
     /**
      * Construct proper Wikimedia Commons image URL
      */
-    private fun constructImageUrl(fileTitle: String): String? {
-        try {
-            // Remove "File:" prefix
-            val filename = fileTitle.removePrefix("File:").trim()
-            if (filename.isBlank()) return null
+//    private fun constructImageUrl(fileTitle: String): String? {
+//        try {
+//            // Remove "File:" prefix
+//            val filename = fileTitle.removePrefix("File:").trim()
+//            if (filename.isBlank()) return null
+//
+//            // Skip non-image files
+//            val imageExtensions = listOf(".jpg", ".jpeg", ".png", ".gif", ".svg", ".webp")
+//            if (!imageExtensions.any { filename.lowercase().endsWith(it) }) {
+//                return null
+//            }
+//
+//            // Normalize filename
+//            val normalizedFilename = filename.replace(" ", "_")
+//            val firstChar = normalizedFilename.first().lowercaseChar()
+//            val secondChar = normalizedFilename.getOrNull(1)?.lowercaseChar() ?: firstChar
+//
+//            // Construct URL
+//            return "https://upload.wikimedia.org/wikipedia/commons/thumb/$firstChar/$firstChar$secondChar/$normalizedFilename/500px-$normalizedFilename"
+//        } catch (e: Exception) {
+//            Log.w(Constants.LOG_TAG, "⚠️ Failed to construct image URL for: $fileTitle", e)
+//            return null
+//        }
+//    }
 
-            // Skip non-image files
-            val imageExtensions = listOf(".jpg", ".jpeg", ".png", ".gif", ".svg", ".webp")
-            if (!imageExtensions.any { filename.lowercase().endsWith(it) }) {
-                return null
-            }
 
-            // Normalize filename
-            val normalizedFilename = filename.replace(" ", "_")
-            val firstChar = normalizedFilename.first().lowercaseChar()
-            val secondChar = normalizedFilename.getOrNull(1)?.lowercaseChar() ?: firstChar
+    // ----------------------------------------------------------
+    // HELPER: IMAGE URL CONSTRUCTION (THE FIX) 🛠️
+    // ----------------------------------------------------------
 
-            // Construct URL
-            return "https://upload.wikimedia.org/wikipedia/commons/thumb/$firstChar/$firstChar$secondChar/$normalizedFilename/500px-$normalizedFilename"
-        } catch (e: Exception) {
-            Log.w(Constants.LOG_TAG, "⚠️ Failed to construct image URL for: $fileTitle", e)
-            return null
-        }
-    }
-
-    /**
-     * Extract additional images from page, excluding primary
-     */
     private fun extractAdditionalImages(dto: WikiPageDto, primaryImageUrl: String?): List<String> {
         val images = dto.images ?: return emptyList()
 
         return images
             .mapNotNull { imageInfo -> constructImageUrl(imageInfo.title) }
             .filter { url ->
-                // Exclude primary image and invalid URLs
+                // Remove duplicates and non-photos
                 url != primaryImageUrl &&
-                        PlaceholderImages.isValidImageUrl(url) &&
                         !url.contains("icon", ignoreCase = true) &&
                         !url.contains("logo", ignoreCase = true) &&
-                        !url.contains("flag", ignoreCase = true)
+                        !url.contains("flag", ignoreCase = true) &&
+                        !url.contains(".svg", ignoreCase = true)
             }
-            .distinct() // Remove duplicates
-            .take(6) // Limit to 6 additional images
+            .distinct()
+            .take(8)
     }
+
+    /**
+     * Converts "File:Name.jpg" to a valid Wikimedia CDN URL using MD5 hashing.
+     */
+    private fun constructImageUrl(fileTitle: String): String? {
+        try {
+            // 1. Clean the filename
+            val filename = fileTitle.removePrefix("File:").trim().replace(" ", "_")
+            if (filename.isBlank()) return null
+
+            // 2. Filter extensions (Keep only photos)
+            val imageExtensions = listOf(".jpg", ".jpeg", ".png", ".webp")
+            if (!imageExtensions.any { filename.lowercase().endsWith(it) }) {
+                return null
+            }
+
+            // 3. Calculate MD5 Hash
+            val hash = md5(filename)
+            val a = hash.substring(0, 1)
+            val ab = hash.substring(0, 2)
+
+            // 4. Build URL
+            // Format: https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Filename.jpg/640px-Filename.jpg
+            return "https://upload.wikimedia.org/wikipedia/commons/thumb/$a/$ab/$filename/640px-$filename"
+
+        } catch (e: Exception) {
+            Log.e(Constants.LOG_TAG, "Failed to construct URL for $fileTitle", e)
+            return null
+        }
+    }
+
+    // MD5 Calculation Helper
+    private fun md5(input: String): String {
+        val bytes = MessageDigest.getInstance("MD5").digest(input.toByteArray())
+        return bytes.joinToString("") { "%02x".format(it) }
+    }
+
+
+
+
+    /**
+     * Extract additional images from page, excluding primary
+     */
+//    private fun extractAdditionalImages(dto: WikiPageDto, primaryImageUrl: String?): List<String> {
+//        val images = dto.images ?: return emptyList()
+//
+//        return images
+//            .mapNotNull { imageInfo -> constructImageUrl(imageInfo.title) }
+//            .filter { url ->
+//                // Exclude primary image and invalid URLs
+//                url != primaryImageUrl &&
+//                        PlaceholderImages.isValidImageUrl(url) &&
+//                        !url.contains("icon", ignoreCase = true) &&
+//                        !url.contains("logo", ignoreCase = true) &&
+//                        !url.contains("flag", ignoreCase = true)
+//            }
+//            .distinct() // Remove duplicates
+//            .take(6) // Limit to 6 additional images
+//    }
 
     /**
      * Get all landmarks from all governorates
@@ -634,6 +713,40 @@ class LandmarkRepository(
     /**
      * Get landmark by ID
      */
+            // with cache
+//    suspend fun getLandmarkById(id: Int): Result<LandMark?> {
+//        return withContext(Dispatchers.IO) {
+//            try {
+//                Log.d(Constants.LOG_TAG, "🔍 Fetching landmark with ID: $id")
+//
+//                // Search in cached landmarks first
+//                val cachedLandmark = cachedLandmarks.values.flatten().firstOrNull { it.id == id }
+//                if (cachedLandmark != null) {
+//                    Log.d(Constants.LOG_TAG, "✅ Found landmark in cache: ${cachedLandmark.name}")
+//                    return@withContext Result.Success(cachedLandmark)
+//                }
+//
+//                // Fallback: fetch all landmarks (optional)
+//                val allResult = getAllLandmarks()
+//                if (allResult is Result.Success) {
+//                    val landmark = allResult.data.firstOrNull { it.id == id }
+//                    if (landmark != null) {
+//                        Log.d(Constants.LOG_TAG, "✅ Found landmark after fetching all: ${landmark.name}")
+//                    } else {
+//                        Log.w(Constants.LOG_TAG, "⚠️ No landmark found with ID: $id")
+//                    }
+//                    return@withContext Result.Success(landmark)
+//                }
+//
+//                Result.Error(Exception("Failed to fetch landmark"), "Fetch failed")
+//            } catch (e: Exception) {
+//                val errorMsg = "Failed to get landmark by ID: ${e.message}"
+//                Log.e(Constants.LOG_TAG, errorMsg, e)
+//                Result.Error(e, errorMsg)
+//            }
+//        }
+//    }
+
     suspend fun getLandmarkById(id: Int): Result<LandMark?> {
         return withContext(Dispatchers.IO) {
             try {

@@ -1,6 +1,3 @@
-
-
-
 package com.hfad.egypttour.ui.navigation
 
 import androidx.compose.runtime.Composable
@@ -56,14 +53,14 @@ fun AppNavigation(navController: NavHostController) {
         }
 
 //        // Landmark detail screen
-//        composable(NavigationDestinations.LANDMARK_DETAIL) { backStackEntry ->
-//            val landmarkId = backStackEntry.arguments?.getString("landmarkId") ?: "0"
-//
-//            //
-//            // LandmarkDetailScreen(
-//            //     landmarkId = landmarkId.toInt(),
-//            //     onBackClick = { navController.popBackStack() }
-//            // )
-//        }
+        composable(NavigationDestinations.LANDMARK_DETAIL) { backStackEntry ->
+            val landmarkId = backStackEntry.arguments?.getString("landmarkId") ?: "0"
+
+
+             LandmarkDetailScreen(
+                 landmarkId = landmarkId.toInt(),
+                 onBackClick = { navController.popBackStack() }
+             )
+        }
     }
 }
