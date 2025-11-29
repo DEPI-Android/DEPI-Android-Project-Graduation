@@ -2,8 +2,11 @@
 agp = "8.13.1"
 converterGson = "2.9.0"
 
-kotlin = "2.0.21"
-ksp = "2.0.21-1.0.26"
+
+#...
+kotlin = "2.0.0"
+ksp = "2.0.0-1.0.21"
+#...
 
 coreKtx = "1.17.0"
 junit = "4.13.2"
@@ -44,13 +47,7 @@ hilt = "2.51.1"
 mapsCompose = "6.4.0"
 playServicesMaps = "19.0.0"
 retrofitVersion = "2.9.0"
-appcompat = "1.7.1"
-material = "1.13.0"
-annotation = "1.9.1"
-constraintlayout = "2.2.1"
-lifecycleLivedataKtx = "2.9.4"
 foundation = "1.9.5"
-material3 = "1.4.0"
 
 [libraries]
 
@@ -101,13 +98,7 @@ androidx-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navig
 maps-compose = { group = "com.google.maps.android", name = "maps-compose", version.ref = "mapsCompose" }
 play-services-maps = { group = "com.google.android.gms", name = "play-services-maps", version.ref = "playServicesMaps" }
 retrofit-v290 = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofitVersion" }
-androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
-androidx-annotation = { group = "androidx.annotation", name = "annotation", version.ref = "annotation" }
-androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
-androidx-lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycleLivedataKtx" }
 androidx-compose-foundation = { group = "androidx.compose.foundation", name = "foundation", version.ref = "foundation" }
-androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "material3" }
 [plugins]
 # Add the Compose Compiler plugin here (Required for Kotlin 2.0+)
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }

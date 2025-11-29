@@ -26,6 +26,15 @@ allprojects {
 
             // FORCE Okio to stable
             force("com.squareup.okio:okio:3.9.0")
+
+            // Coil 2.5.0 is the last stable version that works with OkHttp 4.12.0
+            force("io.coil-kt:coil:2.5.0")
+            force("io.coil-kt:coil-compose:2.5.0")
+            force("io.coil-kt:coil-base:2.5.0")
+
+            // NEW: FORCE Coroutines to stable version (prevents Coil conflicts)
+            force("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0")
+            force("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.0")
         }
     }
 }
