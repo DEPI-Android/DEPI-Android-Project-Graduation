@@ -30,8 +30,7 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun GreetingPreview() {
         EgyptTourTheme {
-            // Updated to include the required onBackClick parameter
-            GovernorateListScreen {  }
+             GovernorateListScreen {  }
         }
     }
 }
