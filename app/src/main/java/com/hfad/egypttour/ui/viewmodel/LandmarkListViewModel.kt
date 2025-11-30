@@ -198,13 +198,16 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
+
 /**
- * FIXED: Removed SavedStateHandle to allow default viewModel() creation
+ * Hilt ViewModel
  */
-class LandmarkListViewModel : ViewModel() {
-
-
-    private val repository = LandmarkRepository(RetrofitInstance.api)
+@HiltViewModel
+class LandmarkListViewModel @Inject constructor(
+    private val repository: LandmarkRepository
+) : ViewModel() {
 
     private val _landmarksState = MutableStateFlow<Result<List<LandMark>>>(Result.Loading)
     val landmarksState: StateFlow<Result<List<LandMark>>> = _landmarksState.asStateFlow()
