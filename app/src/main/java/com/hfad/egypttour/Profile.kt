@@ -36,12 +36,9 @@ fun Profile() {
         ) {
             // Top Bar (Back button and Edit button)
             TopBar()
-
             // Profile Header (Image, Name, Title, Contact Info)
             ProfileHeader()
-
             Spacer(modifier = Modifier.height(32.dp))
-
             // Menu Items Section
             MenuSection()
         }
