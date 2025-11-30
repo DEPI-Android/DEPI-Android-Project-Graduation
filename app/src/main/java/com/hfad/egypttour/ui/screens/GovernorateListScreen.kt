@@ -154,7 +154,7 @@ fun GovernorateCard(
 //                }
 //            )
 
-            // In GovernorateListScreen.kt
+            // In GovernorateListScreen.ktgh
 
             Image(
                 painter = painterResource(id = governorate.imageRes),
