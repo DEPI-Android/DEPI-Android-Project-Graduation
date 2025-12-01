@@ -10,9 +10,9 @@ import androidx.navigation.compose.rememberNavController
 import com.hfad.egypttour.ui.navigation.AppNavigation
 import com.hfad.egypttour.ui.screens.*
 import com.hfad.egypttour.ui.theme.EgyptTourTheme
-// import dagger.hilt.android.AndroidEntryPoint // Removed for Emergency Plan (No Hilt needed)
+import dagger.hilt.android.AndroidEntryPoint
 
-// @AndroidEntryPoint // Removed: Only use if you fully set up Hilt. Using this without the Hilt Gradle plugin causes crashes.
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,8 +30,7 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun GreetingPreview() {
         EgyptTourTheme {
-            // Updated to include the required onBackClick parameter
-            GovernorateListScreen {  }
+             GovernorateListScreen {  }
         }
     }
 }

@@ -15,9 +15,15 @@ import java.io.IOException
 import java.security.MessageDigest
 import kotlin.math.*
 
+import android.content.Context
+import com.hfad.egypttour.data.local.LandmarkJsonReader
+
 class LandmarkRepository(
-    private val apiService: WikiApiService
+    private val apiService: WikiApiService,
+    private val context: Context
 ) {
+    private val jsonReader = LandmarkJsonReader()
+    private var localLandmarksCache: List<LandMark>? = null
 
     /**
      * SMART FETCHING with STRICT FILTERING
@@ -26,13 +32,20 @@ class LandmarkRepository(
 //    private val cachedLandmarks = mutableMapOf<Governorate, List<LandMark>>()
 
     suspend fun getLandmarks(governorate: Governorate): Result<List<LandMark>> {
+        // STEP 1: Load from local database first
+        val localLandmarks = loadLocalLandmarksForGovernorate(governorate)
+        
+        if (localLandmarks.isNotEmpty()) {
+            Log.d(Constants.LOG_TAG, "📦 Found ${localLandmarks.size} local landmarks for ${governorate.displayName}")
+            return Result.Success(localLandmarks)
+        }
+        
+        // STEP 2: Fallback to Wikipedia (only if local data missing)
+        Log.d(Constants.LOG_TAG, "⚠️ No local landmarks for ${governorate.displayName}, falling back to Wikipedia")
+        return fetchFromWikipedia(governorate)
+    }
 
-        // Check cache first
-//        cachedLandmarks[governorate]?.let { cached ->
-//            Log.d(Constants.LOG_TAG, "📦 Returning cached landmarks for ${governorate.displayName}")
-//            return Result.Success(cached)
-//        }
-
+    private suspend fun fetchFromWikipedia(governorate: Governorate): Result<List<LandMark>> {
         val result = withContext(Dispatchers.IO) {
             try {
                 Log.d(Constants.LOG_TAG, "🔍 Fetching landmarks for ${governorate.displayName}")
@@ -117,12 +130,6 @@ class LandmarkRepository(
                 Result.Error(e, errorMsg)
             }
         }
-
-        // Cache the result if successful
-//        if (result is Result.Success) {
-//            cachedLandmarks[governorate] = result.data
-//        }
-
         return result
     }
 
@@ -710,44 +717,43 @@ class LandmarkRepository(
         }
     }
 
-    /**
-     * Get landmark by ID
-     */
-            // with cache
-//    suspend fun getLandmarkById(id: Int): Result<LandMark?> {
-//        return withContext(Dispatchers.IO) {
-//            try {
-//                Log.d(Constants.LOG_TAG, "🔍 Fetching landmark with ID: $id")
-//
-//                // Search in cached landmarks first
-//                val cachedLandmark = cachedLandmarks.values.flatten().firstOrNull { it.id == id }
-//                if (cachedLandmark != null) {
-//                    Log.d(Constants.LOG_TAG, "✅ Found landmark in cache: ${cachedLandmark.name}")
-//                    return@withContext Result.Success(cachedLandmark)
-//                }
-//
-//                // Fallback: fetch all landmarks (optional)
-//                val allResult = getAllLandmarks()
-//                if (allResult is Result.Success) {
-//                    val landmark = allResult.data.firstOrNull { it.id == id }
-//                    if (landmark != null) {
-//                        Log.d(Constants.LOG_TAG, "✅ Found landmark after fetching all: ${landmark.name}")
-//                    } else {
-//                        Log.w(Constants.LOG_TAG, "⚠️ No landmark found with ID: $id")
-//                    }
-//                    return@withContext Result.Success(landmark)
-//                }
-//
-//                Result.Error(Exception("Failed to fetch landmark"), "Fetch failed")
-//            } catch (e: Exception) {
-//                val errorMsg = "Failed to get landmark by ID: ${e.message}"
-//                Log.e(Constants.LOG_TAG, errorMsg, e)
-//                Result.Error(e, errorMsg)
-//            }
-//        }
-//    }
+
 
     suspend fun getLandmarkById(id: Int): Result<LandMark?> {
+        // STEP 1: Search in local database
+        val localLandmark = findLocalLandmarkById(id)
+        
+        if (localLandmark != null) {
+            // STEP 2: Check if description is null, empty, or has less than 15 words
+            val description = localLandmark.description
+            val wordCount = if (description.isNullOrBlank()) 0 else description.trim().split("\\s+".toRegex()).size
+            
+            if (localLandmark.needsWikipediaDescription) {
+                Log.d(Constants.LOG_TAG, "📝 Landmark '${localLandmark.name}': Description needs Wikipedia fallback (words: $wordCount)")
+                
+                // STEP 3: Fetch detailed description from Wikipedia
+                val wikiDescription = fetchWikipediaDescription(localLandmark.name)
+                
+                // Merge: Use Wikipedia if available, otherwise keep local (even if empty)
+                val enhancedDescription = if (wikiDescription.isNotBlank()) {
+                    Log.d(Constants.LOG_TAG, "✅ Wikipedia description fetched successfully (${wikiDescription.split("\\s+".toRegex()).size} words)")
+                    wikiDescription
+                } else {
+                    Log.w(Constants.LOG_TAG, "⚠️ Wikipedia fetch failed, keeping local description")
+                    localLandmark.description
+                }
+                
+                return Result.Success(localLandmark.copy(description = enhancedDescription))
+            }
+            
+            // Description is sufficient (≥15 words), return as-is
+            Log.d(Constants.LOG_TAG, "✅ Landmark '${localLandmark.name}': Description sufficient ($wordCount words), using local data")
+            return Result.Success(localLandmark)
+        }
+        
+        // STEP 4: Not in local DB, fallback to full Wikipedia fetch
+        Log.w(Constants.LOG_TAG, "Landmark $id not found in local database, fetching from Wikipedia")
+        
         return withContext(Dispatchers.IO) {
             try {
                 Log.d(Constants.LOG_TAG, "🔍 Fetching landmark with ID: $id")
@@ -773,6 +779,34 @@ class LandmarkRepository(
                 Log.e(Constants.LOG_TAG, errorMsg, e)
                 Result.Error(e, errorMsg)
             }
+        }
+    }
+
+    // ============= LOCAL DATA HELPERS =============
+
+    private suspend fun getLocalLandmarks(): List<LandMark> {
+        if (localLandmarksCache == null) {
+            localLandmarksCache = jsonReader.loadCompleteLocalDatabase(context)
+        }
+        return localLandmarksCache ?: emptyList()
+    }
+
+    private suspend fun loadLocalLandmarksForGovernorate(governorate: Governorate): List<LandMark> {
+        return getLocalLandmarks().filter { it.governorate == governorate }
+    }
+
+    private suspend fun findLocalLandmarkById(id: Int): LandMark? {
+        return getLocalLandmarks().find { it.id == id }
+    }
+
+    private suspend fun fetchWikipediaDescription(landmarkName: String): String {
+        return try {
+            val response = apiService.getPagesByTitles(titles = landmarkName)
+            val page = response.query?.pages?.values?.firstOrNull()
+            page?.extract ?: ""
+        } catch (e: Exception) {
+            Log.e(Constants.LOG_TAG, "Failed to fetch Wikipedia description for $landmarkName", e)
+            ""
         }
     }
 }
