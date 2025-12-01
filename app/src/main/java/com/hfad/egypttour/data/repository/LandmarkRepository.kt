@@ -16,7 +16,7 @@ import java.security.MessageDigest
 import kotlin.math.*
 
 import android.content.Context
-import com.hfad.egypttour.data.local.LandmarkJsonReader
+import com.hfad.egypttour.data.util.LandmarkJsonReader
 
 class LandmarkRepository(
     private val apiService: WikiApiService,

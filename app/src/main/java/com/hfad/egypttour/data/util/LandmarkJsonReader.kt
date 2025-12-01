@@ -1,9 +1,11 @@
-package com.hfad.egypttour.data.local
+package com.hfad.egypttour.data.util
 
 import android.content.Context
 import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.hfad.egypttour.data.local.GovernorateMapper
+import com.hfad.egypttour.data.local.IdMapper
 import com.hfad.egypttour.data.model.LandMark
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

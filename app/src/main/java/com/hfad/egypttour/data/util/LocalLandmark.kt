@@ -1,4 +1,4 @@
-package com.hfad.egypttour.data.local
+package com.hfad.egypttour.data.util
 
 data class LocalLandmark(
     val id: String,
