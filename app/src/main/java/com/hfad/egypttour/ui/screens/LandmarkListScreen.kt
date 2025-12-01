@@ -26,7 +26,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.hfad.egypttour.data.model.Governorate
@@ -43,7 +43,7 @@ fun LandmarksListScreen(
     governorateId: String,
     onLandmarkClick: (Int) -> Unit,
     onBackClick: () -> Unit,
-    viewModel: LandmarkListViewModel = viewModel()
+    viewModel: LandmarkListViewModel = hiltViewModel()
 ) {
     // Convert governorate ID to Governorate enum
     val governorate = remember(governorateId) {

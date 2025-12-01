@@ -12,14 +12,19 @@ import javax.inject.Singleton
  * Hilt dependency injection module for data layer
  * Provides singletons for API and Repository
  */
+import android.content.Context
+import dagger.hilt.android.qualifiers.ApplicationContext
+
 @Module
 @InstallIn(SingletonComponent::class)
 object DataModule {
 
     @Provides
     @Singleton
-    fun provideLandmarkRepository(): LandmarkRepository {
-        return LandmarkRepository(RetrofitInstance.api)
+    fun provideLandmarkRepository(
+        @ApplicationContext context: Context
+    ): LandmarkRepository {
+        return LandmarkRepository(RetrofitInstance.api, context)
     }
 }
 

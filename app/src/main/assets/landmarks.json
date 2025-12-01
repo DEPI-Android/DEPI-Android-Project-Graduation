@@ -1,0 +1,3077 @@
+[
+  {
+    "id": "89384.0",
+    "name": "Bab al-Nasr (Cairo)",
+    "description": "No description available.",
+    "governorate": "Cairo Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Bab_al-Nasr_(Cairo).jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/3/37/Bab_en-Nasr_%281878%29_-_TIMEA.jpg"
+  },
+  {
+    "id": "98101.0",
+    "name": "Mortuary Temple of Seti I in Qurna",
+    "description": "No description available.",
+    "governorate": "Luxor Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Mortuary_Temple_of_Seti_I_in_Qurna.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/9/91/Temple_of_Seti_at_Luxor_-_panoramio_%281%29.jpg"
+  },
+  {
+    "id": "64325.0",
+    "name": "Great Pyramid of Giza",
+    "description": "oldest and largest of the three pyramids in the Giza Necropolis; one of the seven ancient wonders of the world",
+    "governorate": "Giza Governorate",
+    "coordinates": {
+      "latitude": 29.97915,
+      "longitude": 31.13422
+    },
+    "imagePath": "landmark_images/Great_Pyramid_of_Giza.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/5/58/Flickr_-_Gaspa_-_Giza%2C_la_piramide_grande.jpg"
+  },
+  {
+    "id": "170471.0",
+    "name": "Umm Kulthum Museum",
+    "description": "specialized museum in Old Cairo, Cairo",
+    "governorate": "Cairo Governorate",
+    "coordinates": {
+      "latitude": 30.0072,
+      "longitude": 31.2253
+    },
+    "imagePath": "landmark_images/Umm_Kulthum_Museum.jpg",
+    "wikiUrl": "http://upload.wikimedia.org/wikipedia/commons/f/fe/CairoRodaKalthumBelongings.jpg"
+  },
+  {
+    "id": "34170.0",
+    "name": "Wadi el-Raiyan",
+    "description": "monastery in the Egyptian depression of el-Faiyum",
+    "governorate": "Faiyum Governorate",
+    "coordinates": {
+      "latitude": 29.082222222,
+      "longitude": 30.284444444
+    },
+    "imagePath": "landmark_images/Wadi_el-Raiyan.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/c/cd/Wadi_El-Rayyan%2C_Fayoum%2C_Egypt_%281%29.jpg"
+  },
+  {
+    "id": "168091.0",
+    "name": "Al-Shate'e Mosque",
+    "description": "mosque in Egypt",
+    "governorate": "Port Said",
+    "coordinates": null,
+    "imagePath": "landmark_images/Al-Shate'e_Mosque.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/c/c0/AL-Shate%27e_Mosque_in_Port_Said_015.JPG"
+  },
+  {
+    "id": "102822.0",
+    "name": "Wadi el Gemal National Park",
+    "description": "No description available.",
+    "governorate": "Red Sea Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Wadi_el_Gemal_National_Park.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/9/98/Red_Sea_18.jpg"
+  },
+  {
+    "id": "122463.0",
+    "name": "Bayt Al-Suhaymi",
+    "description": "building in Egypt",
+    "governorate": "Cairo Governorate",
+    "coordinates": {
+      "latitude": 30.0522,
+      "longitude": 31.2625
+    },
+    "imagePath": "landmark_images/Bayt_Al-Suhaymi.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/d/df/El_Suheimi_House_02.jpg"
+  },
+  {
+    "id": "143048.0",
+    "name": "Na'ama Bay",
+    "description": "bay in the area of Sharm ash-Shaykh",
+    "governorate": "South Sinai Governorate",
+    "coordinates": {
+      "latitude": 27.905277777,
+      "longitude": 34.324166666
+    },
+    "imagePath": "landmark_images/Na'ama_Bay.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/b/b2/%D0%A8%D0%B0%D1%80%D0%BC-%D1%8D%D0%BB%D1%8C-%D0%A8%D0%B5%D0%B9%D1%85_-_panoramio_%2843%29.jpg"
+  },
+  {
+    "id": "81351.0",
+    "name": "Elephantine",
+    "description": "island in the Nile, Egypt",
+    "governorate": "Aswan Governorate",
+    "coordinates": {
+      "latitude": 24.09,
+      "longitude": 32.89
+    },
+    "imagePath": "landmark_images/Elephantine.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/d/d5/Psammetichus_II_Cartouches_Aswan.jpg"
+  },
+  {
+    "id": "35012.0",
+    "name": "Siwa",
+    "description": "language",
+    "governorate": "Matruh Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Siwa.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/b/bf/Siwa_oasis_-_Egypt.jpg"
+  },
+  {
+    "id": "7666.0",
+    "name": "Colossi of Memnon",
+    "description": "ancient Egyptian statues",
+    "governorate": "Thebes",
+    "coordinates": {
+      "latitude": 25.720555555,
+      "longitude": 32.610555555
+    },
+    "imagePath": "landmark_images/Colossi_of_Memnon.jpg",
+    "wikiUrl": "http://upload.wikimedia.org/wikipedia/commons/0/06/Memnon_17.jpg"
+  },
+  {
+    "id": "68682.0",
+    "name": "Pyramid of Unas",
+    "description": "Smooth-sided pyramid",
+    "governorate": "Giza Governorate",
+    "coordinates": {
+      "latitude": 29.868333,
+      "longitude": 31.214722
+    },
+    "imagePath": "landmark_images/Pyramid_of_Unas.jpg",
+    "wikiUrl": "http://upload.wikimedia.org/wikipedia/commons/9/97/Unas-Pyramide_%28Sakkara%29_15.jpg"
+  },
+  {
+    "id": "11959.0",
+    "name": "Cairo Citadel",
+    "description": "medieval Islamic-era fortification in Cairo, Egypt",
+    "governorate": "Cairo Governorate",
+    "coordinates": {
+      "latitude": 30.0294,
+      "longitude": 31.2614
+    },
+    "imagePath": "landmark_images/Cairo_Citadel.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/5/50/%D8%A7%D9%84%D9%85%D8%AA%D8%AD%D9%81-%D8%A7%D9%84%D9%82%D9%84%D8%B9%D8%A9.JPG"
+  },
+  {
+    "id": "73439.0",
+    "name": "Mastabat al-Fir'aun",
+    "description": "ancient Egyptian mastaba tomb",
+    "governorate": "Giza Governorate",
+    "coordinates": {
+      "latitude": 29.838888888,
+      "longitude": 31.215277777
+    },
+    "imagePath": "landmark_images/Mastabat_al-Fir'aun.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/5/54/011_Shepseskaf.jpg"
+  },
+  {
+    "id": "195811.0",
+    "name": "Great Hypostyle Hall of Karnak",
+    "description": "No description available.",
+    "governorate": "Luxor Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Great_Hypostyle_Hall_of_Karnak.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/b/bc/Contribs.jpg"
+  },
+  {
+    "id": "283.0",
+    "name": "Wadi Degla",
+    "description": "Egyptian football club based in Cairo",
+    "governorate": "Cairo Governorate",
+    "coordinates": {
+      "latitude": 29.957783333,
+      "longitude": 31.312927777
+    },
+    "imagePath": "landmark_images/Wadi_Degla.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/b/b0/%D9%8BWadi_Degla_38.JPG"
+  },
+  {
+    "id": "198217.0",
+    "name": "Abu Haggag Mosque",
+    "description": "mosque in Luxor, Egypt",
+    "governorate": "Luxor",
+    "coordinates": {
+      "latitude": 25.7,
+      "longitude": 32.63944444
+    },
+    "imagePath": "landmark_images/Abu_Haggag_Mosque.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/c/cb/Luxor_temple32.JPG"
+  },
+  {
+    "id": "160379.0",
+    "name": "Gayer-Anderson Museum",
+    "description": "art museum in Cairo, Egypt",
+    "governorate": "Cairo Governorate",
+    "coordinates": {
+      "latitude": 30.0284,
+      "longitude": 31.2507
+    },
+    "imagePath": "landmark_images/Gayer-Anderson_Museum.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/7/7b/Museo_gayer_anderson%2C_soffitto_01.JPG"
+  },
+  {
+    "id": "161614.0",
+    "name": "Bab Zuwayla",
+    "description": "gate in the Old City of Cairo, Egypt",
+    "governorate": "Cairo Governorate",
+    "coordinates": {
+      "latitude": 30.0428,
+      "longitude": 31.2578
+    },
+    "imagePath": "landmark_images/Bab_Zuwayla.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/9/9a/%D8%A7%D9%84%D8%AF%D8%B1%D8%A8_%D8%A7%D9%84%D8%A7%D8%AD%D9%85%D8%B1_%D8%A8%D9%88%D8%A7%D8%A8%D8%A9_%D8%B2%D9%88%D9%8A%D9%84%D9%87.jpg"
+  },
+  {
+    "id": "56583.0",
+    "name": "Bagawat",
+    "description": "1982 Hindi film directed by Ramanand Sagar",
+    "governorate": "New Valley Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Bagawat.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/4/43/Bagawat_%28LXXXVII%29.jpg"
+  },
+  {
+    "id": "137763.0",
+    "name": "Temple of Seti I in Abydos",
+    "description": "No description available.",
+    "governorate": "Sohag Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Temple_of_Seti_I_in_Abydos.jpg",
+    "wikiUrl": "http://upload.wikimedia.org/wikipedia/commons/5/5a/Abydos_Tempel_Sethos_I._08.JPG"
+  },
+  {
+    "id": "169685.0",
+    "name": "Sehel Island",
+    "description": "Island in the Nile",
+    "governorate": "Aswan Governorate",
+    "coordinates": {
+      "latitude": 24.06,
+      "longitude": 32.871111111
+    },
+    "imagePath": "landmark_images/Sehel_Island.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/e/e7/Neferhotep_I_3.jpg"
+  },
+  {
+    "id": "43121.0",
+    "name": "Karnak precinct of Amun-Ra",
+    "description": "building in Egypt",
+    "governorate": "Karnak",
+    "coordinates": {
+      "latitude": 25.71875,
+      "longitude": 32.65760803
+    },
+    "imagePath": "landmark_images/Karnak_precinct_of_Amun-Ra.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/8/87/Karnak_model.JPG"
+  },
+  {
+    "id": "154752.0",
+    "name": "Pyramid of Djoser",
+    "description": "Archeological site in Egypt",
+    "governorate": "Giza Governorate",
+    "coordinates": {
+      "latitude": 29.871111111,
+      "longitude": 31.216666666
+    },
+    "imagePath": "landmark_images/Pyramid_of_Djoser.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/b/b1/Saqqara_complex_%282347193995%29.jpg"
+  },
+  {
+    "id": "75431.0",
+    "name": "Pyramid of Djedefra",
+    "description": "No description available.",
+    "governorate": "Giza Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Pyramid_of_Djedefra.jpg",
+    "wikiUrl": "http://upload.wikimedia.org/wikipedia/commons/f/fc/Pyramid_of_Djedefre.png"
+  },
+  {
+    "id": "47971.0",
+    "name": "KV17",
+    "description": "ancient Egyptian tomb",
+    "governorate": "Luxor",
+    "coordinates": {
+      "latitude": 25.75,
+      "longitude": 32.6143
+    },
+    "imagePath": "landmark_images/KV17.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/1/14/La_tombe_de_Sethi_1er_%28KV.17%29_%28Vall%C3%A9e_des_Rois%2C_Th%C3%A8bes_ouest%29_-3.jpg"
+  },
+  {
+    "id": "160052.0",
+    "name": "Al-Ashraf Mosque",
+    "description": "school in Egypt",
+    "governorate": "Cairo Governorate",
+    "coordinates": {
+      "latitude": 30.04746,
+      "longitude": 31.26006
+    },
+    "imagePath": "landmark_images/Al-Ashraf_Mosque.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/2/2d/Cairo%2C_moschea_di_al-ashraf_barsey%2C_interno_06.JPG"
+  },
+  {
+    "id": "107673.0",
+    "name": "Temple of Kom Ombo",
+    "description": "building in Egypt",
+    "governorate": "Aswan Governorate",
+    "coordinates": {
+      "latitude": 24.451944444,
+      "longitude": 32.928055555
+    },
+    "imagePath": "landmark_images/Temple_of_Kom_Ombo.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/9/91/By_ovedc_-_Temple_of_Kom_Ombo_-_20.jpg"
+  },
+  {
+    "id": "171192.0",
+    "name": "City of the dead (Cairo)",
+    "description": "No description available.",
+    "governorate": "Cairo Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/City_of_the_dead_(Cairo).jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/1/13/By_ovedc_-_City_of_the_dead_%28Cairo%29_-_5.jpg"
+  },
+  {
+    "id": "150603.0",
+    "name": "Egyptian Museum (Cairo)",
+    "description": "No description available.",
+    "governorate": "Cairo Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Egyptian_Museum_(Cairo).jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/f/fd/CairoEgyptMueseum.jpg"
+  },
+  {
+    "id": "32108.0",
+    "name": "Saint George Church in Coptic Cairo",
+    "description": "No description available.",
+    "governorate": "Cairo Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Saint_George_Church_in_Coptic_Cairo.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/f/fe/Inside_and_outside_the_Church_of_St._George_and_Hanging_Church_14.JPG"
+  },
+  {
+    "id": "96754.0",
+    "name": "Red Pyramid",
+    "description": "smooth-sided pyramid",
+    "governorate": "Giza Governorate",
+    "coordinates": {
+      "latitude": 29.808333333,
+      "longitude": 31.205833333
+    },
+    "imagePath": "landmark_images/Red_Pyramid.jpg",
+    "wikiUrl": "http://upload.wikimedia.org/wikipedia/commons/b/b5/Snofru%27s-Red-Pyramid.jpg"
+  },
+  {
+    "id": "88290.0",
+    "name": "El Ferdan Railway Bridge",
+    "description": "railway bridge",
+    "governorate": "Ismailia",
+    "coordinates": {
+      "latitude": 30.657,
+      "longitude": 32.334
+    },
+    "imagePath": "landmark_images/El_Ferdan_Railway_Bridge.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/a/ad/EG-suez-09-bg-bruecke.jpg"
+  },
+  {
+    "id": "26706.0",
+    "name": "Qasr Qarun",
+    "description": "archaeological site in the Egyptian depression of el-Faiyum",
+    "governorate": "Faiyum Governorate",
+    "coordinates": {
+      "latitude": 29.405630555,
+      "longitude": 30.418288888
+    },
+    "imagePath": "landmark_images/Qasr_Qarun.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/5/51/Dionysias_019.JPG"
+  },
+  {
+    "id": "110375.0",
+    "name": "Kitchener's Island",
+    "description": "island in the Nile River at Aswan, Egypt",
+    "governorate": "Aswan Governorate",
+    "coordinates": {
+      "latitude": 24.093611111,
+      "longitude": 32.886944444
+    },
+    "imagePath": "landmark_images/Kitchener's_Island.jpg",
+    "wikiUrl": "http://upload.wikimedia.org/wikipedia/commons/f/f8/Kitchener-Insel_01.JPG"
+  },
+  {
+    "id": "14168.0",
+    "name": "Children's Civilisation and Creativity Centre",
+    "description": "No description available.",
+    "governorate": "Giza Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Children's_Civilisation_and_Creativity_Centre.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/f/fe/Children%27s_Civilisation_and_Creativity_Centre_Interior.jpg"
+  },
+  {
+    "id": "153741.0",
+    "name": "Sulayman Agha al-Silahdar Mosque",
+    "description": "No description available.",
+    "governorate": "Cairo Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Sulayman_Agha_al-Silahdar_Mosque.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/c/c5/Almoez_street.jpg"
+  },
+  {
+    "id": "142997.0",
+    "name": "Temple of Hibis",
+    "description": "building in Africa",
+    "governorate": "Kharga Oasis",
+    "coordinates": {
+      "latitude": 25.476805555,
+      "longitude": 30.556041666
+    },
+    "imagePath": "landmark_images/Temple_of_Hibis.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/f/f5/Flickr_-_isawnyu_-_Hibis%2C_Temple_%28IV%29.jpg"
+  },
+  {
+    "id": "70900.0",
+    "name": "Valley of the Golden Mummies",
+    "description": "archaeological site in the Egyptian depression of el-Bahriya",
+    "governorate": "Giza Governorate",
+    "coordinates": {
+      "latitude": 28.326811111,
+      "longitude": 28.826111111
+    },
+    "imagePath": "landmark_images/Valley_of_the_Golden_Mummies.jpg",
+    "wikiUrl": "http://upload.wikimedia.org/wikipedia/commons/4/45/ValleyMummiesLandscape.jpg"
+  },
+  {
+    "id": "168906.0",
+    "name": "Giza Zoo",
+    "description": "public exhibit of members of a foreign nation",
+    "governorate": "Giza Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Giza_Zoo.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/2/2f/%D8%AD%D8%AF%D9%8A%D9%82%D8%A9_%D8%A7%D9%84%D8%AD%D9%8A%D9%88%D8%A7%D9%86_%D8%A8%D8%A7%D9%84%D8%AC%D9%8A%D8%B2%D9%87.jpg"
+  },
+  {
+    "id": "188174.0",
+    "name": "Bibliotheca Alexandrina",
+    "description": "one of the largest libraries in the ancient world, located in Alexandria, Egypt",
+    "governorate": "Alexandria",
+    "coordinates": {
+      "latitude": 31.208889,
+      "longitude": 29.909167
+    },
+    "imagePath": "landmark_images/Bibliotheca_Alexandrina.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/0/0c/Space_in_bibliotheca_Alexandrina_02.jpg"
+  },
+  {
+    "id": "37930.0",
+    "name": "Unfinished obelisk in Aswan",
+    "description": "No description available.",
+    "governorate": "Aswan Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Unfinished_obelisk_in_Aswan.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/8/81/Assuan_Unvollendeter_Obelisk_47.jpg"
+  },
+  {
+    "id": "149108.0",
+    "name": "Sabil of Abd al-Rahman Katkhuda",
+    "description": "building from the old part of Islamic Cairo, Egypt",
+    "governorate": "Cairo Governorate",
+    "coordinates": {
+      "latitude": 30.0507,
+      "longitude": 31.2616
+    },
+    "imagePath": "landmark_images/Sabil_of_Abd_al-Rahman_Katkhuda.jpg",
+    "wikiUrl": "http://upload.wikimedia.org/wikipedia/commons/7/70/Katkhuda_sabil_5.jpg"
+  },
+  {
+    "id": "57825.0",
+    "name": "Agiba beach",
+    "description": "beach at the Egyptian Mediterranean Sea coast 24 km west of Marsa Matruh",
+    "governorate": "Mersa Matruh",
+    "coordinates": {
+      "latitude": 31.414722222,
+      "longitude": 27.006944444
+    },
+    "imagePath": "landmark_images/Agiba_beach.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/2/2c/Agaiba_Beach%2C_Marsa_Matrouh00_%2870%29.jpg"
+  },
+  {
+    "id": "9301.0",
+    "name": "Gebel el-Silsila",
+    "description": "village in Aswan Governorate, Egypt",
+    "governorate": "Aswan Governorate",
+    "coordinates": {
+      "latitude": 24.633333333,
+      "longitude": 32.933333333
+    },
+    "imagePath": "landmark_images/Gebel_el-Silsila.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/2/26/Dschabal_as-Silsila_80.jpg"
+  },
+  {
+    "id": "197645.0",
+    "name": "Muizz Street",
+    "description": "street in Cairo Governorate, Egypt",
+    "governorate": "Cairo Governorate",
+    "coordinates": {
+      "latitude": 30.0467,
+      "longitude": 31.26
+    },
+    "imagePath": "landmark_images/Muizz_Street.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/2/27/%D8%B4%D9%80%D8%A7%D8%B1%D8%B9_%D8%A7%D9%84%D9%85%D8%B9%D8%B2_%D9%84%D8%AF%D9%8A%D9%86_%D8%A7%D9%84%D9%84%D9%87_%D8%A7%D9%84%D9%81%D8%A7%D8%B7%D9%85%D9%8A_18.jpg"
+  },
+  {
+    "id": "124145.0",
+    "name": "Monastery of Saint Bishoy",
+    "description": "Monastery of the Coptic Orthodox Church of Alexandria located in Egypt",
+    "governorate": "Beheira Governorate",
+    "coordinates": {
+      "latitude": 30.310277777,
+      "longitude": 30.355277777
+    },
+    "imagePath": "landmark_images/Monastery_of_Saint_Bishoy.jpg",
+    "wikiUrl": "http://upload.wikimedia.org/wikipedia/commons/3/3e/Bischoy_Kloster_BW_6.jpg"
+  },
+  {
+    "id": "80156.0",
+    "name": "Osireion",
+    "description": "archaeological site in Egypt",
+    "governorate": "Sohag Governorate",
+    "coordinates": {
+      "latitude": 26.184025,
+      "longitude": 31.918253
+    },
+    "imagePath": "landmark_images/Osireion.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/1/1c/Temple_of_Seti_I_at_Abydos_-_panoramio_%285%29.jpg"
+  },
+  {
+    "id": "56733.0",
+    "name": "Pyramid of Khafra",
+    "description": "No description available.",
+    "governorate": "Giza Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Pyramid_of_Khafra.jpg",
+    "wikiUrl": "http://upload.wikimedia.org/wikipedia/commons/b/b9/LucKhafre%27s_Pyramid.jpg"
+  },
+  {
+    "id": "164427.0",
+    "name": "Soma Bay",
+    "description": "place in Red Sea Governorate, Egypt",
+    "governorate": "Red Sea Governorate",
+    "coordinates": {
+      "latitude": 26.84735,
+      "longitude": 33.9905
+    },
+    "imagePath": "landmark_images/Soma_Bay.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/6/64/Rhinecanthus_assasi_-_Rotmeer-Picassodrueckerfisch_0973a.jpg"
+  },
+  {
+    "id": "138958.0",
+    "name": "Madrasah of Sarghatmish",
+    "description": "No description available.",
+    "governorate": "Cairo Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Madrasah_of_Sarghatmish.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/8/86/P8100078_Sarghitmish-Madrasa_Minarett_top.JPG"
+  },
+  {
+    "id": "118473.0",
+    "name": "Corniche (Alexandria)",
+    "description": "No description available.",
+    "governorate": "Alexandria",
+    "coordinates": null,
+    "imagePath": "landmark_images/Corniche_(Alexandria).jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/2/2c/Alexandria_Corniche_%2C_photo_by_Hatem_Moushir_18.jpg"
+  },
+  {
+    "id": "113740.0",
+    "name": "St. Catherine's Cathedral, Alexandria",
+    "description": "cathedral in Alexandria, Egypt",
+    "governorate": "Alexandria",
+    "coordinates": {
+      "latitude": 31.19463889,
+      "longitude": 29.89458333
+    },
+    "imagePath": "landmark_images/St._Catherine's_Cathedral,_Alexandria.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/2/29/St._Catherine_rc_Cathedral%2C_Alexandria.jpg"
+  },
+  {
+    "id": "72150.0",
+    "name": "Giza pyramid complex",
+    "description": "archaeological site on the Giza Plateau, Egypt",
+    "governorate": "Giza Governorate",
+    "coordinates": {
+      "latitude": 29.976111,
+      "longitude": 31.132778
+    },
+    "imagePath": "landmark_images/Giza_pyramid_complex.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/0/0b/%D8%A8%D8%A7%D9%86%D9%88%D8%B1%D8%A7%D9%85%D8%A7_%D8%A7%D9%87%D8%B1%D8%A7%D9%85%D8%A7%D8%AA_%D8%A7%D9%84%D8%AC%D9%8A%D8%B2%D8%A9.jpg"
+  },
+  {
+    "id": "135165.0",
+    "name": "Monastery of Saint Anthony",
+    "description": "Monastery in Egypt",
+    "governorate": "Red Sea Governorate",
+    "coordinates": {
+      "latitude": 28.923888888,
+      "longitude": 32.35
+    },
+    "imagePath": "landmark_images/Monastery_of_Saint_Anthony.jpg",
+    "wikiUrl": "http://upload.wikimedia.org/wikipedia/commons/c/c2/Antonius_Kloster_BW_6.jpg"
+  },
+  {
+    "id": "65297.0",
+    "name": "Alexandria Opera House",
+    "description": "opera house in Alexandria, Egypt",
+    "governorate": "Alexandria",
+    "coordinates": {
+      "latitude": 31.197029,
+      "longitude": 29.901707
+    },
+    "imagePath": "landmark_images/Alexandria_Opera_House.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/c/cf/Sayed_Darwish_Theatre_in_the_city_of_Alexandria_-1.JPG"
+  },
+  {
+    "id": "23370.0",
+    "name": "Sphinx of Memphis",
+    "description": "stone sphinx located near the remains of Memphis, Egypt",
+    "governorate": "Giza Governorate",
+    "coordinates": {
+      "latitude": 29.849539,
+      "longitude": 31.254902
+    },
+    "imagePath": "landmark_images/Sphinx_of_Memphis.jpg",
+    "wikiUrl": "http://upload.wikimedia.org/wikipedia/commons/0/08/Memphis_Museum_15.jpg"
+  },
+  {
+    "id": "77731.0",
+    "name": "Grand Egyptian Museum",
+    "description": "museum in the city of al-Giza, Egypt",
+    "governorate": "Giza Governorate",
+    "coordinates": {
+      "latitude": 29.993611,
+      "longitude": 31.119722
+    },
+    "imagePath": "landmark_images/Grand_Egyptian_Museum.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/6/64/By_ovedc_-_Grand_Egyptian_Museum_-_08.jpg"
+  },
+  {
+    "id": "138861.0",
+    "name": "Kom el-Shoqafa",
+    "description": "No description available.",
+    "governorate": "Alexandria",
+    "coordinates": null,
+    "imagePath": "landmark_images/Kom_el-Shoqafa.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/8/8b/Flickr_-_archer10_%28Dennis%29_-_Egypt-14A-053.jpg"
+  },
+  {
+    "id": "130292.0",
+    "name": "Qaed Ibrahim Mosque",
+    "description": "mosque in Alexandria, Egypt",
+    "governorate": "Alexandria",
+    "coordinates": {
+      "latitude": 31.20324,
+      "longitude": 29.90393
+    },
+    "imagePath": "landmark_images/Qaed_Ibrahim_Mosque.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/6/64/%D9%85%D8%B3%D8%AC%D8%AF_%D8%A7%D9%84%D9%82%D8%A7%D8%A6%D8%AF_%D8%A7%D8%A8%D8%B1%D8%A7%D9%87%D9%8A%D9%85_%D8%A8%D8%A7%D9%84%D8%A7%D8%B3%D9%83%D9%86%D8%AF%D8%B1%D9%8A%D8%A9_2.jpg"
+  },
+  {
+    "id": "151725.0",
+    "name": "Khayrbak Mosque",
+    "description": "No description available.",
+    "governorate": "Cairo Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Khayrbak_Mosque.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/b/b1/%D9%85%D8%B3%D8%AC%D8%AF_%D9%81%D9%89_%D8%A8%D8%A7%D8%A8_%D8%A7%D9%84%D9%88%D8%B2%D9%8A%D8%B1.jpg"
+  },
+  {
+    "id": "149906.0",
+    "name": "Ramesseum",
+    "description": "memorial temple of Ramesses II",
+    "governorate": "Luxor Governorate",
+    "coordinates": {
+      "latitude": 25.727777777,
+      "longitude": 32.610555555
+    },
+    "imagePath": "landmark_images/Ramesseum.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/5/54/The_temple_of_Ramese_II_-_panoramio_%2816%29.jpg"
+  },
+  {
+    "id": "53989.0",
+    "name": "Al-Qurn",
+    "description": "village in Egypt",
+    "governorate": "Luxor Governorate",
+    "coordinates": {
+      "latitude": 25.731666666,
+      "longitude": 32.609166666
+    },
+    "imagePath": "landmark_images/Al-Qurn.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/5/54/Egypt_King%27s_valley1.jpg"
+  },
+  {
+    "id": "199494.0",
+    "name": "Garden City, Cairo",
+    "description": "No description available.",
+    "governorate": "Cairo Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Garden_City,_Cairo.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/e/ea/CairoGardenBoulad.jpg"
+  },
+  {
+    "id": "139024.0",
+    "name": "Tomb of Nefertari",
+    "description": "tomb of Queen Nefertari",
+    "governorate": "Luxor Governorate",
+    "coordinates": {
+      "latitude": 25.7333,
+      "longitude": 32.6
+    },
+    "imagePath": "landmark_images/Tomb_of_Nefertari.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/e/eb/%D7%9E%D7%9E%D7%A6%D7%90%D7%99%D7%9D_%D7%A7%D7%98%D7%A0%D7%99%D7%9D_%D7%9E%D7%A7%D7%91%D7%A8%D7%94_%D7%A9%D7%9C_%D7%A0%D7%A4%D7%A8%D7%98%D7%A8%D7%99_04.jpg"
+  },
+  {
+    "id": "129989.0",
+    "name": "Monastery of Saint Simeon in Aswan",
+    "description": "No description available.",
+    "governorate": "Aswan Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Monastery_of_Saint_Simeon_in_Aswan.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/d/d3/Assuan_Simeonskloster_31.jpg"
+  },
+  {
+    "id": "63599.0",
+    "name": "Temple of Isis in Philae",
+    "description": "Temple of Isis in Philae now located on Agilkia island",
+    "governorate": "Aswan Governorate",
+    "coordinates": {
+      "latitude": 24.0257642,
+      "longitude": 32.8841999
+    },
+    "imagePath": "landmark_images/Temple_of_Isis_in_Philae.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/c/cc/%D9%85%D8%B9%D8%A8%D8%AF_%D8%AC%D8%B2%D9%8A%D8%B1%D8%A9_%D9%81%D9%8A%D9%84%D8%A9_01.jpg"
+  },
+  {
+    "id": "148754.0",
+    "name": "Blue Hole (Red Sea)",
+    "description": "No description available.",
+    "governorate": "South Sinai Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Blue_Hole_(Red_Sea).jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/b/bf/BlueHole_Rohscan_bearb_150d.jpg"
+  },
+  {
+    "id": "186683.0",
+    "name": "Baron Empain Palace",
+    "description": "architectural structure in Heliopolis, a suburb near Cairo, Egypt",
+    "governorate": "Cairo Governorate",
+    "coordinates": {
+      "latitude": 30.086667,
+      "longitude": 31.330278
+    },
+    "imagePath": "landmark_images/Baron_Empain_Palace.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/5/59/%D9%82%D8%B5%D8%B1_%D8%A7%D9%84%D8%A8%D8%A7%D8%B1%D9%88%D9%86_%D8%A7%D9%85%D8%A8%D8%A7%D9%86_%D8%A8%D9%85%D8%B5%D8%B1_%D8%A7%D9%84%D8%AC%D8%AF%D9%8A%D8%AF%D8%A9.jpg"
+  },
+  {
+    "id": "184952.0",
+    "name": "Saint Catherine's Monastery, Mount Sinai",
+    "description": "No description available.",
+    "governorate": "South Sinai Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Saint_Catherine's_Monastery,_Mount_Sinai.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/6/66/Saint_Catherine%27s_Monastery%2C_Sinai%2C_Egypt2.jpg"
+  },
+  {
+    "id": "173275.0",
+    "name": "Faiyum Zoo",
+    "description": "No description available.",
+    "governorate": "Faiyum Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Faiyum_Zoo.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/1/11/Llama_fayoum_zoo_by_Hatem_Moushir_1.JPG"
+  },
+  {
+    "id": "49870.0",
+    "name": "Aguilkia Island",
+    "description": "No description available.",
+    "governorate": "Aswan Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Aguilkia_Island.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/1/17/GD-EG-Phila%C3%A9-map-hu.jpg"
+  },
+  {
+    "id": "189349.0",
+    "name": "Hanging Church (Cairo)",
+    "description": "No description available.",
+    "governorate": "Cairo Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Hanging_Church_(Cairo).jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/3/3e/Kairo_-_al-Moallaqa_09.JPG"
+  },
+  {
+    "id": "2430.0",
+    "name": "Qubbet el-Hawa",
+    "description": "archaeological site in Egypt, with Old and Middle Kingdom Tombs",
+    "governorate": "Aswan Governorate",
+    "coordinates": {
+      "latitude": 24.1025,
+      "longitude": 32.88888889
+    },
+    "imagePath": "landmark_images/Qubbet_el-Hawa.jpg",
+    "wikiUrl": "http://upload.wikimedia.org/wikipedia/commons/2/29/0015_Qubbet_el-Hawa%2C_linkes_Nilufer%2C_Aswan_2010.jpg"
+  },
+  {
+    "id": "101968.0",
+    "name": "Ptolemaic Temple of Hathor in Deir el-Medina",
+    "description": "No description available.",
+    "governorate": "Luxor Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Ptolemaic_Temple_of_Hathor_in_Deir_el-Medina.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/c/c6/Temple_of_Deir_el-Medina_14.JPG"
+  },
+  {
+    "id": "120517.0",
+    "name": "Tomb of Nakht TT52",
+    "description": "No description available.",
+    "governorate": "Luxor Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Tomb_of_Nakht_TT52.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/1/15/View_in_the_tomb_of_Nekht._%281902%29_-_TIMEA.jpg"
+  },
+  {
+    "id": "135773.0",
+    "name": "Abdeen Palace",
+    "description": "palace of Cairo, Egypt",
+    "governorate": "Cairo Governorate",
+    "coordinates": {
+      "latitude": 30.0417,
+      "longitude": 31.2483
+    },
+    "imagePath": "landmark_images/Abdeen_Palace.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/5/5a/%D9%82%D8%B5%D8%B1_%D8%B9%D8%A7%D8%A8%D8%AF%D9%8A%D9%86_27.jpg"
+  },
+  {
+    "id": "178580.0",
+    "name": "Deir el-Medina",
+    "description": "ancient Egyptian village in the Valley of the Kings",
+    "governorate": "Luxor Governorate",
+    "coordinates": {
+      "latitude": 25.728333333,
+      "longitude": 32.601388888
+    },
+    "imagePath": "landmark_images/Deir_el-Medina.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/b/b2/Deir_el-Medina%2C_Luxor%2C_3_Jan_2011_-_panoramio.jpg"
+  },
+  {
+    "id": "202118.0",
+    "name": "Egyptian National Military Museum",
+    "description": "Egyptian National Military Museum",
+    "governorate": "Cairo Governorate",
+    "coordinates": {
+      "latitude": 30.0294,
+      "longitude": 31.2614
+    },
+    "imagePath": "landmark_images/Egyptian_National_Military_Museum.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/e/ea/%D8%B5%D9%88%D8%B1_%D9%85%D9%86_%D8%AF%D8%A7%D8%AE%D9%84_%D8%A7%D9%84%D9%85%D8%AA%D8%AD%D9%81_%D8%A7%D9%84%D8%AD%D8%B1%D8%A8%D9%8A_%D8%A7%D9%84%D9%82%D9%88%D9%85%D9%8A_%D9%85%D9%86_%D8%AF%D8%A7%D8%AE%D9%84_%D8%A7%D9%84%D9%82%D9%84%D8%B9%D8%A9_49.jpg"
+  },
+  {
+    "id": "131246.0",
+    "name": "Madrasah of Al-Nasir Muhammad",
+    "description": "No description available.",
+    "governorate": "Cairo Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Madrasah_of_Al-Nasir_Muhammad.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/f/f8/Madrassa_and_Mausoleum_of_Sultan_al-Zahir_Barquq_02.jpg"
+  },
+  {
+    "id": "52413.0",
+    "name": "Al-Manyal Palace Museum",
+    "description": "No description available.",
+    "governorate": "Cairo Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Al-Manyal_Palace_Museum.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/6/60/Museum%2C_Cairo_00_%282%29.JPG"
+  },
+  {
+    "id": "28316.0",
+    "name": "Monastery of Saint Samuel the Confessor",
+    "description": "monastery in Egypt",
+    "governorate": "Beni Suef Governorate",
+    "coordinates": {
+      "latitude": 28.9086,
+      "longitude": 30.505261111
+    },
+    "imagePath": "landmark_images/Monastery_of_Saint_Samuel_the_Confessor.jpg",
+    "wikiUrl": "http://upload.wikimedia.org/wikipedia/commons/8/89/DeirSamuelAndrewsLeft.jpg"
+  },
+  {
+    "id": "39154.0",
+    "name": "Meidum",
+    "description": "Wikimedia disambiguation page",
+    "governorate": "Giza Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Meidum.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/f/fe/Panorama_Meidoum.jpg"
+  },
+  {
+    "id": "82883.0",
+    "name": "Abu el-Abbas el-Mursi Mosque",
+    "description": "No description available.",
+    "governorate": "Alexandria",
+    "coordinates": null,
+    "imagePath": "landmark_images/Abu_el-Abbas_el-Mursi_Mosque.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/0/09/Alex_11.jpg"
+  },
+  {
+    "id": "194636.0",
+    "name": "Theban Necropolis",
+    "description": "area in Egypt, west of the Nile near Thebes",
+    "governorate": "New Valley Governorate",
+    "coordinates": {
+      "latitude": 25.720833333,
+      "longitude": 32.61
+    },
+    "imagePath": "landmark_images/Theban_Necropolis.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/7/76/Theban_Necropolis1.JPG"
+  },
+  {
+    "id": "172063.0",
+    "name": "Citadel of Qaitbay",
+    "description": "building in Alexandria, Egypt",
+    "governorate": "Alexandria Governorate",
+    "coordinates": {
+      "latitude": 31.213,
+      "longitude": 29.8852
+    },
+    "imagePath": "landmark_images/Citadel_of_Qaitbay.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/c/ce/%D9%82%D9%84%D8%B9%D8%A9_%D9%82%D8%A7%D9%8A%D8%AA%D8%A8%D8%A7%D9%8A_-_5.jpg"
+  },
+  {
+    "id": "196950.0",
+    "name": "Nabq Protected Area",
+    "description": "nature reserve in Egypt",
+    "governorate": "South Sinai Governorate",
+    "coordinates": {
+      "latitude": 28.278,
+      "longitude": 34.38
+    },
+    "imagePath": "landmark_images/Nabq_Protected_Area.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/9/91/Nabq_Protected_Area_%2C_photo_by_Hatem_Moushir_34.jpg"
+  },
+  {
+    "id": "49339.0",
+    "name": "Mosque of al-Mahmudiya",
+    "description": "mosque in Cairo, Egypt",
+    "governorate": "Cairo",
+    "coordinates": {
+      "latitude": 30.0316,
+      "longitude": 31.2574
+    },
+    "imagePath": "landmark_images/Mosque_of_al-Mahmudiya.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/0/00/Mosque_of_Muhammad_Ali_182.jpg"
+  },
+  {
+    "id": "147850.0",
+    "name": "Bibliotheca Alexandrina planetarium",
+    "description": "No description available.",
+    "governorate": "Alexandria",
+    "coordinates": null,
+    "imagePath": "landmark_images/Bibliotheca_Alexandrina_planetarium.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/f/f0/Bibliotheca_Alexandrina_-_20080720d.jpg"
+  },
+  {
+    "id": "45981.0",
+    "name": "Al-Jawhara Palace museum",
+    "description": "No description available.",
+    "governorate": "Cairo Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Al-Jawhara_Palace_museum.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/c/c3/Outside_and_inside_the_mosque%2C_Mohammed_Ali_Citadel_Saladin_04.JPG"
+  },
+  {
+    "id": "166191.0",
+    "name": "Aswan High Dam",
+    "description": "dam in Aswan, Egypt",
+    "governorate": "Aswan Governorate",
+    "coordinates": {
+      "latitude": 23.971431,
+      "longitude": 32.880192
+    },
+    "imagePath": "landmark_images/Aswan_High_Dam.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/b/b4/By_ovedc_-_Aswan_High_Dam_-_08.jpg"
+  },
+  {
+    "id": "65321.0",
+    "name": "Mortuary Temple of Hatshepsut",
+    "description": "temple in Luxor, Egypt",
+    "governorate": "Luxor Governorate",
+    "coordinates": {
+      "latitude": 25.738056,
+      "longitude": 32.606944
+    },
+    "imagePath": "landmark_images/Mortuary_Temple_of_Hatshepsut.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/4/43/Aegypt1987-066_hg.jpg"
+  },
+  {
+    "id": "14197.0",
+    "name": "Deir el-Bahari",
+    "description": "archaeological site",
+    "governorate": "Luxor Governorate",
+    "coordinates": {
+      "latitude": 25.7375,
+      "longitude": 32.6075
+    },
+    "imagePath": "landmark_images/Deir_el-Bahari.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/c/c1/Qesm_Al_Wahat_Al_Khargah%2C_New_Valley_Governorate%2C_Egypt_-_panoramio_%2861%29.jpg"
+  },
+  {
+    "id": "121013.0",
+    "name": "El Alamein Military Museum",
+    "description": "No description available.",
+    "governorate": "Matruh Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/El_Alamein_Military_Museum.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/e/ec/Museum_at_El_Alamein_-_Flickr_-_heatheronhertravels_%285%29.jpg"
+  },
+  {
+    "id": "121540.0",
+    "name": "Pompey's Pillar, Alexandria",
+    "description": "No description available.",
+    "governorate": "Alexandria",
+    "coordinates": null,
+    "imagePath": "landmark_images/Pompey's_Pillar,_Alexandria.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/0/0a/Bay_Citadel.jpg"
+  },
+  {
+    "id": "192556.0",
+    "name": "Esna Temple",
+    "description": "No description available.",
+    "governorate": "Qena Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Esna_Temple.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/6/61/Esna_Tempel_SW_SO.jpg"
+  },
+  {
+    "id": "151003.0",
+    "name": "Pyramid of Amenemhat III in Hawara",
+    "description": "No description available.",
+    "governorate": "Giza Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Pyramid_of_Amenemhat_III_in_Hawara.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/2/23/Hawara-plan-complexe.jpg"
+  },
+  {
+    "id": "156969.0",
+    "name": "Great Sphinx of Giza",
+    "description": "ancient Egyptian monumental sculpture",
+    "governorate": "Giza",
+    "coordinates": {
+      "latitude": 29.97527,
+      "longitude": 31.13768
+    },
+    "imagePath": "landmark_images/Great_Sphinx_of_Giza.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/2/25/The_Great_Sphinx_of_Giza.JPG"
+  },
+  {
+    "id": "71592.0",
+    "name": "Rahmanyia island",
+    "description": "No description available.",
+    "governorate": "Kafr el-Sheikh Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Rahmanyia_island.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/2/2c/%D8%AC%D8%B2%D9%8A%D8%B1%D8%A9_%D8%A7%D9%84%D8%B1%D8%AD%D9%85%D8%A7%D9%86%D9%8A%D8%A9_%D8%A7%D9%84%D9%85%D9%82%D8%A7%D8%A8%D9%84%D8%A9_%D9%84%D9%85%D8%AF%D9%8A%D9%86%D8%A9_%D8%AF%D8%B3%D9%88%D9%82.jpg"
+  },
+  {
+    "id": "176312.0",
+    "name": "Al-Azhar Park (Cairo)",
+    "description": "No description available.",
+    "governorate": "Cairo Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Al-Azhar_Park_(Cairo).jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/0/0c/%D8%AD%D8%AF%D9%8A%D9%82%D8%A9_%D8%A7%D9%84%D8%A3%D8%B2%D9%87%D8%B1_%D9%88%D8%A7%D9%84%D9%82%D8%A7%D9%87%D8%B1%D8%A9_%D8%A7%D9%84%D9%81%D8%A7%D8%B7%D9%85%D9%8A%D8%A9.jpg"
+  },
+  {
+    "id": "52573.0",
+    "name": "Deir el-Muharraq",
+    "description": "monastery in Middle Egypt north of Asyut",
+    "governorate": "Asyut Governorate",
+    "coordinates": {
+      "latitude": 27.3853,
+      "longitude": 30.7792
+    },
+    "imagePath": "landmark_images/Deir_el-Muharraq.jpg",
+    "wikiUrl": "http://upload.wikimedia.org/wikipedia/commons/1/19/DeirMuharraqGeneralGate.jpg"
+  },
+  {
+    "id": "28722.0",
+    "name": "Shalalat Garden, Alexandria",
+    "description": "No description available.",
+    "governorate": "Alexandria",
+    "coordinates": null,
+    "imagePath": "landmark_images/Shalalat_Garden,_Alexandria.jpg",
+    "wikiUrl": "http://upload.wikimedia.org/wikipedia/commons/a/a1/Shallalat_gardens_2.JPG"
+  },
+  {
+    "id": "177983.0",
+    "name": "Eliyahu Hanavi Synagogue (Alexandria)",
+    "description": "No description available.",
+    "governorate": "Alexandria",
+    "coordinates": null,
+    "imagePath": "landmark_images/Eliyahu_Hanavi_Synagogue_(Alexandria).jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/0/07/Eliahu_Hanavi_synagogue_Alexandria_%28389489459%29.jpg"
+  },
+  {
+    "id": "139093.0",
+    "name": "Orman Garden",
+    "description": "botanical garden in El Giza, Egypt",
+    "governorate": "Giza Governorate",
+    "coordinates": {
+      "latitude": 30.0292,
+      "longitude": 31.2131
+    },
+    "imagePath": "landmark_images/Orman_Garden.jpg",
+    "wikiUrl": "http://upload.wikimedia.org/wikipedia/commons/6/60/Dracaena_deremensis_hatem_moushir.JPG"
+  },
+  {
+    "id": "197070.0",
+    "name": "Fatimid Cemetery in Aswan",
+    "description": "cemetery in Aswan, Egypt",
+    "governorate": "Aswan",
+    "coordinates": {
+      "latitude": 24.08053889,
+      "longitude": 32.89197222
+    },
+    "imagePath": "landmark_images/Fatimid_Cemetery_in_Aswan.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/c/c8/Phatemy_Graves_at_Aswan_by_Hatem_Moushir_17.JPG"
+  },
+  {
+    "id": "135112.0",
+    "name": "Famine stele",
+    "description": "No description available.",
+    "governorate": "Aswan Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Famine_stele.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/e/eb/Sehel-steleFamine.jpg"
+  },
+  {
+    "id": "103352.0",
+    "name": "Mokattam",
+    "description": "urban district",
+    "governorate": "Cairo Governorate",
+    "coordinates": {
+      "latitude": 30.02,
+      "longitude": 31.3
+    },
+    "imagePath": "landmark_images/Mokattam.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/2/2e/%D8%A7%D9%84%D9%85%D9%82%D8%B7%D9%85_7.jpg"
+  },
+  {
+    "id": "134547.0",
+    "name": "Aquarium Grotto Garden",
+    "description": "park on Zamalek island, Cairo, Egypt",
+    "governorate": "Giza Governorate",
+    "coordinates": {
+      "latitude": 30.056629,
+      "longitude": 31.218705
+    },
+    "imagePath": "landmark_images/Aquarium_Grotto_Garden.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/3/32/Aquarium_Grotto_Garden_by_Hatem_Moushir_6.JPG"
+  },
+  {
+    "id": "48298.0",
+    "name": "Gezira",
+    "description": "palace in Egypt",
+    "governorate": "Cairo Governorate",
+    "coordinates": {
+      "latitude": 30.057222222,
+      "longitude": 31.225
+    },
+    "imagePath": "landmark_images/Gezira.jpg",
+    "wikiUrl": "http://upload.wikimedia.org/wikipedia/commons/2/2b/Gezira1.JPG"
+  },
+  {
+    "id": "69841.0",
+    "name": "Mausoleum of Aga Khan",
+    "description": "mausoleum at the west bank of Aswan, Egypt",
+    "governorate": "Aswan Governorate",
+    "coordinates": {
+      "latitude": 24.088333333,
+      "longitude": 32.878888888
+    },
+    "imagePath": "landmark_images/Mausoleum_of_Aga_Khan.jpg",
+    "wikiUrl": "http://upload.wikimedia.org/wikipedia/commons/3/31/Assuan_Mausoleum_Aga_Khan_III._09.JPG"
+  },
+  {
+    "id": "127574.0",
+    "name": "Great Temple of the Aten",
+    "description": "ancient Egyptian temple",
+    "governorate": "Sharqia Governorate",
+    "coordinates": {
+      "latitude": 27.65,
+      "longitude": 30.901
+    },
+    "imagePath": "landmark_images/Great_Temple_of_the_Aten.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/4/4d/-_001_Torino_Museo_Egizio_geroglifici_su_pietra.jpg"
+  },
+  {
+    "id": "167416.0",
+    "name": "Qasr al-Nil Bridge",
+    "description": "bridge in Egypt",
+    "governorate": "Cairo Governorate",
+    "coordinates": {
+      "latitude": 30.043742,
+      "longitude": 31.229667
+    },
+    "imagePath": "landmark_images/Qasr_al-Nil_Bridge.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/0/02/Veduta_dalla_torre_del_cairo_08.JPG"
+  },
+  {
+    "id": "90394.0",
+    "name": "Temple of Khonsu in Karnak",
+    "description": "painting by Jan Ciągliński",
+    "governorate": "Luxor Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Temple_of_Khonsu_in_Karnak.jpg",
+    "wikiUrl": "http://upload.wikimedia.org/wikipedia/commons/0/05/Karnak_Khonsou_080523.jpg"
+  },
+  {
+    "id": "72813.0",
+    "name": "Beni Hassan",
+    "description": "ethnic group",
+    "governorate": "Minya Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Beni_Hassan.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/2/28/Qustol_Incense_burner_fragments.tif"
+  },
+  {
+    "id": "153529.0",
+    "name": "Kiosk of Trajan in Philae",
+    "description": "No description available.",
+    "governorate": "Aswan Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Kiosk_of_Trajan_in_Philae.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/c/c3/Temple_of_the_Goddess_Isis_at_Philae_-_panoramio_%282%29.jpg"
+  },
+  {
+    "id": "56727.0",
+    "name": "Khan el-Khalili",
+    "description": "major souk in Cairo",
+    "governorate": "Cairo Governorate",
+    "coordinates": {
+      "latitude": 30.0475,
+      "longitude": 31.262222
+    },
+    "imagePath": "landmark_images/Khan_el-Khalili.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/8/8c/Flickr_-_Gaspa_-_Cairo%2C_Bazar_el-Khalili_%283%29.jpg"
+  },
+  {
+    "id": "93943.0",
+    "name": "Luxor Temple",
+    "description": "ancient Egyptian tem",
+    "governorate": "Luxor",
+    "coordinates": {
+      "latitude": 25.7,
+      "longitude": 32.639166666
+    },
+    "imagePath": "landmark_images/Luxor_Temple.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/c/cf/Louxor_temple_%26_palm_in_louxor.jpg"
+  },
+  {
+    "id": "49608.0",
+    "name": "Suez Canal Bridge",
+    "description": "road bridge crossing the Suez Canal at El Qantara",
+    "governorate": "El-Qantarah al-Sharqiya",
+    "coordinates": {
+      "latitude": 30.828144444,
+      "longitude": 32.317722222
+    },
+    "imagePath": "landmark_images/Suez_Canal_Bridge.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/1/19/Suez_Canal_Bridge_%282008%29_03.jpg"
+  },
+  {
+    "id": "140483.0",
+    "name": "Pyramid of Senusret II",
+    "description": "ancient Egyptian pyramid",
+    "governorate": "Faiyum Governorate",
+    "coordinates": {
+      "latitude": 29.23611111,
+      "longitude": 30.97055556
+    },
+    "imagePath": "landmark_images/Pyramid_of_Senusret_II.jpg",
+    "wikiUrl": "http://upload.wikimedia.org/wikipedia/commons/e/ea/El_Lahun_Pyramid_09.JPG"
+  },
+  {
+    "id": "106366.0",
+    "name": "Pyramid of Neferirkare",
+    "description": "Second pyramid to be built at the necropolis site of Abusir",
+    "governorate": "Giza Governorate",
+    "coordinates": {
+      "latitude": 29.89502778,
+      "longitude": 31.20244444
+    },
+    "imagePath": "landmark_images/Pyramid_of_Neferirkare.jpg",
+    "wikiUrl": "http://upload.wikimedia.org/wikipedia/commons/0/04/Neferirkare5.JPG"
+  },
+  {
+    "id": "41580.0",
+    "name": "Pyramid of Qakare Ibi",
+    "description": "No description available.",
+    "governorate": "Giza Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Pyramid_of_Qakare_Ibi.jpg",
+    "wikiUrl": "http://upload.wikimedia.org/wikipedia/commons/e/e1/Qakare-Ibi-Pyramid.png"
+  },
+  {
+    "id": "48085.0",
+    "name": "Giza Plateau",
+    "description": "site of the largest known collection of pyramids, in Egypt",
+    "governorate": "Giza Governorate",
+    "coordinates": {
+      "latitude": 29.97611111,
+      "longitude": 31.13277778
+    },
+    "imagePath": "landmark_images/Giza_Plateau.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/9/9b/P2090116_desert.JPG"
+  },
+  {
+    "id": "123460.0",
+    "name": "Sultan Qaytbay Complex",
+    "description": "place of prayer for Muslims in Egypt",
+    "governorate": "Cairo Governorate",
+    "coordinates": {
+      "latitude": 30.04402,
+      "longitude": 31.27499
+    },
+    "imagePath": "landmark_images/Sultan_Qaytbay_Complex.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/f/fd/Flickr_-_HuTect_ShOts_-_Dome_of_Madrasa_and_Masjid_of_Sultan_Qaytbay_%D9%85%D8%AF%D8%B1%D8%B3%D8%A9_%D9%88%D9%85%D8%B3%D8%AC%D8%AF_%D8%A7%D9%84%D8%B3%D9%84%D8%B7%D8%A7%D9%86_%D9%82%D8%A7%D9%8A%D8%AA%D8%A8%D8%A7%D9%8A_-_Cairo_-_Egypt_-_28_05_2010.jpg"
+  },
+  {
+    "id": "94728.0",
+    "name": "Pyramid of Menkaure",
+    "description": "smallest of the three main Pyramids of Giza, Egypt",
+    "governorate": "Giza",
+    "coordinates": {
+      "latitude": 29.9725,
+      "longitude": 31.128333
+    },
+    "imagePath": "landmark_images/Pyramid_of_Menkaure.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/6/64/Flickr_-_archer10_%28Dennis%29_-_Egypt-12B-084.jpg"
+  },
+  {
+    "id": "121980.0",
+    "name": "Amr Ibn al-Aas Mosque (Damietta)",
+    "description": "mosque in Egypt",
+    "governorate": "Damietta",
+    "coordinates": {
+      "latitude": 31.4229,
+      "longitude": 31.818
+    },
+    "imagePath": "landmark_images/Amr_Ibn_al-Aas_Mosque_(Damietta).jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/f/f0/Amr_Ben_El_Ass_Mosque_in_Damietta2.JPG"
+  },
+  {
+    "id": "131755.0",
+    "name": "Montaza Palace",
+    "description": "palace in Alexandria, Egypt",
+    "governorate": "Unknown",
+    "coordinates": {
+      "latitude": 31.2886,
+      "longitude": 30.0159
+    },
+    "imagePath": "landmark_images/Montaza_Palace.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/5/5a/Al-Montazah_Palace.jpg"
+  },
+  {
+    "id": "50308.0",
+    "name": "6 October Bridge",
+    "description": "No description available.",
+    "governorate": "Cairo Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/6_October_Bridge.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/4/4c/Flickr_-_Daveness_98_-_Bridge_of_6th_October.jpg"
+  },
+  {
+    "id": "128891.0",
+    "name": "Ben Ezra Synagogue",
+    "description": "building in Egypt",
+    "governorate": "Cairo Governorate",
+    "coordinates": {
+      "latitude": 30.005794,
+      "longitude": 31.231022
+    },
+    "imagePath": "landmark_images/Ben_Ezra_Synagogue.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/5/58/By_ovedc_-_Ben_Ezra_Synagogue_-_05.jpg"
+  },
+  {
+    "id": "141303.0",
+    "name": "Bent Pyramid",
+    "description": "ancient tomb in Egypt",
+    "governorate": "Giza Governorate",
+    "coordinates": {
+      "latitude": 29.790277777,
+      "longitude": 31.209166666
+    },
+    "imagePath": "landmark_images/Bent_Pyramid.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/3/35/Piramide_romboidale_di_snefru%2C_dahshur%2C_2600_ac._04.JPG"
+  },
+  {
+    "id": "77600.0",
+    "name": "Crystal Mountain, White Desert",
+    "description": "No description available.",
+    "governorate": "Giza Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Crystal_Mountain,_White_Desert.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/b/ba/Crystal_mountain.jpg"
+  },
+  {
+    "id": "21772.0",
+    "name": "Pyramid of Djedkare Isesi",
+    "description": "smooth-sided pyramid",
+    "governorate": "Giza Governorate",
+    "coordinates": {
+      "latitude": 29.85111,
+      "longitude": 31.22083
+    },
+    "imagePath": "landmark_images/Pyramid_of_Djedkare_Isesi.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/4/47/Djedkare-Isesi-05.jpg"
+  },
+  {
+    "id": "156920.0",
+    "name": "Alexandria Zoo",
+    "description": "zoo in Alexandria, Egypt",
+    "governorate": "Alexandria Governorate",
+    "coordinates": {
+      "latitude": 31.205,
+      "longitude": 29.9444
+    },
+    "imagePath": "landmark_images/Alexandria_Zoo.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/4/40/Alexandria_Zoo_%2C_photo_by_Hatem_Moushir_53.jpg"
+  },
+  {
+    "id": "18774.0",
+    "name": "Monastery of Saint Macarius the Great",
+    "description": "No description available.",
+    "governorate": "Beheira Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Monastery_of_Saint_Macarius_the_Great.jpg",
+    "wikiUrl": "http://upload.wikimedia.org/wikipedia/commons/e/e4/Monastery_of_Saint_Macarius_the_Great-4.jpg"
+  },
+  {
+    "id": "146550.0",
+    "name": "Pyramid of Userkaf",
+    "description": "smooth-sided pyramid",
+    "governorate": "Giza Governorate",
+    "coordinates": {
+      "latitude": 29.873453,
+      "longitude": 31.218901
+    },
+    "imagePath": "landmark_images/Pyramid_of_Userkaf.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6f/Userkaf_Pyramid_Substructure%2C_ar.png"
+  },
+  {
+    "id": "195466.0",
+    "name": "Valley of the Queens",
+    "description": "ancient Egyptian necropolis",
+    "governorate": "Luxor Governorate",
+    "coordinates": {
+      "latitude": 25.7275,
+      "longitude": 32.593055555
+    },
+    "imagePath": "landmark_images/Valley_of_the_Queens.jpg",
+    "wikiUrl": "http://upload.wikimedia.org/wikipedia/commons/f/f8/ValleyofQueens5.JPG"
+  },
+  {
+    "id": "196723.0",
+    "name": "Cairo International Stadium",
+    "description": "Football Stadium in Cairo, Egypt",
+    "governorate": "Nasr City",
+    "coordinates": {
+      "latitude": 30.069111,
+      "longitude": 31.312333
+    },
+    "imagePath": "landmark_images/Cairo_International_Stadium.jpg",
+    "wikiUrl": "http://upload.wikimedia.org/wikipedia/commons/f/fc/In_Cairo_Stadium.jpg"
+  },
+  {
+    "id": "77648.0",
+    "name": "Sakakini Palace",
+    "description": "palace of Cairo, in Egypt",
+    "governorate": "Cairo",
+    "coordinates": {
+      "latitude": 30.065694444,
+      "longitude": 31.266166666
+    },
+    "imagePath": "landmark_images/Sakakini_Palace.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/b/be/CairoSakakini3.jpg"
+  },
+  {
+    "id": "2743.0",
+    "name": "Dendera Temple complex",
+    "description": "ancient Egyptian temple complex",
+    "governorate": "Dendera",
+    "coordinates": {
+      "latitude": 26.141667,
+      "longitude": 32.670278
+    },
+    "imagePath": "landmark_images/Dendera_Temple_complex.jpg",
+    "wikiUrl": "http://upload.wikimedia.org/wikipedia/commons/8/82/Dendera_Tempelkomplex_Brunnen_01.jpg"
+  },
+  {
+    "id": "110912.0",
+    "name": "Islamic Cairo",
+    "description": "urban district",
+    "governorate": "Cairo Governorate",
+    "coordinates": {
+      "latitude": 30.046,
+      "longitude": 31.2627
+    },
+    "imagePath": "landmark_images/Islamic_Cairo.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a5/Islamic_Cairo120.jpg"
+  },
+  {
+    "id": "183636.0",
+    "name": "Ras Muhammad",
+    "description": "Egyptian national park in South Sinai",
+    "governorate": "South Sinai Governorate",
+    "coordinates": {
+      "latitude": 27.769444444,
+      "longitude": 34.209722222
+    },
+    "imagePath": "landmark_images/Ras_Muhammad.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/e/e9/SharmDunraven.jpg"
+  },
+  {
+    "id": "26506.0",
+    "name": "Mosque of al-Maridani",
+    "description": "No description available.",
+    "governorate": "Cairo Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Mosque_of_al-Maridani.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/b/ba/Cairo_al-Maridani_6.jpg"
+  },
+  {
+    "id": "26752.0",
+    "name": "Greco-Roman Museum, Alexandria",
+    "description": "No description available.",
+    "governorate": "Alexandria",
+    "coordinates": null,
+    "imagePath": "landmark_images/Greco-Roman_Museum,_Alexandria.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/1/17/Egypt-14A-044_%282217542760%29.jpg"
+  },
+  {
+    "id": "126469.0",
+    "name": "Synagogue of Moses Maimonides",
+    "description": "No description available.",
+    "governorate": "Cairo Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Synagogue_of_Moses_Maimonides.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/6/66/By_ovedc_-_Synagogue_of_Moses_Maimonides_-_6.jpg"
+  },
+  {
+    "id": "48153.0",
+    "name": "Mosque of Saint Ibrahim El-Desouky",
+    "description": "No description available.",
+    "governorate": "Kafr el-Sheikh Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Mosque_of_Saint_Ibrahim_El-Desouky.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/8/80/Desouk-2015-29.jpg"
+  },
+  {
+    "id": "56677.0",
+    "name": "Al-Sayeda Nafeesah Mosque",
+    "description": "mosque in Cairo, Egypt",
+    "governorate": "Cairo Governorate",
+    "coordinates": {
+      "latitude": 30.02237,
+      "longitude": 31.25241
+    },
+    "imagePath": "landmark_images/Al-Sayeda_Nafeesah_Mosque.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a0/%D9%85%D8%B3%D8%AC%D8%AF_%D8%A7%D9%84%D8%B3%D9%8A%D8%AF%D8%A9_%D9%86%D9%81%D9%8A%D8%B3%D8%A9.jpg"
+  },
+  {
+    "id": "199665.0",
+    "name": "Saint Barbara Church in Coptic Cairo",
+    "description": "church in Coptic Cairo, Egypt",
+    "governorate": "Cairo Governorate",
+    "coordinates": {
+      "latitude": 30.0057,
+      "longitude": 31.2311
+    },
+    "imagePath": "landmark_images/Saint_Barbara_Church_in_Coptic_Cairo.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/3/35/Cairo_-_Coptic_area_-_Church_of_Saint_Barbara_-_exterior.JPG"
+  },
+  {
+    "id": "112624.0",
+    "name": "Temple of Derr",
+    "description": "ancient temple in Southern Egypt, now covered by Lake Nasser",
+    "governorate": "Aswan Governorate",
+    "coordinates": {
+      "latitude": 22.7325,
+      "longitude": 32.262222222
+    },
+    "imagePath": "landmark_images/Temple_of_Derr.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/0/00/Flickr_-_archer10_%28Dennis%29_-_Egypt-9B-050.jpg"
+  },
+  {
+    "id": "168024.0",
+    "name": "Alexandria Port",
+    "description": "port in Alexandria, Egypt",
+    "governorate": "Alexandria Governorate",
+    "coordinates": {
+      "latitude": 31.18471,
+      "longitude": 29.88227
+    },
+    "imagePath": "landmark_images/Alexandria_Port.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/2/2c/Eastern_Port%2C_Alexandria_-_%D8%A7%D9%84%D9%85%D9%8A%D9%86%D8%A7%D8%A1_%D8%A7%D9%84%D8%B4%D8%B1%D9%82%D9%8A%D9%87_%D9%84%D9%85%D8%AF%D9%8A%D9%86%D9%87_%D8%A7%D9%84%D8%A3%D8%B3%D9%83%D9%86%D8%AF%D8%B1%D9%8A%D9%87.jpg"
+  },
+  {
+    "id": "192770.0",
+    "name": "Mosque-Madrassa of Sultan Hassan",
+    "description": "mosque in Egypt",
+    "governorate": "Cairo Governorate",
+    "coordinates": {
+      "latitude": 30.0319,
+      "longitude": 31.2567
+    },
+    "imagePath": "landmark_images/Mosque-Madrassa_of_Sultan_Hassan.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/d/df/Sultan-Hassan-Moschee_2015-11-14za.jpg"
+  },
+  {
+    "id": "7578.0",
+    "name": "Bab al-Futuh",
+    "description": "gate in the Old City of Cairo, Egypt",
+    "governorate": "Cairo Governorate",
+    "coordinates": {
+      "latitude": 30.0555,
+      "longitude": 31.2634
+    },
+    "imagePath": "landmark_images/Bab_al-Futuh.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/e/ea/Al-Gamaliyia_in_2017%2C_photo_by_Hatem_Moushir_23.jpg"
+  },
+  {
+    "id": "122955.0",
+    "name": "Qalawun complex",
+    "description": "architectural structure",
+    "governorate": "Cairo Governorate",
+    "coordinates": {
+      "latitude": 30.0495,
+      "longitude": 31.261
+    },
+    "imagePath": "landmark_images/Qalawun_complex.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/8/8a/Complex_of_Sultan_Al_Mansur_Qalawun_001.jpg"
+  },
+  {
+    "id": "78055.0",
+    "name": "Saint Mark's Coptic Orthodox Cathedral, Cairo",
+    "description": "No description available.",
+    "governorate": "Cairo Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Saint_Mark's_Coptic_Orthodox_Cathedral,_Cairo.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/4/45/CairoAbbasiyaMarkWindows.jpg"
+  },
+  {
+    "id": "167581.0",
+    "name": "Coptic Museum in Cairo",
+    "description": "museum in Coptic Cairo, Egypt",
+    "governorate": "Cairo Governorate",
+    "coordinates": {
+      "latitude": 30.005916666,
+      "longitude": 31.230666666
+    },
+    "imagePath": "landmark_images/Coptic_Museum_in_Cairo.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/9/9c/Kairo_-_Altkairo_05.jpg"
+  },
+  {
+    "id": "25856.0",
+    "name": "Nilometer in Rhoda Island",
+    "description": "No description available.",
+    "governorate": "Rhoda Island",
+    "coordinates": {
+      "latitude": 30.006903,
+      "longitude": 31.225011
+    },
+    "imagePath": "landmark_images/Nilometer_in_Rhoda_Island.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/8/88/Nilometer._Roda_AusenansichtJPG.JPG"
+  },
+  {
+    "id": "63553.0",
+    "name": "San Stefano Grand Plaza",
+    "description": "building complex in Alexandria, Egypt",
+    "governorate": "Alexandria Governorate",
+    "coordinates": {
+      "latitude": 31.2458,
+      "longitude": 29.966
+    },
+    "imagePath": "landmark_images/San_Stefano_Grand_Plaza.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/4/41/Qaitbay_Alex_10.JPG"
+  },
+  {
+    "id": "21824.0",
+    "name": "Mohandessin",
+    "description": "quarter of al-Giza city, Egypt",
+    "governorate": "Giza Governorate",
+    "coordinates": {
+      "latitude": 30.0531,
+      "longitude": 31.2017
+    },
+    "imagePath": "landmark_images/Mohandessin.jpg",
+    "wikiUrl": "http://upload.wikimedia.org/wikipedia/commons/e/e6/Mohandessin_CIB.JPG"
+  },
+  {
+    "id": "101932.0",
+    "name": "Speos Artemidos",
+    "description": "Archaeological site in Middle Egypt",
+    "governorate": "Minya Governorate",
+    "coordinates": {
+      "latitude": 27.904169444,
+      "longitude": 30.873061111
+    },
+    "imagePath": "landmark_images/Speos_Artemidos.jpg",
+    "wikiUrl": "http://upload.wikimedia.org/wikipedia/commons/d/dd/Speos_Artemidos_01.JPG"
+  },
+  {
+    "id": "48635.0",
+    "name": "Pyramid of Khendjer",
+    "description": "smooth-sided pyramid",
+    "governorate": "Giza Governorate",
+    "coordinates": {
+      "latitude": 29.83235278,
+      "longitude": 31.223775
+    },
+    "imagePath": "landmark_images/Pyramid_of_Khendjer.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/7/71/Petite-pyramide-khendjer.jpg"
+  },
+  {
+    "id": "190759.0",
+    "name": "Al-Salih Tala'i Mosque",
+    "description": "mosque in Egypt",
+    "governorate": "Cairo Governorate",
+    "coordinates": {
+      "latitude": 30.0422,
+      "longitude": 31.2578
+    },
+    "imagePath": "landmark_images/Al-Salih_Tala'i_Mosque.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/0/09/Salih_Talai_mosque_mihrab_and_minbar.jpg"
+  },
+  {
+    "id": "165483.0",
+    "name": "Mallawi Museum",
+    "description": "of Egyptian antiquities in Mallawi, Minya Governorate",
+    "governorate": "Mallawi",
+    "coordinates": {
+      "latitude": 27.73558333,
+      "longitude": 30.84454722
+    },
+    "imagePath": "landmark_images/Mallawi_Museum.jpg",
+    "wikiUrl": "http://upload.wikimedia.org/wikipedia/commons/0/02/MallawiMuseum.jpg"
+  },
+  {
+    "id": "126492.0",
+    "name": "Amir Taz Palace",
+    "description": "palace in Cairo, Egypt",
+    "governorate": "Cairo Governorate",
+    "coordinates": {
+      "latitude": 30.0319,
+      "longitude": 31.2533
+    },
+    "imagePath": "landmark_images/Amir_Taz_Palace.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/c/c1/%D8%B3%D9%84%D9%85_%D8%A8%D8%AF%D8%A7%D8%AE%D9%84_%D9%82%D8%B5%D8%B1_%D8%A7%D9%84%D8%A3%D9%85%D9%8A%D8%B1_%D8%B7%D8%A7%D8%B2.jpg"
+  },
+  {
+    "id": "125763.0",
+    "name": "Pyramid of Sahure",
+    "description": "smooth-sided pyramid",
+    "governorate": "Giza Governorate",
+    "coordinates": {
+      "latitude": 29.897777777,
+      "longitude": 31.203333333
+    },
+    "imagePath": "landmark_images/Pyramid_of_Sahure.jpg",
+    "wikiUrl": "http://upload.wikimedia.org/wikipedia/commons/0/0f/Sahoure5.JPG"
+  },
+  {
+    "id": "102391.0",
+    "name": "Al-Rifa'i Mosque",
+    "description": "mosque in Egypt",
+    "governorate": "Cairo Governorate",
+    "coordinates": {
+      "latitude": 30.032777777,
+      "longitude": 31.256666666
+    },
+    "imagePath": "landmark_images/Al-Rifa'i_Mosque.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/a/ac/AlRifa%27i_Mosque3.jpg"
+  },
+  {
+    "id": "164469.0",
+    "name": "Mosque of Qajmas al-Ishaqi",
+    "description": "No description available.",
+    "governorate": "Cairo Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Mosque_of_Qajmas_al-Ishaqi.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/c/c1/Cairo%2C_moschea_di_Akjmas_Ishaqi%2C_ingresso_01.JPG"
+  },
+  {
+    "id": "30643.0",
+    "name": "Nyuserre sun temple",
+    "description": "No description available.",
+    "governorate": "Giza Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Nyuserre_sun_temple.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/e/e4/Niuserre_Sun_Temple_at_Abu_Gurab.jpg"
+  },
+  {
+    "id": "15037.0",
+    "name": "Luxor Museum",
+    "description": "egyptological museum in Luxor, Egypt",
+    "governorate": "Luxor",
+    "coordinates": {
+      "latitude": 25.707725,
+      "longitude": 32.644489
+    },
+    "imagePath": "landmark_images/Luxor_Museum.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/c/cf/Flickr_-_schmuela_-_IMG_6163.jpg"
+  },
+  {
+    "id": "168220.0",
+    "name": "Aswan Low Dam",
+    "description": "dam in Egypt",
+    "governorate": "Aswan Governorate",
+    "coordinates": {
+      "latitude": 24.0339,
+      "longitude": 32.8658
+    },
+    "imagePath": "landmark_images/Aswan_Low_Dam.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/3/37/Egypt.Aswan.AswanLowDam.01.jpg"
+  },
+  {
+    "id": "172132.0",
+    "name": "Pyramid of Senusret I",
+    "description": "smooth-sided pyramid",
+    "governorate": "Giza Governorate",
+    "coordinates": {
+      "latitude": 29.560011111,
+      "longitude": 31.220944444
+    },
+    "imagePath": "landmark_images/Pyramid_of_Senusret_I.jpg",
+    "wikiUrl": "http://upload.wikimedia.org/wikipedia/commons/d/d0/LishtSes1EastSide.jpg"
+  },
+  {
+    "id": "72209.0",
+    "name": "Tomb of Kheruef",
+    "description": "ancient Egyptian tomb",
+    "governorate": "Luxor Governorate",
+    "coordinates": {
+      "latitude": 25.73416667,
+      "longitude": 32.61166667
+    },
+    "imagePath": "landmark_images/Tomb_of_Kheruef.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/2/28/Tomb_TT192_of_Kheruef_%28Kairoinfo4u%29.jpg"
+  },
+  {
+    "id": "121569.0",
+    "name": "Sadat museum",
+    "description": "museum in Alexandria, Egypt",
+    "governorate": "Alexandria Governorate",
+    "coordinates": {
+      "latitude": 31.208834,
+      "longitude": 29.909122
+    },
+    "imagePath": "landmark_images/Sadat_museum.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/d/de/Sadatmuseum.JPG"
+  },
+  {
+    "id": "30832.0",
+    "name": "Temple of Isis in Deir el-Shelwit",
+    "description": "No description available.",
+    "governorate": "Luxor Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Temple_of_Isis_in_Deir_el-Shelwit.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/f/f3/Deir_El-Shelwit_propylon_relief.jpg"
+  },
+  {
+    "id": "83438.0",
+    "name": "Al-Aqmar Mosque",
+    "description": "mosque in Cairo, Egypt",
+    "governorate": "Cairo Governorate",
+    "coordinates": {
+      "latitude": 30.0517,
+      "longitude": 31.2619
+    },
+    "imagePath": "landmark_images/Al-Aqmar_Mosque.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/5/59/Aqmar_Mosque_238.jpg"
+  },
+  {
+    "id": "186018.0",
+    "name": "White Monastery",
+    "description": "monastery in Egypt",
+    "governorate": "Sohag Governorate",
+    "coordinates": {
+      "latitude": 26.534561111,
+      "longitude": 31.645669444
+    },
+    "imagePath": "landmark_images/White_Monastery.jpg",
+    "wikiUrl": "http://upload.wikimedia.org/wikipedia/commons/8/88/White_Monastery_08.JPG"
+  },
+  {
+    "id": "43028.0",
+    "name": "Antoniadis Palace",
+    "description": "No description available.",
+    "governorate": "Alexandria",
+    "coordinates": null,
+    "imagePath": "landmark_images/Antoniadis_Palace.jpg",
+    "wikiUrl": "http://upload.wikimedia.org/wikipedia/commons/f/f5/GD-EG-Alex-Antoniadis01.JPG"
+  },
+  {
+    "id": "59891.0",
+    "name": "Mosque of Qanibay al-Rammah",
+    "description": "No description available.",
+    "governorate": "Cairo Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Mosque_of_Qanibay_al-Rammah.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/2/26/Islamic_Cairo73.jpg"
+  },
+  {
+    "id": "81611.0",
+    "name": "Muhammad Ali Mosque",
+    "description": "mosque in Egypt",
+    "governorate": "Cairo Governorate",
+    "coordinates": {
+      "latitude": 30.028611111,
+      "longitude": 31.259722222
+    },
+    "imagePath": "landmark_images/Muhammad_Ali_Mosque.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/2/29/B612_20190203_113649_032.jpg"
+  },
+  {
+    "id": "125441.0",
+    "name": "Mosque of Sultan al-Zahir Baybars",
+    "description": "No description available.",
+    "governorate": "Cairo Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Mosque_of_Sultan_al-Zahir_Baybars.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/4/48/CairoMosqueBaybars1.jpg"
+  },
+  {
+    "id": "127969.0",
+    "name": "Aswan Botanical Garden",
+    "description": "park in Egypt",
+    "governorate": "Aswan Governorate",
+    "coordinates": {
+      "latitude": 24.09366,
+      "longitude": 32.88695
+    },
+    "imagePath": "landmark_images/Aswan_Botanical_Garden.jpg",
+    "wikiUrl": "http://upload.wikimedia.org/wikipedia/commons/9/96/Aswan_Botanical_Garden_04.jpg"
+  },
+  {
+    "id": "66706.0",
+    "name": "Kiosk of Qertassi",
+    "description": "Egyptian temple",
+    "governorate": "Aswan Governorate",
+    "coordinates": {
+      "latitude": 23.96013889,
+      "longitude": 32.86761111
+    },
+    "imagePath": "landmark_images/Kiosk_of_Qertassi.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/9/90/Flickr_-_schmuela_-_i_do_love_a_Hathor_head_capital.jpg"
+  },
+  {
+    "id": "14736.0",
+    "name": "Saqqara",
+    "description": "village in Giza Governorate, Egypt",
+    "governorate": "Markaz al Badrashayn",
+    "coordinates": {
+      "latitude": 29.85,
+      "longitude": 31.233333333
+    },
+    "imagePath": "landmark_images/Saqqara.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/0/06/Giza_Plateau_%282347027331%29.jpg"
+  },
+  {
+    "id": "164762.0",
+    "name": "Edfu Temple",
+    "description": "ancient Egyptian temple, located on the west bank of the Nile in Edfu, Upper Egypt",
+    "governorate": "Aswan Governorate",
+    "coordinates": {
+      "latitude": 24.977777777,
+      "longitude": 32.873333333
+    },
+    "imagePath": "landmark_images/Edfu_Temple.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/d/df/%C3%84gypten_1999_%28173%29_Tempel_von_Edfu_%2827199270183%29.jpg"
+  },
+  {
+    "id": "116248.0",
+    "name": "Mortuary Temple of Thutmosis III",
+    "description": "No description available.",
+    "governorate": "Luxor",
+    "coordinates": {
+      "latitude": 25.737917,
+      "longitude": 32.605972
+    },
+    "imagePath": "landmark_images/Mortuary_Temple_of_Thutmosis_III.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/c/c6/Deir_el-Bahari_35.jpg"
+  },
+  {
+    "id": "41825.0",
+    "name": "Qurnet Murai",
+    "description": "settlement and archaeological site at the Luxor West Bank",
+    "governorate": "Luxor Governorate",
+    "coordinates": {
+      "latitude": 25.726388888,
+      "longitude": 32.603611111
+    },
+    "imagePath": "landmark_images/Qurnet_Murai.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/4/41/Qurnet_Murrai.jpg"
+  },
+  {
+    "id": "83381.0",
+    "name": "Paromeos Monastery",
+    "description": "building in Egypt",
+    "governorate": "Beheira Governorate",
+    "coordinates": {
+      "latitude": 30.357135839,
+      "longitude": 30.270754764
+    },
+    "imagePath": "landmark_images/Paromeos_Monastery.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/9/99/Paromeos_Monastery-_11.jpg"
+  },
+  {
+    "id": "128734.0",
+    "name": "Pyramid of Teti",
+    "description": "smooth-sided pyramid",
+    "governorate": "Giza Governorate",
+    "coordinates": {
+      "latitude": 29.87527778,
+      "longitude": 31.22161111
+    },
+    "imagePath": "landmark_images/Pyramid_of_Teti.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/1/13/Teti%27s_pyramid.jpg"
+  },
+  {
+    "id": "73871.0",
+    "name": "Pyramid of Ameni Qemau",
+    "description": "No description available.",
+    "governorate": "Giza Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Pyramid_of_Ameni_Qemau.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/e/e6/Vue-axono-ameni_copie.jpg"
+  },
+  {
+    "id": "101108.0",
+    "name": "Mosque of Ibn Tulun",
+    "description": "Mosque in Cairo, Egypt",
+    "governorate": "Cairo",
+    "coordinates": {
+      "latitude": 30.02875,
+      "longitude": 31.249528
+    },
+    "imagePath": "landmark_images/Mosque_of_Ibn_Tulun.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/0/0a/IMG_7%D9%85%D8%B3%D8%AC%D8%AF_%D8%A7%D8%AD%D9%85%D8%AF_%D8%A8%D9%86_%D8%B7%D9%88%D9%84%D9%88%D9%86.jpg"
+  },
+  {
+    "id": "129427.0",
+    "name": "Red Monastery",
+    "description": "monastery 3 kilometers from Vaghuhas",
+    "governorate": "Aghdara District",
+    "coordinates": {
+      "latitude": 40.11247635,
+      "longitude": 46.47663116
+    },
+    "imagePath": "landmark_images/Red_Monastery.jpg",
+    "wikiUrl": "http://upload.wikimedia.org/wikipedia/commons/4/4d/RedMonasteryNorthernEntrance.jpg"
+  },
+  {
+    "id": "33148.0",
+    "name": "Aqsunqur Mosque",
+    "description": "mosque in Egypt",
+    "governorate": "Cairo Governorate",
+    "coordinates": {
+      "latitude": 30.036111111,
+      "longitude": 31.260277777
+    },
+    "imagePath": "landmark_images/Aqsunqur_Mosque.jpg",
+    "wikiUrl": "http://upload.wikimedia.org/wikipedia/commons/6/69/Cairo_Aqsunqur_2.jpg"
+  },
+  {
+    "id": "116048.0",
+    "name": "Pyramid of Nyuserre Ini",
+    "description": "building in Egypt",
+    "governorate": "Giza Governorate",
+    "coordinates": {
+      "latitude": 29.89566667,
+      "longitude": 31.20355556
+    },
+    "imagePath": "landmark_images/Pyramid_of_Nyuserre_Ini.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/d/d6/Pyramide_de_Niouserre_3.jpg"
+  },
+  {
+    "id": "42601.0",
+    "name": "Coloured Canyon",
+    "description": "Canyon in South Sinai",
+    "governorate": "South Sinai Governorate",
+    "coordinates": {
+      "latitude": 29.14255,
+      "longitude": 34.598269444
+    },
+    "imagePath": "landmark_images/Coloured_Canyon.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/b/bf/Sinai_Coloured_Canyon_-_panoramio_%287%29.jpg"
+  },
+  {
+    "id": "3959.0",
+    "name": "Borg El Arab Stadium",
+    "description": "Football stadium in Egypt",
+    "governorate": "Alexandria",
+    "coordinates": {
+      "latitude": 30.9994,
+      "longitude": 29.7293
+    },
+    "imagePath": "landmark_images/Borg_El_Arab_Stadium.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/3/3b/Borg_El_Arab_Stadium_-_EGY_v_TOG_1.jpg"
+  },
+  {
+    "id": "151103.0",
+    "name": "Egyptian Geological Museum",
+    "description": "geological museum in Maadi",
+    "governorate": "Cairo Governorate",
+    "coordinates": {
+      "latitude": 29.9963,
+      "longitude": 31.2286
+    },
+    "imagePath": "landmark_images/Egyptian_Geological_Museum.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/7/71/Basilosaurus_isis_by_Hatem_Moushir_1.JPG"
+  },
+  {
+    "id": "155534.0",
+    "name": "El-Ma'eini mosque, Dumyat",
+    "description": "mosque in Egypt",
+    "governorate": "Damietta",
+    "coordinates": {
+      "latitude": 31.4143,
+      "longitude": 31.8122
+    },
+    "imagePath": "landmark_images/El-Ma'eini_mosque,_Dumyat.jpg",
+    "wikiUrl": "http://upload.wikimedia.org/wikipedia/commons/5/57/DumyatMaeiniMosqueEntrance.jpg"
+  },
+  {
+    "id": "168662.0",
+    "name": "Pyramid of Khentkaus II",
+    "description": "smooth-sided pyramid",
+    "governorate": "Giza Governorate",
+    "coordinates": {
+      "latitude": 29.89413889,
+      "longitude": 31.2025
+    },
+    "imagePath": "landmark_images/Pyramid_of_Khentkaus_II.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/0/04/Pyramide_Khentkaous_II.jpg"
+  },
+  {
+    "id": "189186.0",
+    "name": "Saint Mark Coptic Orthodox Church (Heliopolis)",
+    "description": "No description available.",
+    "governorate": "Cairo Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Saint_Mark_Coptic_Orthodox_Church_(Heliopolis).jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/e/ec/Flickr_-_Bakar_88_-_Cairo%2C_Egypt_%28Not_HDR%29.jpg"
+  },
+  {
+    "id": "21170.0",
+    "name": "Cairo Opera House",
+    "description": "opera house and performing arts centre in Cairo, Egypt",
+    "governorate": "Giza Governorate",
+    "coordinates": {
+      "latitude": 30.04245,
+      "longitude": 31.223530555
+    },
+    "imagePath": "landmark_images/Cairo_Opera_House.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/9/91/1%D8%AF%D8%A7%D8%B1_%D8%A7%D9%84%D8%A7%D9%88%D8%A8%D8%B1%D8%A7_%D8%A7%D9%84%D9%85%D8%B5%D8%B1%D9%8A%D8%A9_06.jpg"
+  },
+  {
+    "id": "191070.0",
+    "name": "Deir el-Qadisa Damyana",
+    "description": "monastery in Egypt",
+    "governorate": "Dakahlia Governorate",
+    "coordinates": {
+      "latitude": 31.2944,
+      "longitude": 31.388411111
+    },
+    "imagePath": "landmark_images/Deir_el-Qadisa_Damyana.jpg",
+    "wikiUrl": "http://upload.wikimedia.org/wikipedia/commons/f/f3/DamyanaNewChurchInside.jpg"
+  },
+  {
+    "id": "89339.0",
+    "name": "Nubia Museum, Aswan",
+    "description": "No description available.",
+    "governorate": "Aswan Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Nubia_Museum,_Aswan.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/7/79/AbuSimbel_copy.jpg"
+  },
+  {
+    "id": "154887.0",
+    "name": "WV22",
+    "description": "ancient Egyptian tomb",
+    "governorate": "Luxor",
+    "coordinates": {
+      "latitude": 25.75,
+      "longitude": 32.6143
+    },
+    "imagePath": "landmark_images/WV22.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/b/bd/Pharaon_amenophis_3_egypt_a-2.jpg"
+  },
+  {
+    "id": "194114.0",
+    "name": "Shepheard's Hotel",
+    "description": "architectural structure of a hotel burned down in 1952",
+    "governorate": "Cairo Governorate",
+    "coordinates": {
+      "latitude": 30.05446,
+      "longitude": 31.24648
+    },
+    "imagePath": "landmark_images/Shepheard's_Hotel.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/9/9b/Tick%E2%80%99s_first_French_lesson.jpg"
+  },
+  {
+    "id": "189104.0",
+    "name": "Ahmed Shawki Museum",
+    "description": "museum in Giza",
+    "governorate": "Giza Governorate",
+    "coordinates": {
+      "latitude": 30.0214,
+      "longitude": 31.2175
+    },
+    "imagePath": "landmark_images/Ahmed_Shawki_Museum.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/7/70/Ahmed_Shawki_Museum_-_Garden_by_Hatem_Moushir_2.JPG"
+  },
+  {
+    "id": "104569.0",
+    "name": "Pyramid of Ahmose",
+    "description": "smooth-sided pyramid",
+    "governorate": "Matruh Governorate",
+    "coordinates": {
+      "latitude": 26.175717,
+      "longitude": 31.937782
+    },
+    "imagePath": "landmark_images/Pyramid_of_Ahmose.jpg",
+    "wikiUrl": "http://upload.wikimedia.org/wikipedia/commons/3/3f/Ahmose_Osirisgrab_3.png"
+  },
+  {
+    "id": "156441.0",
+    "name": "Greek Orthodox Cathedral of Evangelismos, Alexandria",
+    "description": "No description available.",
+    "governorate": "Alexandria",
+    "coordinates": null,
+    "imagePath": "landmark_images/Greek_Orthodox_Cathedral_of_Evangelismos,_Alexandria.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/2/2f/Im_Inneren_der_griechisch-orthodoxen_Kathedrale_Evangelismos%2C_Alexandria%2C_%C3%84gypten.jpg"
+  },
+  {
+    "id": "60393.0",
+    "name": "Aswan Museum",
+    "description": "museum on the island of Elephantine, Aswan, Egypt",
+    "governorate": "Aswan Governorate",
+    "coordinates": {
+      "latitude": 24.0847,
+      "longitude": 32.8867
+    },
+    "imagePath": "landmark_images/Aswan_Museum.jpg",
+    "wikiUrl": "http://upload.wikimedia.org/wikipedia/commons/5/58/Assuan-Museum_03.JPG"
+  },
+  {
+    "id": "176343.0",
+    "name": "Collections of the Imhotep Museum in Saqqara",
+    "description": "No description available.",
+    "governorate": "Giza Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Collections_of_the_Imhotep_Museum_in_Saqqara.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/2/24/StatueAmenemopet.jpg"
+  },
+  {
+    "id": "148105.0",
+    "name": "Tomb of Unknown Soldier in Cairo",
+    "description": "No description available.",
+    "governorate": "Cairo Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Tomb_of_Unknown_Soldier_in_Cairo.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/b/b1/By_ovedc_-_Tomb_of_Unknown_Soldier_in_Cairo_-_06.jpg"
+  },
+  {
+    "id": "185437.0",
+    "name": "El-Bahr mosque, Dumyat",
+    "description": "mosque in Egypt",
+    "governorate": "Damietta",
+    "coordinates": {
+      "latitude": 31.4194,
+      "longitude": 31.8109
+    },
+    "imagePath": "landmark_images/El-Bahr_mosque,_Dumyat.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/5/56/%D8%AC%D8%A7%D9%85%D8%B9_%D8%A7%D9%84%D8%A8%D8%AD%D8%B1_%D8%A8%D8%AF%D9%85%D9%8A%D8%A7%D8%B7.jpg"
+  },
+  {
+    "id": "157644.0",
+    "name": "Saints Sergius and Bacchus Church, Cairo",
+    "description": "No description available.",
+    "governorate": "Cairo Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Saints_Sergius_and_Bacchus_Church,_Cairo.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/3/35/Cairo%2C_chiesa_di_san_sergio_02.JPG"
+  },
+  {
+    "id": "117120.0",
+    "name": "Rhoda Island",
+    "description": "urban district",
+    "governorate": "Cairo Governorate",
+    "coordinates": {
+      "latitude": 30.0208,
+      "longitude": 31.2256
+    },
+    "imagePath": "landmark_images/Rhoda_Island.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/1/1f/EG-C-015_%D9%83%D9%88%D8%A8%D8%B1%D9%8A_%D8%A7%D9%84%D8%B1%D9%88%D8%B6%D9%87.jpg"
+  },
+  {
+    "id": "130426.0",
+    "name": "New Kalabsha",
+    "description": "archaeological site in Egypt",
+    "governorate": "Aswan Governorate",
+    "coordinates": {
+      "latitude": 23.96101,
+      "longitude": 32.86669
+    },
+    "imagePath": "landmark_images/New_Kalabsha.jpg",
+    "wikiUrl": "http://upload.wikimedia.org/wikipedia/commons/a/a4/Neu-Kalabscha_01.JPG"
+  },
+  {
+    "id": "146349.0",
+    "name": "Mosque of Sultan al-Muayyad",
+    "description": "No description available.",
+    "governorate": "Cairo Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Mosque_of_Sultan_al-Muayyad.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/0/0b/%D9%85%D8%B3%D8%AC%D8%AF_%D8%A7%D9%84%D9%85%D8%A4%D9%8A%D8%AF.jpg"
+  },
+  {
+    "id": "65487.0",
+    "name": "Egyptian National Library",
+    "description": "Egyptian National Library and Archives",
+    "governorate": "Cairo Governorate",
+    "coordinates": {
+      "latitude": 30.06638889,
+      "longitude": 31.2275
+    },
+    "imagePath": "landmark_images/Egyptian_National_Library.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/2/2c/Mosque_of_Sayeda_Zainab%2C_Cairo.JPG"
+  },
+  {
+    "id": "42483.0",
+    "name": "Pyramid of Amenemhat I",
+    "description": "smooth-sided pyramid",
+    "governorate": "Giza Governorate",
+    "coordinates": {
+      "latitude": 29.80555556,
+      "longitude": 31.22277778
+    },
+    "imagePath": "landmark_images/Pyramid_of_Amenemhat_I.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a3/Pyramid_of_Amenemhat_I_%28El-Lisht%29.jpg"
+  },
+  {
+    "id": "14735.0",
+    "name": "Sulayman Pasha Mosque",
+    "description": "mosque in Egypt",
+    "governorate": "Cairo",
+    "coordinates": {
+      "latitude": 30.031056,
+      "longitude": 31.264375
+    },
+    "imagePath": "landmark_images/Sulayman_Pasha_Mosque.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/0/0b/Flickr_-_Gaspa_-_Cairo%2C_moschea_di_Sulayman_Basha.jpg"
+  },
+  {
+    "id": "94633.0",
+    "name": "Wadi Hammamat",
+    "description": "river in Egypt",
+    "governorate": "Red Sea Governorate",
+    "coordinates": {
+      "latitude": 25.964403,
+      "longitude": 33.504066
+    },
+    "imagePath": "landmark_images/Wadi_Hammamat.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/e/ee/Silk_Road_banner.JPG"
+  },
+  {
+    "id": "175367.0",
+    "name": "Al-Ghuri Complex",
+    "description": "No description available.",
+    "governorate": "Cairo Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Al-Ghuri_Complex.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/9/91/Cairo%2C_moschea_di_al-ghouri%2C_interno%2C_lampada_2.jpg"
+  },
+  {
+    "id": "96429.0",
+    "name": "Mahmoud Khalil Museum",
+    "description": "museum in Egypt",
+    "governorate": "Giza Governorate",
+    "coordinates": {
+      "latitude": 30.0356,
+      "longitude": 31.2197
+    },
+    "imagePath": "landmark_images/Mahmoud_Khalil_Museum.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/d/d1/GizaMahmoudKhalilMuseum.jpg"
+  },
+  {
+    "id": "190041.0",
+    "name": "Petrified Forest near Maadi",
+    "description": "No description available.",
+    "governorate": "Cairo Governorate",
+    "coordinates": {
+      "latitude": 29.976380555,
+      "longitude": 31.462661111
+    },
+    "imagePath": "landmark_images/Petrified_Forest_near_Maadi.jpg",
+    "wikiUrl": "http://upload.wikimedia.org/wikipedia/commons/3/32/MaadiForestEntrance.jpg"
+  },
+  {
+    "id": "104678.0",
+    "name": "Hatem Mosque",
+    "description": "mosque in Egypt",
+    "governorate": "Alexandria",
+    "coordinates": null,
+    "imagePath": "landmark_images/Hatem_Mosque.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/d/d7/Hatem_Mosque1_%2810%29.jpg"
+  },
+  {
+    "id": "77524.0",
+    "name": "Al-Nur Mosque",
+    "description": "No description available.",
+    "governorate": "Neukölln",
+    "coordinates": {
+      "latitude": 52.46424,
+      "longitude": 13.4653
+    },
+    "imagePath": "landmark_images/Al-Nur_Mosque.jpg",
+    "wikiUrl": "http://upload.wikimedia.org/wikipedia/commons/7/76/CairoAbbasiyaNurSideWall.jpg"
+  },
+  {
+    "id": "12598.0",
+    "name": "Alexandria National Museum",
+    "description": "museum in Alexandria, Egypt",
+    "governorate": "Alexandria Governorate",
+    "coordinates": {
+      "latitude": 31.2011,
+      "longitude": 29.9132
+    },
+    "imagePath": "landmark_images/Alexandria_National_Museum.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/1/1c/Alexandria_National_Museum.jpg"
+  },
+  {
+    "id": "59214.0",
+    "name": "Alexandria Stadium",
+    "description": "Football stadium in Egypt",
+    "governorate": "Alexandria Governorate",
+    "coordinates": {
+      "latitude": 31.1971,
+      "longitude": 29.9132
+    },
+    "imagePath": "landmark_images/Alexandria_Stadium.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/3/34/GD-EG-Alex-Stade002.JPG"
+  },
+  {
+    "id": "178316.0",
+    "name": "Museum of Islamic Art, Cairo",
+    "description": "art museum in Cairo, Egypt",
+    "governorate": "Cairo Governorate",
+    "coordinates": {
+      "latitude": 30.044722222,
+      "longitude": 31.252777777
+    },
+    "imagePath": "landmark_images/Museum_of_Islamic_Art,_Cairo.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/d/da/GD-EG-Caire-Mus%C3%A9eIslam001.JPG"
+  },
+  {
+    "id": "127352.0",
+    "name": "Tomb of Hetepheres",
+    "description": "ancient Egyptian shaft tomb at Giza",
+    "governorate": "Luxor Governorate",
+    "coordinates": {
+      "latitude": 29.97913889,
+      "longitude": 31.13655556
+    },
+    "imagePath": "landmark_images/Tomb_of_Hetepheres.jpg",
+    "wikiUrl": "http://upload.wikimedia.org/wikipedia/commons/7/73/Hetepheres-Lehner-Fig2.jpg"
+  },
+  {
+    "id": "187812.0",
+    "name": "Syrian Monastery",
+    "description": "building in Egypt",
+    "governorate": "Beheira Governorate",
+    "coordinates": {
+      "latitude": 30.318888888,
+      "longitude": 30.352777777
+    },
+    "imagePath": "landmark_images/Syrian_Monastery.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/a/ad/Prophecies_Gate_of_The_Syrian_Monastery_Bottom7.jpg"
+  },
+  {
+    "id": "45523.0",
+    "name": "Port Said Lighthouse",
+    "description": "lighthouse in Egypt",
+    "governorate": "Port Said",
+    "coordinates": {
+      "latitude": 31.26388889,
+      "longitude": 32.31166667
+    },
+    "imagePath": "landmark_images/Port_Said_Lighthouse.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/0/08/%D9%81%D9%86%D8%A7%D8%B1_%D8%A8%D9%88%D8%B1%D8%B3%D8%B9%D9%8A%D8%AF_%D8%A7%D9%84%D8%A7%D8%AB%D8%B1%D9%89.jpg"
+  },
+  {
+    "id": "24884.0",
+    "name": "Emir Qurqumas complex",
+    "description": "building in Egypt",
+    "governorate": "Cairo",
+    "coordinates": {
+      "latitude": 30.04793,
+      "longitude": 31.27744
+    },
+    "imagePath": "landmark_images/Emir_Qurqumas_complex.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/5/55/%D8%A8%D9%88%D8%A7%D8%A8%D8%A9_%D8%B9%D9%84%D9%89_%D8%A7%D9%84%D8%AA%D8%A7%D8%B1%D9%8A%D8%AE.jpg"
+  },
+  {
+    "id": "66382.0",
+    "name": "Pyramid of Pepi II",
+    "description": "smooth-sided pyramid",
+    "governorate": "Giza Governorate",
+    "coordinates": {
+      "latitude": 29.83333,
+      "longitude": 31.21667
+    },
+    "imagePath": "landmark_images/Pyramid_of_Pepi_II.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/6/60/023_pepi_IIa.jpg"
+  },
+  {
+    "id": "95266.0",
+    "name": "Museum of Constantine P. Cavafy",
+    "description": "museum in Alexandria, Egypt",
+    "governorate": "Alexandria",
+    "coordinates": {
+      "latitude": 31.197582,
+      "longitude": 29.90128
+    },
+    "imagePath": "landmark_images/Museum_of_Constantine_P._Cavafy.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/4/4a/%CE%91lexandria_-_The_Kavafy_Museum_02%2C_1995.jpg"
+  },
+  {
+    "id": "69988.0",
+    "name": "Lake Timsah",
+    "description": "lake in Egypt",
+    "governorate": "Ismailia",
+    "coordinates": {
+      "latitude": 30.577777777,
+      "longitude": 32.288888888
+    },
+    "imagePath": "landmark_images/Lake_Timsah.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a4/Flickr_-_casillero_-_Terry%2C_Glyn_and_Don%2C_Lake_Timsah.jpg"
+  },
+  {
+    "id": "119917.0",
+    "name": "Cathedral of St. Mark, Alexandria",
+    "description": "No description available.",
+    "governorate": "Alexandria",
+    "coordinates": null,
+    "imagePath": "landmark_images/Cathedral_of_St._Mark,_Alexandria.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/e/e6/Alexandria_-_St._Marc%27s_Church.jpg"
+  },
+  {
+    "id": "31307.0",
+    "name": "Pyramid of Baka",
+    "description": "smooth-sided pyramid",
+    "governorate": "Giza Governorate",
+    "coordinates": {
+      "latitude": 29.94012222,
+      "longitude": 31.15155556
+    },
+    "imagePath": "landmark_images/Pyramid_of_Baka.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/9/9c/Vue-grande-excavation.jpg"
+  },
+  {
+    "id": "188506.0",
+    "name": "Fatima Khatun Mosque",
+    "description": "mosque in Jenin, Palestine",
+    "governorate": "Jenin",
+    "coordinates": {
+      "latitude": 32.462254,
+      "longitude": 35.301456
+    },
+    "imagePath": "landmark_images/Fatima_Khatun_Mosque.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/f/fb/Great_Mosque_of_Jenin9.jpg"
+  },
+  {
+    "id": "147919.0",
+    "name": "Black Pyramid of Amenemhat III",
+    "description": "No description available.",
+    "governorate": "Giza Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Black_Pyramid_of_Amenemhat_III.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/8/8b/Dahshur%2C_resti_della_piramide_nera.JPG"
+  },
+  {
+    "id": "83209.0",
+    "name": "Gebel el-Teir, el-Kharga",
+    "description": "Archaeological site of Gebel el-Teir in the el-Kharga depression, Egypt",
+    "governorate": "New Valley Governorate",
+    "coordinates": {
+      "latitude": 25.5167,
+      "longitude": 30.55
+    },
+    "imagePath": "landmark_images/Gebel_el-Teir,_el-Kharga.jpg",
+    "wikiUrl": "http://upload.wikimedia.org/wikipedia/commons/4/43/GebelTeirCow.jpg"
+  },
+  {
+    "id": "115293.0",
+    "name": "Island of Bigeh",
+    "description": "No description available.",
+    "governorate": "Aswan Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Island_of_Bigeh.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/6/63/The_Island_of_Philae_%281905%29_-_TIMEA.jpg"
+  },
+  {
+    "id": "38287.0",
+    "name": "Giyushi Mosque, Cairo",
+    "description": "No description available.",
+    "governorate": "Cairo Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Giyushi_Mosque,_Cairo.jpg",
+    "wikiUrl": "http://upload.wikimedia.org/wikipedia/commons/c/cd/CairoMoqattamGiyushi.jpg"
+  },
+  {
+    "id": "90130.0",
+    "name": "Layer Pyramid",
+    "description": "Archaeological site in Egypt",
+    "governorate": "Giza Governorate",
+    "coordinates": {
+      "latitude": 29.932778,
+      "longitude": 31.161111
+    },
+    "imagePath": "landmark_images/Layer_Pyramid.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/c/c0/The_layer_Pyramid.jpg"
+  },
+  {
+    "id": "35373.0",
+    "name": "Pyramid of Merenre Nemtyemsaf I",
+    "description": "No description available.",
+    "governorate": "Giza Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Pyramid_of_Merenre_Nemtyemsaf_I.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/5/57/Pyramid_of_Merenre%2C_Saqqara%2C_1990ies.jpg"
+  },
+  {
+    "id": "5848.0",
+    "name": "Pyramid of Pepi I",
+    "description": "smooth-sided pyramid",
+    "governorate": "Giza Governorate",
+    "coordinates": {
+      "latitude": 29.83333,
+      "longitude": 31.21667
+    },
+    "imagePath": "landmark_images/Pyramid_of_Pepi_I.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/3/36/Satellite_pyramid_of_Anchenespepi_III.jpg"
+  },
+  {
+    "id": "107922.0",
+    "name": "Hurghada Grand Aquarium",
+    "description": "building in Egypt",
+    "governorate": "Red Sea Governorate",
+    "coordinates": {
+      "latitude": 27.1337,
+      "longitude": 33.8217
+    },
+    "imagePath": "landmark_images/Hurghada_Grand_Aquarium.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/3/38/Hurghada_Grand_Aquarium_by_Hatem_Moushir_3.JPG"
+  },
+  {
+    "id": "185949.0",
+    "name": "KV62",
+    "description": "Tomb of Tutankhamun",
+    "governorate": "Luxor",
+    "coordinates": {
+      "latitude": 25.740361111,
+      "longitude": 32.601444444
+    },
+    "imagePath": "landmark_images/KV62.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/c/c6/By_ovedc_-_KV62_-_2.jpg"
+  },
+  {
+    "id": "106621.0",
+    "name": "Dra Abu el-Naga",
+    "description": "village and archaeological site of Draʿ Abu el-Naga, Luxor West Bank, Egypt",
+    "governorate": "Luxor Governorate",
+    "coordinates": {
+      "latitude": 25.735280555,
+      "longitude": 32.620561111
+    },
+    "imagePath": "landmark_images/Dra_Abu_el-Naga.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/2/22/DraAbuNagaSite.jpg"
+  },
+  {
+    "id": "157421.0",
+    "name": "Gilf Kebir Plateau",
+    "description": "No description available.",
+    "governorate": "New Valley Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Gilf_Kebir_Plateau.jpg",
+    "wikiUrl": "http://upload.wikimedia.org/wikipedia/commons/f/ff/GilfKebirJerichoRoses.jpg"
+  },
+  {
+    "id": "196689.0",
+    "name": "Green Island (Egypt)",
+    "description": "No description available.",
+    "governorate": "Red Sea Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Green_Island_(Egypt).jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/c/cf/BrtrmCheckingStramsBuoy25011969.jpg"
+  },
+  {
+    "id": "58945.0",
+    "name": "Heliopolis Palace",
+    "description": "one of the Egyptian presidential palaces and residences.",
+    "governorate": "Cairo Governorate",
+    "coordinates": {
+      "latitude": 30.088897,
+      "longitude": 31.319543
+    },
+    "imagePath": "landmark_images/Heliopolis_Palace.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/0/04/Fireworks_at_Anti-Morsi_protests.jpg"
+  },
+  {
+    "id": "184694.0",
+    "name": "EL-Safa Park",
+    "description": "park in Egypt",
+    "governorate": "Kafr el-Sheikh Governorate",
+    "coordinates": {
+      "latitude": 31.1189,
+      "longitude": 30.65269
+    },
+    "imagePath": "landmark_images/EL-Safa_Park.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/c/c6/El-Gesh_st._Desouk.jpg"
+  },
+  {
+    "id": "39747.0",
+    "name": "Mosque of Qanibay al-Muhammadi",
+    "description": "mosque in Egypt",
+    "governorate": "Cairo",
+    "coordinates": {
+      "latitude": 30.030713,
+      "longitude": 31.25409
+    },
+    "imagePath": "landmark_images/Mosque_of_Qanibay_al-Muhammadi.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/2/2c/Flickr_-_Gaspa_-_Cairo%2C_moschea_Qanibay_Al-Muhammadi.jpg"
+  },
+  {
+    "id": "88444.0",
+    "name": "Sha'b Abu el-Nuhas",
+    "description": "No description available.",
+    "governorate": "Red Sea Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Sha'b_Abu_el-Nuhas.jpg",
+    "wikiUrl": "http://upload.wikimedia.org/wikipedia/commons/2/27/Sha_b_Abu_Nuhas.JPG"
+  },
+  {
+    "id": "191487.0",
+    "name": "Pharaon Island",
+    "description": "No description available.",
+    "governorate": "South Sinai Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Pharaon_Island.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6c/Linder_at_Coral_Island_1973.jpg"
+  },
+  {
+    "id": "64996.0",
+    "name": "White Pyramid of Amenemhat II",
+    "description": "No description available.",
+    "governorate": "Giza Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/White_Pyramid_of_Amenemhat_II.jpg",
+    "wikiUrl": "http://upload.wikimedia.org/wikipedia/commons/f/ff/AmenemhatIV-interne1.jpg"
+  },
+  {
+    "id": "32125.0",
+    "name": "Umm el-Qaab",
+    "description": "ancient Egyptian necropolis",
+    "governorate": "Sohag Governorate",
+    "coordinates": {
+      "latitude": 26.174913,
+      "longitude": 31.9078587
+    },
+    "imagePath": "landmark_images/Umm_el-Qaab.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/e/e6/Ummal-qaab.png"
+  },
+  {
+    "id": "81170.0",
+    "name": "Dream Park",
+    "description": "architectural structure",
+    "governorate": "Greater Banjul Area",
+    "coordinates": {
+      "latitude": 13.44650021,
+      "longitude": -16.71916767
+    },
+    "imagePath": "landmark_images/Dream_Park.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/1/17/Dream_park_2.JPG"
+  },
+  {
+    "id": "185572.0",
+    "name": "Sha'ar Hashamayim Synagogue (Cairo)",
+    "description": "No description available.",
+    "governorate": "Cairo Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Sha'ar_Hashamayim_Synagogue_(Cairo).jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/2/21/Flickr_-_dlisbona_-_Adly_street_Synagogue.jpg"
+  },
+  {
+    "id": "179160.0",
+    "name": "Gidi Pass",
+    "description": "landform on Egypt's Sinai Peninsula",
+    "governorate": "Giza Governorate",
+    "coordinates": {
+      "latitude": 30.21666667,
+      "longitude": 33.16666667
+    },
+    "imagePath": "landmark_images/Gidi_Pass.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/1/16/Gidi_pass.jpg"
+  },
+  {
+    "id": "195508.0",
+    "name": "Desouk Stadium",
+    "description": "building in Africa",
+    "governorate": "Desouk",
+    "coordinates": {
+      "latitude": 31.143056,
+      "longitude": 30.6525
+    },
+    "imagePath": "landmark_images/Desouk_Stadium.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a8/DesoukStadium2.jpg"
+  },
+  {
+    "id": "201843.0",
+    "name": "Medinet Madi",
+    "description": "archaeological site in the Egyptian depression of el-Faiyum",
+    "governorate": "Faiyum Governorate",
+    "coordinates": {
+      "latitude": 29.193119444,
+      "longitude": 30.642130555
+    },
+    "imagePath": "landmark_images/Medinet_Madi.jpg",
+    "wikiUrl": "http://upload.wikimedia.org/wikipedia/commons/e/ec/Medinet_Madi_03.JPG"
+  },
+  {
+    "id": "201165.0",
+    "name": "Pyramid of Neferefre",
+    "description": "smooth-sided pyramid",
+    "governorate": "Giza Governorate",
+    "coordinates": {
+      "latitude": 29.893805555,
+      "longitude": 31.201666666
+    },
+    "imagePath": "landmark_images/Pyramid_of_Neferefre.jpg",
+    "wikiUrl": "http://upload.wikimedia.org/wikipedia/commons/0/0c/Raneferef-Pyramide_Substruktur.png"
+  },
+  {
+    "id": "18539.0",
+    "name": "Bahr Yousef canal",
+    "description": "No description available.",
+    "governorate": "Beni Suef Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Bahr_Yousef_canal.jpg",
+    "wikiUrl": "http://upload.wikimedia.org/wikipedia/commons/d/de/DairutDam.jpg"
+  },
+  {
+    "id": "23514.0",
+    "name": "Abu Qir Bay",
+    "description": "bay on the Mediterranean coast of Egypt",
+    "governorate": "Alexandria",
+    "coordinates": {
+      "latitude": 31.3,
+      "longitude": 30.166666666
+    },
+    "imagePath": "landmark_images/Abu_Qir_Bay.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/0/06/Abu_Qir_Mango_in_Saudi_Arabia.jpg"
+  },
+  {
+    "id": "125.0",
+    "name": "Al-Sayeda Zainab Mosque",
+    "description": "mosque in Egypt",
+    "governorate": "Cairo Governorate",
+    "coordinates": {
+      "latitude": 30.031722,
+      "longitude": 31.2420797
+    },
+    "imagePath": "landmark_images/Al-Sayeda_Zainab_Mosque.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/4/4d/Mosque_Seyideh-Zeninab_%28n.d.%29_-_front_-_TIMEA.jpg"
+  },
+  {
+    "id": "131013.0",
+    "name": "Al Fattah Al Alim Mosque (Cairo)",
+    "description": "No description available.",
+    "governorate": "Cairo Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Al_Fattah_Al_Alim_Mosque_(Cairo).jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/7/76/%D8%AF%D8%A7%D8%B1_%D9%85%D9%86%D8%A7%D8%B3%D8%A8%D8%A7%D8%AA_%D9%84%D9%85%D8%B3%D8%AC%D8%AF_%D8%A7%D9%84%D9%81%D8%AA%D8%A7%D8%AD_%D8%A7%D9%84%D8%B9%D9%84%D9%8A%D9%85.jpg"
+  },
+  {
+    "id": "80919.0",
+    "name": "Sayeda Aisha Mosque",
+    "description": "mosque in Egypt",
+    "governorate": "Cairo",
+    "coordinates": {
+      "latitude": 30.02473,
+      "longitude": 31.25672
+    },
+    "imagePath": "landmark_images/Sayeda_Aisha_Mosque.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/8/84/%D8%A8%D8%A7%D9%86%D9%88%D8%B1%D8%A7%D9%85%D8%A7_%D8%A7%D8%B3%D9%84%D8%A7%D9%85%D9%8A%D8%A9.jpg"
+  },
+  {
+    "id": "85883.0",
+    "name": "Port Tewfik Memorial",
+    "description": "destroyed war memorial",
+    "governorate": "Suez Governorate",
+    "coordinates": {
+      "latitude": 29.933693,
+      "longitude": 32.562147
+    },
+    "imagePath": "landmark_images/Port_Tewfik_Memorial.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/3/3b/COLLECTIE_TROPENMUSEUM_Suez_monument_bij_Port_Tefik_TMnr_60018228.jpg"
+  },
+  {
+    "id": "145485.0",
+    "name": "Attarine Mosque",
+    "description": "mosque in Alexandria, Egypt",
+    "governorate": "Alexandria",
+    "coordinates": {
+      "latitude": 31.191902,
+      "longitude": 29.900004
+    },
+    "imagePath": "landmark_images/Attarine_Mosque.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/4/4f/COLLECTIE_TROPENMUSEUM_Straatbeeld_van_Port_Said_in_Egypte._TMnr_60007524.jpg"
+  },
+  {
+    "id": "156379.0",
+    "name": "Mosque of Sultan Abu al-Ila",
+    "description": "No description available.",
+    "governorate": "Cairo Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Mosque_of_Sultan_Abu_al-Ila.jpg",
+    "wikiUrl": "http://upload.wikimedia.org/wikipedia/commons/1/15/BulaqAbuIlaQibla.jpg"
+  },
+  {
+    "id": "129646.0",
+    "name": "Al-Fath Mosque",
+    "description": "mosque in France",
+    "governorate": "Besançon",
+    "coordinates": {
+      "latitude": 47.213861111,
+      "longitude": 5.964
+    },
+    "imagePath": "landmark_images/Al-Fath_Mosque.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/8/8b/Al_Fath_Mosque.jpg"
+  },
+  {
+    "id": "154891.0",
+    "name": "Gezira Center for Modern Art",
+    "description": "art museum in Cairo, Egypt",
+    "governorate": "Cairo",
+    "coordinates": {
+      "latitude": 30.042780555,
+      "longitude": 31.2231
+    },
+    "imagePath": "landmark_images/Gezira_Center_for_Modern_Art.jpg",
+    "wikiUrl": "http://upload.wikimedia.org/wikipedia/commons/d/d5/EMAM.jpg"
+  },
+  {
+    "id": "68051.0",
+    "name": "Pyramid of Seila",
+    "description": "archaeological site in the Egyptian depression of el-Faiyum",
+    "governorate": "Faiyum Governorate",
+    "coordinates": {
+      "latitude": 29.382588888,
+      "longitude": 31.053580555
+    },
+    "imagePath": "landmark_images/Pyramid_of_Seila.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/0/0b/SeilaRomanTombs.jpg"
+  },
+  {
+    "id": "29311.0",
+    "name": "Amada",
+    "description": "ancient town of Phrygia",
+    "governorate": "Aswan Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Amada.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/3/35/Le_desert_vers_Amada_-_panoramio.jpg"
+  },
+  {
+    "id": "141756.0",
+    "name": "Koubbeh Palace",
+    "description": "Egyptian palace near downtown Cairo",
+    "governorate": "Cairo Governorate",
+    "coordinates": {
+      "latitude": 30.0987,
+      "longitude": 31.303
+    },
+    "imagePath": "landmark_images/Koubbeh_Palace.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/8/8d/Yuri_Gagarin_and_Zakaria_Mohieddin_05-02-1962_Koubbeh_Palace_in_Egypt.jpg"
+  },
+  {
+    "id": "38165.0",
+    "name": "Relations of Egypt and Italy",
+    "description": "No description available.",
+    "governorate": "Cairo Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Relations_of_Egypt_and_Italy.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/1/1a/Egypt_Italy_locator.png"
+  },
+  {
+    "id": "71596.0",
+    "name": "Sohag Stadium",
+    "description": "No description available.",
+    "governorate": "Sohag",
+    "coordinates": {
+      "latitude": 26.55775,
+      "longitude": 31.709277777
+    },
+    "imagePath": "landmark_images/Sohag_Stadium.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/b/be/Sohag_stadium.jpg"
+  },
+  {
+    "id": "102704.0",
+    "name": "Userkaf sun temple",
+    "description": "No description available.",
+    "governorate": "Giza Governorate",
+    "coordinates": null,
+    "imagePath": "landmark_images/Userkaf_sun_temple.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/b/b5/Userkaf_Sun_temple_rendered_Mk2.jpg"
+  },
+  {
+    "id": "197788.0",
+    "name": "Ras el-Tin Palace",
+    "description": "palace in Alexandria, Egypt",
+    "governorate": "Alexandria Governorate",
+    "coordinates": {
+      "latitude": 31.199638888,
+      "longitude": 29.868833333
+    },
+    "imagePath": "landmark_images/Ras_el-Tin_Palace.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/2/2b/Palace_of_the_Khedive_%281878%29_-_TIMEA.jpg"
+  },
+  {
+    "id": "41868.0",
+    "name": "Tirbana mosque, Alexandria",
+    "description": "No description available.",
+    "governorate": "Alexandria",
+    "coordinates": null,
+    "imagePath": "landmark_images/Tirbana_mosque,_Alexandria.jpg",
+    "wikiUrl": "http://upload.wikimedia.org/wikipedia/commons/c/c7/AlexTirbanaMosqueEast.jpg"
+  },
+  {
+    "id": "62739.0",
+    "name": "Abu Ghurab",
+    "description": "ancient Egyptian sun temple",
+    "governorate": "Giza Governorate",
+    "coordinates": {
+      "latitude": 29.904166666,
+      "longitude": 31.194166666
+    },
+    "imagePath": "landmark_images/Abu_Ghurab.jpg",
+    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/d/d5/N%C3%A1prstek_Museum_-_NM_Prague_05.JPG"
+  }
+]

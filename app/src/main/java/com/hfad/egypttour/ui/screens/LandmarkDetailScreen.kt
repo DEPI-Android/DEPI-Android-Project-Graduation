@@ -29,7 +29,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.hfad.egypttour.data.model.LandMark
@@ -39,12 +39,13 @@ import com.hfad.egypttour.ui.theme.PureWhite
 import com.hfad.egypttour.ui.theme.TextBlack
 import com.hfad.egypttour.ui.theme.TextGray
 import com.hfad.egypttour.ui.viewmodel.LandmarkListViewModel
+import kotlinx.coroutines.delay
 
 @Composable
 fun LandmarkDetailScreen(
     landmarkId: Int,
     onBackClick: () -> Unit,
-    viewModel: LandmarkListViewModel = viewModel()
+    viewModel: LandmarkListViewModel = hiltViewModel()
 ) {
     LaunchedEffect(landmarkId) {
         viewModel.loadLandmarkDetails(landmarkId)
@@ -244,7 +245,170 @@ private fun LandmarkDetailContent(
 
                     Text("Details", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = EgyptGold, modifier = Modifier.align(Alignment.CenterHorizontally))
                     Spacer(modifier = Modifier.height(8.dp))
-                    Text(landmark.description, fontSize = 15.sp, color = TextBlack.copy(0.7f), textAlign = TextAlign.Justify, lineHeight = 24.sp)
+                    
+                     // Description with Wikipedia loading indicator + 20-second timeout
+                    val description = landmark.description
+                    val isPlaceholderDescription = description.equals("No description available.", ignoreCase = true) || 
+                                                    description.equals("building in Egypt", ignoreCase = true)
+                    
+                    // Client-side timeout: Force Google Search button after 20 seconds
+                    var hasTimedOut by remember { mutableStateOf(false) }
+                    
+                    LaunchedEffect(landmark.id) {
+                        if ((description.isNullOrBlank() || isPlaceholderDescription) && landmark.needsWikipediaDescription) {
+                            delay(13000L) // 20 seconds
+                            hasTimedOut = true
+                        }
+                    }
+                    
+                    when {
+                        // Show Google Search button if timed out (20+ seconds)
+                        hasTimedOut -> {
+                            Column(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                Text(
+                                    text = "Wikipedia is taking longer than expected.",
+                                    fontSize = 15.sp,
+                                    color = TextBlack.copy(0.6f),
+                                    textAlign = TextAlign.Center,
+                                    lineHeight = 24.sp,
+                                    fontStyle = androidx.compose.ui.text.font.FontStyle.Italic
+                                )
+                                
+                                Spacer(modifier = Modifier.height(16.dp))
+                                
+                                // Google Search Button
+                                Button(
+                                    onClick = {
+                                        val searchQuery = "${landmark.name} Egypt"
+                                        val googleSearchUrl = "https://www.google.com/search?q=${java.net.URLEncoder.encode(searchQuery, "UTF-8")}"
+                                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(googleSearchUrl))
+                                        context.startActivity(intent)
+                                    },
+                                    colors = ButtonDefaults.buttonColors(
+                                        containerColor = EgyptGold
+                                    ),
+                                    shape = RoundedCornerShape(12.dp),
+                                    modifier = Modifier.wrapContentSize()
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Default.Search,
+                                        contentDescription = null,
+                                        tint = PureWhite,
+                                        modifier = Modifier.size(20.dp)
+                                    )
+                                    Spacer(modifier = Modifier.width(8.dp))
+                                    Text(
+                                        text = "Search google for ${landmark.name}",
+                                        color = PureWhite,
+                                        fontSize = 16.sp,
+                                        fontWeight = FontWeight.Medium
+                                    )
+                                }
+                                
+                                Spacer(modifier = Modifier.height(8.dp))
+                                
+                                Text(
+                                    text = "Learn more about ${landmark.name}",
+                                    fontSize = 13.sp,
+                                    color = TextGray,
+                                    fontStyle = androidx.compose.ui.text.font.FontStyle.Italic
+                                )
+                            }
+                        }
+                        // Show Wikipedia loading indicator if description is being fetched (< 20 seconds)
+                        (description.isNullOrBlank() || isPlaceholderDescription) && landmark.needsWikipediaDescription -> {
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(vertical = 24.dp),
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                CircularProgressIndicator(
+                                    color = EgyptGold,
+                                    modifier = Modifier.size(32.dp),
+                                    strokeWidth = 3.dp
+                                )
+                                Spacer(modifier = Modifier.height(12.dp))
+                                Text(
+                                    text = "Getting details from Wikipedia...",
+                                    fontSize = 14.sp,
+                                    color = TextGray,
+                                    fontStyle = androidx.compose.ui.text.font.FontStyle.Italic
+                                )
+                            }
+                        }
+                        // Show description if available and not a placeholder
+                        !description.isNullOrBlank() && !isPlaceholderDescription -> {
+                            Text(
+                                text = description,
+                                fontSize = 15.sp,
+                                color = TextBlack.copy(0.7f),
+                                textAlign = TextAlign.Justify,
+                                lineHeight = 24.sp
+                            )
+                        }
+                        // Fallback: Show message + Google Search button if Wikipedia failed
+                        else -> {
+                            Column(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                Text(
+                                    text = "Information about this landmark is limited in our database.",
+                                    fontSize = 15.sp,
+                                    color = TextBlack.copy(0.6f),
+                                    textAlign = TextAlign.Center,
+                                    lineHeight = 24.sp,
+                                    fontStyle = androidx.compose.ui.text.font.FontStyle.Italic
+                                )
+                                
+                                Spacer(modifier = Modifier.height(16.dp))
+                                
+                                // Google Search Button
+                                Button(
+                                    onClick = {
+                                        val searchQuery = "${landmark.name} Egypt"
+                                        val googleSearchUrl = "https://www.google.com/search?q=${java.net.URLEncoder.encode(searchQuery, "UTF-8")}"
+                                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(googleSearchUrl))
+                                        context.startActivity(intent)
+                                    },
+                                    colors = ButtonDefaults.buttonColors(
+                                        containerColor = EgyptGold
+                                    ),
+                                    shape = RoundedCornerShape(12.dp),
+                                    modifier = Modifier
+                                        .fillMaxWidth(0.7f)
+                                        .height(48.dp)
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Default.Search,
+                                        contentDescription = null,
+                                        tint = PureWhite,
+                                        modifier = Modifier.size(20.dp)
+                                    )
+                                    Spacer(modifier = Modifier.width(8.dp))
+                                    Text(
+                                        text = "Search on Google",
+                                        color = PureWhite,
+                                        fontSize = 16.sp,
+                                        fontWeight = FontWeight.Medium
+                                    )
+                                }
+                                
+                                Spacer(modifier = Modifier.height(8.dp))
+                                
+                                Text(
+                                    text = "Learn more about ${landmark.name}",
+                                    fontSize = 13.sp,
+                                    color = TextGray,
+                                    fontStyle = androidx.compose.ui.text.font.FontStyle.Italic
+                                )
+                            }
+                        }
+                    }
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -257,7 +421,7 @@ private fun LandmarkDetailContent(
                         val intent = Intent(Intent.ACTION_VIEW, uri)
                         context.startActivity(intent)
                     },
-                    modifier = Modifier.fillMaxWidth().height(56.dp).shadow(4.dp, RoundedCornerShape(12.dp)),
+                    modifier = Modifier.fillMaxWidth().height(56.dp).shadow(4.dp, RoundedCornerShape(12.dp)).padding(8.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = EgyptGold),
                     shape = RoundedCornerShape(12.dp)
                 ) {
