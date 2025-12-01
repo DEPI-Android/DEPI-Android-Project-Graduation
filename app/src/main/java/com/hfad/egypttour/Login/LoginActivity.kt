@@ -11,7 +11,9 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -35,8 +37,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.hfad.egypttour.MainActivity
 import com.hfad.egypttour.R
-import com.hfad.egypttour.Login.SignInActivity
-import com.hfad.egypttour.Login.SignUpActivity
 import com.hfad.egypttour.ui.theme.EgyptGoldDark
 import com.hfad.egypttour.ui.theme.EgyptTourTheme
 import kotlinx.coroutines.delay
@@ -73,6 +73,7 @@ fun LoginScreen() {
     val animatedText = remember { mutableStateOf("") }
     val bungeespiceRegular = FontFamily(Font(R.font.font_co))
     val welcomFont = FontFamily(Font(R.font.frijole_regular))
+    val scrollState = rememberScrollState()
 
     val images = listOf(
         R.drawable.login_img,
@@ -109,6 +110,7 @@ fun LoginScreen() {
                     colors = listOf(Color(0xFFBAB9B3), Color(0xFFF6D575))
                 )
             )
+            .verticalScroll(scrollState)
     ) {
         Box(
             modifier = Modifier
