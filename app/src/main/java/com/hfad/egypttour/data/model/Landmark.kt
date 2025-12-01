@@ -8,13 +8,24 @@ data class LandMark(
     val imageUrls: List<String> = emptyList(),
     val lat: Double?,
     val lon: Double?,
-    val governorate: Governorate
-
-
+    val governorate: Governorate,
+    val localImagePaths: List<String> = emptyList()
 ) {
     val haseCoordinates: Boolean
         get() = lat != null && lon != null
 
+    /**
+     * Determines if this landmark needs Wikipedia description fallback
+     * Returns true if:
+     * - Description is null or blank
+     * - Description has less than 15 words
+     */
+    val needsWikipediaDescription: Boolean
+        get() {
+            if (description.isNullOrBlank()) return true
+            val wordCount = description.trim().split("\\s+".toRegex()).size
+            return wordCount < 15
+        }
 
     val shortDescription: String
         get() = if (description.length > 100) {

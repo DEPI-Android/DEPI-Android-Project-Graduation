@@ -167,6 +167,8 @@
 //}
 
 package com.hfad.egypttour.data.model
+import com.hfad.egypttour.R
+import androidx.annotation.DrawableRes
 
 /**
  * Enhanced Governorate enum with multiple data sources:
@@ -181,7 +183,7 @@ enum class Governorate(
     val wikiCategory: String?,  // NULL if no category exists
     val latitude: Double,
     val longitude: Double,
-    val imageUrl: String,  // Image URL for the governorate
+    @DrawableRes val imageRes: Int,  // CHANGED: Now uses a local Resource ID
     val knownLandmarks: List<String> = emptyList() // Manual fallback
 ) {
     CAIRO(
@@ -190,7 +192,7 @@ enum class Governorate(
         wikiCategory = "Category:Tourist_attractions_in_Cairo",
         latitude = 30.0444,
         longitude = 31.2357,
-        imageUrl = "https://images.unsplash.com/photo-1572252009286-268acec5ca0a?w=800&q=80", // Cairo cityscape with mosques
+        imageRes = R.drawable.cairo,
         knownLandmarks = emptyList()
     ),
 
@@ -200,7 +202,7 @@ enum class Governorate(
         wikiCategory = "Category:Tourist_attractions_in_Alexandria",
         latitude = 31.2001,
         longitude = 29.9187,
-        imageUrl = "https://images.unsplash.com/photo-1553913861-c0fddf2619ee?w=800&q=80", // Alexandria coastline
+        imageRes = R.drawable.alex,
         knownLandmarks = emptyList()
     ),
 
@@ -210,7 +212,7 @@ enum class Governorate(
         wikiCategory = "Category:Buildings_and_structures_in_Giza",
         latitude = 30.0131,
         longitude = 31.2089,
-        imageUrl = "https://images.unsplash.com/photo-1568322445389-f64ac2515020?w=800&q=80", // Great Pyramids of Giza
+        imageRes = R.drawable.giza,
         knownLandmarks = listOf(
             "Great Pyramid of Giza",
             "Sphinx",
@@ -225,7 +227,7 @@ enum class Governorate(
         wikiCategory = "Category:Buildings_and_structures_in_Luxor",
         latitude = 25.6872,
         longitude = 32.6396,
-        imageUrl = "https://images.unsplash.com/photo-1539768942893-daf53e448371?w=800&q=80", // Luxor Temple columns
+        imageRes = R.drawable.luxor,
         knownLandmarks = listOf(
             "Karnak Temple",
             "Luxor Temple",
@@ -241,7 +243,7 @@ enum class Governorate(
         wikiCategory = "Category:Buildings_and_structures_in_Aswan",
         latitude = 24.0889,
         longitude = 32.8998,
-        imageUrl = "https://images.unsplash.com/photo-1590068213685-586146781e63?w=800&q=80", // Nile at Aswan with feluccas
+        imageRes = R.drawable.aswan,
         knownLandmarks = listOf(
             "Abu Simbel",
             "Philae Temple",
@@ -256,7 +258,7 @@ enum class Governorate(
         wikiCategory = null, // NO CATEGORY - Will use fallbacks
         latitude = 29.3084,
         longitude = 30.8428,
-        imageUrl = "https://images.unsplash.com/photo-1473496169904-658ba7c44d8a?w=800&q=80", // Desert oasis/waterfall
+        imageRes = R.drawable.faiyum,
         knownLandmarks = listOf(
             "Wadi El Rayan",
             "Lake Qarun",
@@ -272,7 +274,7 @@ enum class Governorate(
         wikiCategory = null, // NO CATEGORY
         latitude = 31.2653,
         longitude = 32.3019,
-        imageUrl = "https://images.unsplash.com/photo-1606840574311-ba25cb63b6be?w=800&q=80", // Port/harbor view
+        imageRes = R.drawable.portsaid,
         knownLandmarks = listOf(
             "Port Said Lighthouse",
             "Military Museum",
@@ -286,7 +288,7 @@ enum class Governorate(
         wikiCategory = null, // NO CATEGORY
         latitude = 29.9668,
         longitude = 32.5498,
-        imageUrl = "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&q=80", // Suez Canal ships
+        imageRes = R.drawable.suez,
         knownLandmarks = listOf(
             "Suez Canal",
             "Ahmed Hamdi Tunnel"
@@ -299,7 +301,7 @@ enum class Governorate(
         wikiCategory = null, // NO CATEGORY
         latitude = 27.9158,
         longitude = 34.3300,
-        imageUrl = "https://images.unsplash.com/photo-1583771063440-8e628178a045?w=800&q=80", // Red Sea underwater/coral
+        imageRes = R.drawable.sharm,
         knownLandmarks = listOf(
             "Ras Muhammad National Park",
             "Naama Bay",
@@ -313,7 +315,7 @@ enum class Governorate(
         wikiCategory = null, // NO CATEGORY
         latitude = 27.2579,
         longitude = 33.8116,
-        imageUrl = "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80", // Red Sea beach resort
+        imageRes = R.drawable.hurghada,
         knownLandmarks = listOf(
             "Giftun Island",
             "Hurghada Grand Aquarium",

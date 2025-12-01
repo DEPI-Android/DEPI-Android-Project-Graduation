@@ -198,15 +198,23 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-/**
- * FIXED: Removed SavedStateHandle to allow default viewModel() creation
- */
-class LandmarkListViewModel : ViewModel() {
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-    private val repository = LandmarkRepository(RetrofitInstance.api)
+/**
+ * Hilt ViewModel
+ */
+@HiltViewModel
+class LandmarkListViewModel @Inject constructor(
+    private val repository: LandmarkRepository
+) : ViewModel() {
 
     private val _landmarksState = MutableStateFlow<Result<List<LandMark>>>(Result.Loading)
     val landmarksState: StateFlow<Result<List<LandMark>>> = _landmarksState.asStateFlow()
+
+    // NEW: State for the selected single landmark (for Detail Screen)
+    private val _selectedLandmark = MutableStateFlow<Result<LandMark?>>(Result.Loading)
+    val selectedLandmark: StateFlow<Result<LandMark?>> = _selectedLandmark.asStateFlow()
 
     private val _currentGovernorate = MutableStateFlow<Governorate?>(null)
     val currentGovernorate: StateFlow<Governorate?> = _currentGovernorate.asStateFlow()
@@ -243,6 +251,43 @@ class LandmarkListViewModel : ViewModel() {
             }
         }
     }
+
+
+//    fun loadLandmarkDetails(id: Int) {
+//        _selectedLandmark.value = Result.Loading
+//
+//        viewModelScope.launch {
+//            val state = _landmarksState.value
+//            Log.d("LandmarkVM", "Landmarks state: $state")
+//
+//            val existingLandmark = (state as? Result.Success)?.data?.find { it.id == id }
+//            Log.d("LandmarkVM", "Existing landmark found: $existingLandmark")
+//            if (existingLandmark != null) {
+//                // Correct: assign LandMark? inside Result.Success
+//                _selectedLandmark.value = Result.Success(existingLandmark)
+//            } else {
+//                // Error if not found
+//                _selectedLandmark.value = Result.Error(Exception("Landmark not found"))
+//            }
+//        }
+//    }
+
+    fun loadLandmarkDetails(id: Int) {
+        viewModelScope.launch {
+            val currentState = _landmarksState.value
+            val landmark = (currentState as? Result.Success)?.data?.find { it.id == id }
+                ?: run {
+                    // Not loaded yet — fetch from repository
+                    val result = repository.getLandmarkById(id)
+                    if (result is Result.Success) result.data else null
+                }
+
+            Log.d("LandmarkVM", "Existing landmark found: $landmark")
+            _selectedLandmark.value = Result.Success(landmark)
+        }
+    }
+
+
 
     fun retry() {
         _currentGovernorate.value?.let { governorate ->
