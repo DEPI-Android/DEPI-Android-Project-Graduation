@@ -9,8 +9,11 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
@@ -22,24 +25,31 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.airbnb.lottie.compose.*
 import com.google.firebase.auth.FirebaseAuth
 import com.hfad.egypttour.MainActivity
 import com.hfad.egypttour.R
 import com.hfad.egypttour.ui.theme.EgyptGoldDark
 import com.hfad.egypttour.ui.theme.EgyptTourTheme
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
@@ -49,24 +59,79 @@ class SignInActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             EgyptTourTheme {
-                SignInScreen()
+                SignInScreen(
+                    onNavigateToMain = {
+                        val intent = Intent(this, MainActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        startActivity(intent)
+                    },
+                    onNavigateToSignUp = { startActivity(Intent(this, SignUpActivity::class.java)) },
+                    onNavigateToForgotPassword = { startActivity(Intent(this, ForgotPasswordActivity::class.java)) }
+                )
             }
         }
     }
 }
 
-@Composable
-fun SignInScreen() {
-    val context = LocalContext.current
-    val scope = rememberCoroutineScope()
-    val auth = FirebaseAuth.getInstance()
-    val signin_Font = FontFamily(Font(R.font.frijole_regular))
+sealed class SignInUiState {
+    object Idle : SignInUiState()
+    object Loading : SignInUiState()
+    data class Success(val message: String) : SignInUiState()
+    data class Error(val message: String) : SignInUiState()
+}
 
-    var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-    var passwordVisible by remember { mutableStateOf(false) }
-    var rememberMe by remember { mutableStateOf(false) }
-    var isLoading by remember { mutableStateOf(false) }
+class SignInViewModel : ViewModel() {
+    private val auth: FirebaseAuth = FirebaseAuth.getInstance()
+
+    private val _uiState = MutableStateFlow<SignInUiState>(SignInUiState.Idle)
+    val uiState = _uiState.asStateFlow()
+
+    var email by mutableStateOf("")
+    var password by mutableStateOf("")
+    var passwordVisible by mutableStateOf(false)
+    var rememberMe by mutableStateOf(false)
+
+    fun signIn(context: Context) {
+        if (email.isBlank() || password.isBlank()) {
+            _uiState.value = SignInUiState.Error("Please fill all fields.")
+            return
+        }
+
+        viewModelScope.launch {
+            _uiState.value = SignInUiState.Loading
+            try {
+                auth.signInWithEmailAndPassword(email, password).await()
+                if (rememberMe) {
+                    val sharedPreferences = context.getSharedPreferences("user_session", Context.MODE_PRIVATE)
+                    with(sharedPreferences.edit()) {
+                        putBoolean("isLoggedIn", true)
+                        apply()
+                    }
+                }
+                _uiState.value = SignInUiState.Success("Login Successful")
+            } catch (e: Exception) {
+                _uiState.value = SignInUiState.Error(e.message ?: "An unknown error occurred.")
+            }
+        }
+    }
+
+    fun resetState() {
+        _uiState.value = SignInUiState.Idle
+    }
+}
+
+@Composable
+fun SignInScreen(
+    viewModel: SignInViewModel = androidx.lifecycle.viewmodel.compose.viewModel(),
+    onNavigateToMain: () -> Unit,
+    onNavigateToSignUp: () -> Unit,
+    onNavigateToForgotPassword: () -> Unit
+) {
+    val context = LocalContext.current
+    val focusManager = LocalFocusManager.current
+    val uiState by viewModel.uiState.collectAsState()
+    val signin_Font = FontFamily(Font(R.font.frijole_regular))
+    val scrollState = rememberScrollState()
 
     val backgroundBrush = Brush.verticalGradient(
         colors = listOf(Color(0xFF333333), Color(0xFF895100), Color(0xFFE4B643))
@@ -83,6 +148,21 @@ fun SignInScreen() {
     val lottieComposition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.loadin_lo))
     val lottieProgress by animateLottieCompositionAsState(lottieComposition, iterations = LottieConstants.IterateForever)
 
+    LaunchedEffect(uiState) {
+        when (val state = uiState) {
+            is SignInUiState.Success -> {
+                Toast.makeText(context, state.message, Toast.LENGTH_SHORT).show()
+                onNavigateToMain()
+                viewModel.resetState()
+            }
+            is SignInUiState.Error -> {
+                Toast.makeText(context, state.message, Toast.LENGTH_LONG).show()
+                viewModel.resetState()
+            }
+            else -> Unit
+        }
+    }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -97,7 +177,9 @@ fun SignInScreen() {
         ) {
             Box(modifier = Modifier.background(cardBrush)) {
                 Column(
-                    modifier = Modifier.padding(24.dp),
+                    modifier = Modifier
+                        .padding(24.dp)
+                        .verticalScroll(scrollState),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
@@ -121,13 +203,17 @@ fun SignInScreen() {
                     )
 
                     OutlinedTextField(
-                        value = email,
-                        onValueChange = { email = it },
+                        value = viewModel.email,
+                        onValueChange = { viewModel.email = it },
                         label = { Text("Email") },
                         leadingIcon = { Icon(Icons.Default.Email, contentDescription = null) },
                         modifier = Modifier.fillMaxWidth(),
                         shape = RoundedCornerShape(50),
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+                        keyboardOptions = KeyboardOptions(
+                            keyboardType = KeyboardType.Email,
+                            imeAction = ImeAction.Next
+                        ),
+                        keyboardActions = KeyboardActions(onNext = { focusManager.moveFocus(FocusDirection.Down) }),
                         colors = OutlinedTextFieldDefaults.colors(
                             focusedTextColor = Color.White,
                             unfocusedTextColor = Color.White.copy(alpha = 0.7f),
@@ -140,18 +226,22 @@ fun SignInScreen() {
                     )
 
                     OutlinedTextField(
-                        value = password,
-                        onValueChange = { password = it },
+                        value = viewModel.password,
+                        onValueChange = { viewModel.password = it },
                         label = { Text("Password") },
                         leadingIcon = { Icon(Icons.Default.Lock, contentDescription = null) },
                         trailingIcon = {
-                            val image = if (passwordVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff
-                            IconButton(onClick = { passwordVisible = !passwordVisible }) {
+                            val image = if (viewModel.passwordVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff
+                            IconButton(onClick = { viewModel.passwordVisible = !viewModel.passwordVisible }) {
                                 Icon(imageVector = image, null)
                             }
                         },
-                        visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                        visualTransformation = if (viewModel.passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+                        keyboardOptions = KeyboardOptions(
+                            keyboardType = KeyboardType.Password,
+                            imeAction = ImeAction.Done
+                        ),
+                        keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
                         modifier = Modifier.fillMaxWidth(),
                         shape = RoundedCornerShape(50),
                         colors = OutlinedTextFieldDefaults.colors(
@@ -172,8 +262,8 @@ fun SignInScreen() {
                     ) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Checkbox(
-                                checked = rememberMe,
-                                onCheckedChange = { rememberMe = it },
+                                checked = viewModel.rememberMe,
+                                onCheckedChange = { viewModel.rememberMe = it },
                                 colors = CheckboxDefaults.colors(
                                     checkedColor = Color.White,
                                     checkmarkColor = Color(0xFFFF9800)
@@ -181,60 +271,34 @@ fun SignInScreen() {
                             )
                             Text("Remember me", color = Color.White.copy(alpha = 0.8f))
                         }
-                        TextButton(onClick = { /*TODO*/ }) {
+                        TextButton(onClick = onNavigateToForgotPassword) {
                             Text("Forgot password?", color = Color.White.copy(alpha = 0.8f))
                         }
                     }
 
                     Button(
-                        onClick = {
-                            if (email.isNotEmpty() && password.isNotEmpty()) {
-                                isLoading = true
-                                scope.launch {
-                                    try {
-                                        auth.signInWithEmailAndPassword(email, password).await()
-                                        // Save session and navigate
-                                        val sharedPreferences = context.getSharedPreferences("user_session", Context.MODE_PRIVATE)
-                                        with(sharedPreferences.edit()) {
-                                            putBoolean("isLoggedIn", true)
-                                            apply()
-                                        }
-                                        // The corrected code
-                                        val intent = Intent(context, MainActivity::class.java)
-                                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                                        context.startActivity(intent)
-
-                                    } catch (e: Exception) {
-                                        val message = e.message ?: "An unknown error occurred."
-                                        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
-                                    } finally {
-                                        isLoading = false
-                                    }
-                                }
-                            } else {
-                                Toast.makeText(context, "Please fill all fields.", Toast.LENGTH_SHORT).show()
-                            }
-                        },
+                        onClick = { viewModel.signIn(context) },
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(50.dp)
                             .background(buttonBrush, RoundedCornerShape(50)),
                         colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
-                        contentPadding = PaddingValues()
+                        contentPadding = PaddingValues(),
+                        enabled = uiState != SignInUiState.Loading
                     ) {
                         Text("LOGIN", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Color.White)
                     }
 
                     Row {
                         Text("Don't have account? ", color = Color.White.copy(alpha = 0.8f))
-                        TextButton(onClick = { context.startActivity(Intent(context, SignUpActivity::class.java)) }) {
+                        TextButton(onClick = onNavigateToSignUp) {
                             Text("Sign up!", color = Color.White, fontWeight = FontWeight.Bold)
                         }
                     }
                 }
             }
         }
-        if (isLoading) {
+        if (uiState == SignInUiState.Loading) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -255,6 +319,6 @@ fun SignInScreen() {
 @Composable
 fun SignInScreenPreview() {
     EgyptTourTheme {
-        SignInScreen()
+        SignInScreen(onNavigateToMain = {}, onNavigateToSignUp = {}, onNavigateToForgotPassword = {})
     }
 }
