@@ -1,6 +1,7 @@
-package com.hfad.egypttour.data
+package com.hfad.egypttour.Login
 
 import com.hfad.egypttour.data.model.LoggedInUser
+import com.hfad.egypttour.data.util.Result
 
 /**
  * Class that requests authentication and user information from the remote data source and

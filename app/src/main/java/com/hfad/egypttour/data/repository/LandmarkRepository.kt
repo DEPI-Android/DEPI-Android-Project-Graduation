@@ -4,12 +4,13 @@ import android.util.Log
 import com.hfad.egypttour.data.api.WikiApiService
 import com.hfad.egypttour.data.api.model.WikiPageDto
 import com.hfad.egypttour.data.model.Governorate
-import com.hfad.egypttour.data.model.Result
+import com.hfad.egypttour.data.util.Result
 import com.hfad.egypttour.data.model.LandMark
 import com.hfad.egypttour.data.util.Constants
 import com.hfad.egypttour.data.util.PlaceholderImages
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.withTimeout
 import retrofit2.HttpException
 import java.io.IOException
 import java.security.MessageDigest
@@ -633,7 +634,7 @@ class LandmarkRepository(
                         }
 
                         is Result.Error -> {
-                            val errorMsg = "${governorate.displayName}: ${result.massage}"
+                            val errorMsg = "${governorate.displayName}: ${result.message}"
                             errors.add(errorMsg)
                             Log.w(Constants.LOG_TAG, "⚠️ $errorMsg")
                         }
@@ -719,7 +720,7 @@ class LandmarkRepository(
 
 
 
-    suspend fun getLandmarkById(id: Int): Result<LandMark?> {
+    suspend fun getLandmarkById(id: Int): Result<LandMark?> = withContext(Dispatchers.IO) {
         // STEP 1: Search in local database
         val localLandmark = findLocalLandmarkById(id)
         
@@ -743,42 +744,40 @@ class LandmarkRepository(
                     localLandmark.description
                 }
                 
-                return Result.Success(localLandmark.copy(description = enhancedDescription))
+                return@withContext Result.Success(localLandmark.copy(description = enhancedDescription))
             }
             
             // Description is sufficient (≥15 words), return as-is
             Log.d(Constants.LOG_TAG, "✅ Landmark '${localLandmark.name}': Description sufficient ($wordCount words), using local data")
-            return Result.Success(localLandmark)
+            return@withContext Result.Success(localLandmark)
         }
         
         // STEP 4: Not in local DB, fallback to full Wikipedia fetch
         Log.w(Constants.LOG_TAG, "Landmark $id not found in local database, fetching from Wikipedia")
         
-        return withContext(Dispatchers.IO) {
-            try {
-                Log.d(Constants.LOG_TAG, "🔍 Fetching landmark with ID: $id")
+        try {
+            Log.d(Constants.LOG_TAG, "🔍 Fetching landmark with ID: $id")
 
-                val allLandmarksResult = getAllLandmarks()
+            val allLandmarksResult = getAllLandmarks()
 
-                if (allLandmarksResult is Result.Success) {
-                    val landmark = allLandmarksResult.data.find { it.id == id }
+            if (allLandmarksResult is Result.Success) {
+                val landmark = allLandmarksResult.data.find { it.id == id }
 
-                    if (landmark != null) {
-                        Log.d(Constants.LOG_TAG, "✅ Found landmark: ${landmark.name}")
-                    } else {
-                        Log.w(Constants.LOG_TAG, "⚠️ No landmark found with ID: $id")
-                    }
-
-                    Result.Success(landmark)
+                if (landmark != null) {
+                    Log.d(Constants.LOG_TAG, "✅ Found landmark: ${landmark.name}")
                 } else {
-                    Result.Error(Exception("Failed to fetch landmarks"), "Fetch failed")
+                    Log.w(Constants.LOG_TAG, "⚠️ No landmark found with ID: $id")
                 }
 
-            } catch (e: Exception) {
-                val errorMsg = "Failed to get landmark by ID: ${e.message}"
-                Log.e(Constants.LOG_TAG, errorMsg, e)
-                Result.Error(e, errorMsg)
+                return@withContext Result.Success(landmark)
+            } else {
+                return@withContext Result.Error(Exception("Failed to fetch landmarks"), "Fetch failed")
             }
+
+        } catch (e: Exception) {
+            val errorMsg = "Failed to get landmark by ID: ${e.message}"
+            Log.e(Constants.LOG_TAG, errorMsg, e)
+            return@withContext Result.Error(e, errorMsg)
         }
     }
 
@@ -799,14 +798,36 @@ class LandmarkRepository(
         return getLocalLandmarks().find { it.id == id }
     }
 
+    /**
+     * Fetches Wikipedia description for a landmark with timeout and proper error handling.
+     * Runs on IO dispatcher to prevent NetworkOnMainThreadException on physical devices.
+     */
     private suspend fun fetchWikipediaDescription(landmarkName: String): String {
-        return try {
-            val response = apiService.getPagesByTitles(titles = landmarkName)
-            val page = response.query?.pages?.values?.firstOrNull()
-            page?.extract ?: ""
-        } catch (e: Exception) {
-            Log.e(Constants.LOG_TAG, "Failed to fetch Wikipedia description for $landmarkName", e)
-            ""
+        return withContext(Dispatchers.IO) {
+            try {
+                Log.d(Constants.LOG_TAG, "🌍 Fetching Wikipedia description for: $landmarkName")
+                
+                // Add 20-second timeout to prevent indefinite waiting
+                withTimeout(20000L) {
+                    val response = apiService.getPagesByTitles(titles = landmarkName)
+                    val page = response.query?.pages?.values?.firstOrNull()
+                    val extract = page?.extract ?: ""
+                    
+                    if (extract.isBlank()) {
+                        Log.w(Constants.LOG_TAG, "⚠️ Wikipedia returned empty description for $landmarkName")
+                    } else {
+                        Log.d(Constants.LOG_TAG, "✅ Wikipedia description fetched (${extract.length} chars)")
+                    }
+                    
+                    extract
+                }
+            } catch (e: kotlinx.coroutines.TimeoutCancellationException) {
+                Log.w(Constants.LOG_TAG, "⏱️ Wikipedia fetch TIMED OUT after 20s for $landmarkName")
+                ""
+            } catch (e: Exception) {
+                Log.e(Constants.LOG_TAG, "❌ Wikipedia fetch FAILED for $landmarkName: ${e.javaClass.simpleName} - ${e.message}", e)
+                ""
+            }
         }
     }
 }

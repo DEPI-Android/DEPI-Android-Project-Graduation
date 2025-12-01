@@ -3,7 +3,6 @@
     "total_landmarks": 279,
     "total_image_directories": 279,
     "total_images": 2217,
-    "total_original_images": 5514,
     "landmarks_with_images": 279,
     "landmarks_without_images": 0,
     "max_images_per_landmark": 12
@@ -258,7 +257,7 @@
       "governorate": "Faiyum Governorate",
       "folder_name": "Wadi_el-Raiyan",
       "image_directory": "images/Wadi_el-Raiyan",
-      "image_count": 12,
+      "image_count": 27,
       "csv_image_count": 27,
       "images": [
         {

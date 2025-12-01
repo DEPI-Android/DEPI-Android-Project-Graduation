@@ -6,7 +6,7 @@
 //import androidx.lifecycle.viewModelScope
 //import com.hfad.egypttour.data.model.Governorate
 //import com.hfad.egypttour.data.model.LandMark
-//import com.hfad.egypttour.data.model.Result
+
 //import com.hfad.egypttour.data.repository.LandmarkRepository
 //import com.hfad.egypttour.data.util.Constants
 //import dagger.hilt.android.lifecycle.HiltViewModel
@@ -190,7 +190,7 @@ import androidx.lifecycle.viewModelScope
 import com.hfad.egypttour.data.api.RetrofitInstance
 import com.hfad.egypttour.data.model.Governorate
 import com.hfad.egypttour.data.model.LandMark
-import com.hfad.egypttour.data.model.Result
+import com.hfad.egypttour.data.util.Result
 import com.hfad.egypttour.data.repository.LandmarkRepository
 import com.hfad.egypttour.data.util.Constants
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -229,7 +229,7 @@ class LandmarkListViewModel @Inject constructor(
     val scrollPosition: StateFlow<Int> = _scrollPosition.asStateFlow()
 
     val errorMessage: String?
-        get() = (_landmarksState.value as? Result.Error)?.massage
+        get() = (_landmarksState.value as? Result.Error)?.message
 
     fun loadLandmarks(governorate: Governorate, forceRefresh: Boolean = false) {
         if (!forceRefresh && _currentGovernorate.value == governorate && _landmarksState.value is Result.Success) {

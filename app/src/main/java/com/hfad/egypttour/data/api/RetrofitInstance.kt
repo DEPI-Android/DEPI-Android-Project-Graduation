@@ -12,8 +12,7 @@ import java.util.concurrent.TimeUnit
     object RetrofitInstance {
 
         private val okHttpClient: OkHttpClient by lazy {
-            // FIX 1: Use OkHttpClient.Builder(), not the variable name
-            OkHttpClient.Builder()
+             OkHttpClient.Builder()
                 .addInterceptor { chain ->
                     val original = chain.request()
                     val requestBuilder = original.newBuilder()
@@ -23,8 +22,7 @@ import java.util.concurrent.TimeUnit
                 }
                 .addInterceptor(
                     HttpLoggingInterceptor().apply {
-                        // FIX 2: Only log Body in Debug mode.
-                        // In Release, use NONE to save performance and security.
+                         // In Release, use NONE to save performance and security.
                         level =  HttpLoggingInterceptor.Level.BODY
 
                     }

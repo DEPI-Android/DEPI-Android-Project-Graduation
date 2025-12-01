@@ -33,7 +33,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.hfad.egypttour.data.model.LandMark
-import com.hfad.egypttour.data.model.Result
+import com.hfad.egypttour.data.util.Result
 import com.hfad.egypttour.ui.theme.EgyptGold
 import com.hfad.egypttour.ui.theme.PureWhite
 import com.hfad.egypttour.ui.theme.TextBlack

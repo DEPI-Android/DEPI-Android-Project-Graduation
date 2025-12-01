@@ -11,8 +11,7 @@ data class LandMark(
     val governorate: Governorate,
     val localImagePaths: List<String> = emptyList()
 ) {
-    val haseCoordinates: Boolean
-        get() = lat != null && lon != null
+
 
     /**
      * Determines if this landmark needs Wikipedia description fallback
@@ -27,19 +26,19 @@ data class LandMark(
             return wordCount < 15
         }
 
-    val shortDescription: String
-        get() = if (description.length > 100) {
-            description.take(147) + "..."
-        } else {
-            description
-        }
-
-    val hasGallery: Boolean
-        get() = imageUrls.isNotEmpty()
-    val totalImages: Int
-        get() = 1 + imageUrls.size
-    val allImages: List<String>
-        get() = (listOf(imageUrl) + imageUrls) as List<String>
+//    val shortDescription: String
+//        get() = if (description.length > 100) {
+//            description.take(147) + "..."
+//        } else {
+//            description
+//        }
+//
+//    val hasGallery: Boolean
+//        get() = imageUrls.isNotEmpty()
+//    val totalImages: Int
+//        get() = 1 + imageUrls.size
+//    val allImages: List<String>
+//        get() = (listOf(imageUrl) + imageUrls) as List<String>
 
 
 }

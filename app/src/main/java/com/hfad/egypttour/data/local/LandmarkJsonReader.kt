@@ -57,7 +57,7 @@ class LandmarkJsonReader {
             
             if (governorate == null) {
                 // Log warning but continue - these are expected for unsupported governorates
-                // Log.w(tag, "Skipping landmark '${localLandmark.name}' - unmapped governorate: ${localLandmark.governorate}")
+                Log.w(tag, "Skipping landmark '${localLandmark.name}' - unmapped governorate: ${localLandmark.governorate}")
                 continue
             }
             
