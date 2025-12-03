@@ -2,6 +2,7 @@ package com.hfad.egypttour.ui.screens
 
 import android.content.Intent
 import android.net.Uri
+import android.widget.Toast
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.BorderStroke
@@ -46,6 +47,7 @@ import com.hfad.egypttour.ui.theme.TextBlack
 import com.hfad.egypttour.ui.theme.TextGray
 import com.hfad.egypttour.ui.viewmodel.LandmarkListViewModel
 import kotlinx.coroutines.delay
+import androidx.core.net.toUri
 
 @Composable
 fun LandmarkDetailScreen(
@@ -118,7 +120,7 @@ private fun LandmarkDetailContent(
     
     // Animated height for details section
     val detailsHeightFraction by animateFloatAsState(
-        targetValue = if (isDetailsExpanded) 1f else 0.60f,
+        targetValue = if (isDetailsExpanded) 0.95f else 0.60f,
         animationSpec = spring(dampingRatio = 0.75f, stiffness = 250f),
         label = "detailsHeight"
     )
@@ -234,7 +236,29 @@ private fun LandmarkDetailContent(
                         tint = Color.White
                     )
                 }
-            }
+                
+                // --- THUMBNAIL GALLERY (Bottom of image area) ---
+//                LazyRow(
+//                    modifier = Modifier
+//                        .fillMaxWidth()
+//                        .align(Alignment.BottomCenter)
+//                        .padding(bottom = 16.dp, start = 16.dp, end = 16.dp)
+//                        .background(
+//                            Color.Black.copy(alpha = 0.3f),
+//                            RoundedCornerShape(12.dp)
+//                        )
+//                        .padding(8.dp),
+//                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+//                ) {
+//                    items(allImages.size) { index ->
+//                        GalleryThumb(
+//                            url = allImages[index],
+//                            isSelected = currentImageIndex == index,
+//                            onClick = { currentImageIndex = index }
+//                        )
+//                    }
+//                }
+         }
         }
 
 
@@ -266,7 +290,10 @@ private fun LandmarkDetailContent(
                 .fillMaxWidth()
                 .fillMaxHeight(detailsHeightFraction) // Animated height
                 .align(Alignment.BottomCenter)
-                .clickable(enabled = false) { } // Prevent click-through
+                .clickable(enabled = true) {
+                    // Toggle details expansion on tap
+                    isDetailsExpanded = !isDetailsExpanded
+                } // Prevent click-through
                 // Add bidirectional swipe gesture detection
                 .pointerInput(Unit) {
                     var totalDrag = 0f
@@ -398,13 +425,42 @@ private fun LandmarkDetailContent(
                         }
                         // Show description if available and not a placeholder
                         !description.isNullOrBlank() && !isPlaceholderDescription -> {
-                            Text(
-                                text = description,
-                                fontSize = 15.sp,
-                                color = TextBlack.copy(0.7f),
-                                textAlign = TextAlign.Justify,
-                                lineHeight = 24.sp
-                            )
+                            Column {
+                                Text(
+                                    text = description,
+                                    fontSize = 15.sp,
+                                    color = TextBlack.copy(0.7f),
+                                    textAlign = TextAlign.Justify,
+                                    lineHeight = 24.sp
+                                )
+                                
+                                Spacer(modifier = Modifier.height(12.dp))
+                                
+                                // Source indicator
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    horizontalArrangement = Arrangement.End,
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Default.Info,
+                                        contentDescription = null,
+                                        tint = TextGray.copy(alpha = 0.5f),
+                                        modifier = Modifier.size(14.dp)
+                                    )
+                                    Spacer(modifier = Modifier.width(4.dp))
+                                    Text(
+                                        text = if (!landmark.needsWikipediaDescription) {
+                                            "Source: Local Database"
+                                        } else {
+                                            "Source: Wikipedia"
+                                        },
+                                        fontSize = 12.sp,
+                                        color = TextGray.copy(alpha = 0.6f),
+                                        fontStyle = androidx.compose.ui.text.font.FontStyle.Italic
+                                    )
+                                }
+                            }
                         }
                         // Timeout occurred: Show centered message (buttons will be shown below)
                         hasTimedOut -> {
@@ -471,27 +527,8 @@ private fun LandmarkDetailContent(
                     verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
                     // Primary button: Find Location on Map (always visible)
-                    // FIXED: Tapping toggles expansion, or executes map action when expanded
-                    Button(
-                        onClick = {
-                            if (!showExpandedState) {
-                                // Collapsed: expand to show both options
-                                isExpanded = true
-                            } else {
-                                // Expanded: toggle collapse OR execute map action
-                                // If user taps again while expanded, collapse it
-                                if (isExpanded) {
-                                    isExpanded = false
-                                } else {
-                                    // Auto-expanded (timeout): execute map action
-                                    val lat = landmark.lat ?: 0.0
-                                    val lon = landmark.lon ?: 0.0
-                                    val uri = Uri.parse("geo:$lat,$lon?q=$lat,$lon(${landmark.name})")
-                                    val intent = Intent(Intent.ACTION_VIEW, uri)
-                                    context.startActivity(intent)
-                                }
-                            }
-                        },
+                    // Separated logic: button area opens map, arrow toggles expansion
+                    Surface(
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(64.dp)
@@ -501,15 +538,41 @@ private fun LandmarkDetailContent(
                                 ambientColor = EgyptGold.copy(alpha = if (!showExpandedState) glowAlpha else 0f),
                                 spotColor = EgyptGold.copy(alpha = if (!showExpandedState) glowAlpha else 0f)
                             ),
-                        colors = ButtonDefaults.buttonColors(containerColor = EgyptGold),
+                        color = EgyptGold,
                         shape = RoundedCornerShape(16.dp)
                     ) {
                         Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically
+                            modifier = Modifier.fillMaxSize(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
                         ) {
+                            // Left side: Clickable area for opening map
                             Row(
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .fillMaxHeight()
+                                    .clickable {
+                                        // Validate coordinates before opening map
+                                        val lat = landmark.lat
+                                        val lon = landmark.lon
+                                        
+                                        if (lat != null && lon != null) {
+                                            // Coordinates available - open map
+                                            val uri = "geo:$lat,$lon?q=$lat,$lon(${landmark.name})".toUri()
+                                            val intent = Intent(Intent.ACTION_VIEW, uri)
+                                            context.startActivity(intent)
+                                        } else {
+                                            // No coordinates - show helpful error message
+                                            Toast.makeText(
+                                                context,
+                                                "Location coordinates not available. Try using Google Search below.",
+                                                Toast.LENGTH_LONG
+                                            ).show()
+                                            // Auto-expand to show Google Search option
+                                            isExpanded = true
+                                        }
+                                    }
+                                    .padding(start = 16.dp),
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
                                 Icon(
@@ -526,17 +589,24 @@ private fun LandmarkDetailContent(
                                 )
                             }
                             
-                            // Chevron indicator (rotates when expanded)
-                            Icon(
-                                imageVector = Icons.Default.KeyboardArrowDown,
-                                contentDescription = if (showExpandedState) "Collapse" else "Expand",
-                                tint = Color.White,
-                                modifier = Modifier
-                                    .size(24.dp)
-                                    .graphicsLayer {
-                                        rotationZ = chevronRotation
-                                    }
-                            )
+                            // Right side: Arrow button for expand/collapse
+                            IconButton(
+                                onClick = {
+                                    // Toggle expansion state
+                                    isExpanded = !isExpanded
+                                }
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.KeyboardArrowDown,
+                                    contentDescription = if (showExpandedState) "Collapse" else "Expand",
+                                    tint = Color.White,
+                                    modifier = Modifier
+                                        .size(24.dp)
+                                        .graphicsLayer {
+                                            rotationZ = chevronRotation
+                                        }
+                                )
+                            }
                         }
                     }
                     
