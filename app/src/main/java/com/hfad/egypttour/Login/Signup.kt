@@ -36,6 +36,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -154,6 +155,19 @@ class SignUpViewModel : ViewModel() {
     }
 }
 
+@Composable
+fun customTextFieldColors(): TextFieldColors {
+    return OutlinedTextFieldDefaults.colors(
+        focusedTextColor = Color.White,
+        unfocusedTextColor = Color.White.copy(alpha = 0.7f),
+        focusedContainerColor = Color.Transparent,
+        unfocusedContainerColor = Color.Transparent,
+        focusedBorderColor = Color.White,
+        unfocusedBorderColor = Color.White.copy(alpha = 0.7f),
+        cursorColor = Color.White
+    )
+}
+
 
 @Composable
 fun SignUpScreen(
@@ -194,9 +208,9 @@ fun SignUpScreen(
             }
             is SignUpUiState.Error -> {
                 Toast.makeText(context, state.message, Toast.LENGTH_SHORT).show()
-                viewModel.resetState()
+                viewModel.resetState() // <-- قم بإضافة هذا السطر
             }
-            else -> Unit
+            else -> Unit // للحالات الأخرى مثل Idle و Loading
         }
     }
 
@@ -248,15 +262,7 @@ fun SignUpScreen(
                         shape = RoundedCornerShape(50),
                         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
                         keyboardActions = KeyboardActions(onNext = { focusManager.moveFocus(FocusDirection.Down) }),
-                        colors = OutlinedTextFieldDefaults.colors(
-                            focusedTextColor = Color.White,
-                            unfocusedTextColor = Color.White.copy(alpha = 0.7f),
-                            focusedContainerColor = Color.Transparent,
-                            unfocusedContainerColor = Color.Transparent,
-                            focusedBorderColor = Color.White,
-                            unfocusedBorderColor = Color.White.copy(alpha = 0.7f),
-                            cursorColor = Color.White
-                        )
+                        colors = customTextFieldColors()
                     )
 
                     OutlinedTextField(
@@ -271,15 +277,7 @@ fun SignUpScreen(
                             imeAction = ImeAction.Next
                         ),
                         keyboardActions = KeyboardActions(onNext = { focusManager.moveFocus(FocusDirection.Down) }),
-                        colors = OutlinedTextFieldDefaults.colors(
-                            focusedTextColor = Color.White,
-                            unfocusedTextColor = Color.White.copy(alpha = 0.7f),
-                            focusedContainerColor = Color.Transparent,
-                            unfocusedContainerColor = Color.Transparent,
-                            focusedBorderColor = Color.White,
-                            unfocusedBorderColor = Color.White.copy(alpha = 0.7f),
-                            cursorColor = Color.White
-                        )
+                        colors = customTextFieldColors()
                     )
 
                     OutlinedTextField(
@@ -301,15 +299,7 @@ fun SignUpScreen(
                         keyboardActions = KeyboardActions(onNext = { focusManager.moveFocus(FocusDirection.Down) }),
                         modifier = Modifier.fillMaxWidth(),
                         shape = RoundedCornerShape(50),
-                        colors = OutlinedTextFieldDefaults.colors(
-                            focusedTextColor = Color.White,
-                            unfocusedTextColor = Color.White.copy(alpha = 0.7f),
-                            focusedContainerColor = Color.Transparent,
-                            unfocusedContainerColor = Color.Transparent,
-                            focusedBorderColor = Color.White,
-                            unfocusedBorderColor = Color.White.copy(alpha = 0.7f),
-                            cursorColor = Color.White
-                        )
+                        colors = customTextFieldColors()
                     )
 
                     OutlinedTextField(
@@ -331,15 +321,7 @@ fun SignUpScreen(
                         keyboardActions = KeyboardActions(onDone = { viewModel.signUp() }),
                         modifier = Modifier.fillMaxWidth(),
                         shape = RoundedCornerShape(50),
-                        colors = OutlinedTextFieldDefaults.colors(
-                            focusedTextColor = Color.White,
-                            unfocusedTextColor = Color.White.copy(alpha = 0.7f),
-                            focusedContainerColor = Color.Transparent,
-                            unfocusedContainerColor = Color.Transparent,
-                            focusedBorderColor = Color.White,
-                            unfocusedBorderColor = Color.White.copy(alpha = 0.7f),
-                            cursorColor = Color.White
-                        )
+                        colors = customTextFieldColors()
                     )
 
                     Button(
@@ -364,7 +346,7 @@ fun SignUpScreen(
                         TextButton(onClick = {
                             context.startActivity(Intent(context, SignInActivity::class.java))
                         }) {
-                            Text("Sign in!", color = Color.White, fontWeight = FontWeight.Bold)
+                            Text("Sign in!", color = Color.White, fontWeight = FontWeight.Bold, textDecoration = TextDecoration.Underline)
                         }
                     }
                 }

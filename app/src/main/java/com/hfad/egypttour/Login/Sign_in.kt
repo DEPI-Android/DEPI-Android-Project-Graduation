@@ -37,6 +37,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -311,9 +312,9 @@ fun SignInScreen(
                     }
 
                     Row {
-                        Text("Don't have account? ", color = Color.White.copy(alpha = 0.8f))
+                        Text("Don\'t have account? ", color = Color.White.copy(alpha = 0.8f))
                         TextButton(onClick = onNavigateToSignUp) {
-                            Text("Sign up!", color = Color.White, fontWeight = FontWeight.Bold)
+                            Text("Sign up!", color = Color.White, fontWeight = FontWeight.Bold, textDecoration = TextDecoration.Underline)
                         }
                     }
                 }
