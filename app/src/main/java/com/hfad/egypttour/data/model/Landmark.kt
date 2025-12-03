@@ -18,27 +18,22 @@ data class LandMark(
      * Returns true if:
      * - Description is null or blank
      * - Description has less than 15 words
+     * - Description has less than 100 characters (approximately 2-3 lines on screen)
      */
     val needsWikipediaDescription: Boolean
         get() {
             if (description.isNullOrBlank()) return true
+            
+            // Check word count (existing logic)
             val wordCount = description.trim().split("\\s+".toRegex()).size
-            return wordCount < 15
+            if (wordCount < 15) return true
+            
+            // Check character count for visual length (2-3 lines ≈ 100 chars)
+            if (description.length < 1200) return true
+            
+            return false
         }
 
-//    val shortDescription: String
-//        get() = if (description.length > 100) {
-//            description.take(147) + "..."
-//        } else {
-//            description
-//        }
-//
-//    val hasGallery: Boolean
-//        get() = imageUrls.isNotEmpty()
-//    val totalImages: Int
-//        get() = 1 + imageUrls.size
-//    val allImages: List<String>
-//        get() = (listOf(imageUrl) + imageUrls) as List<String>
 
 
 }

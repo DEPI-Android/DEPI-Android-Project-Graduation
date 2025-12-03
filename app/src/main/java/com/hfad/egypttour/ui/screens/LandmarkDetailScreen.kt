@@ -2,6 +2,9 @@ package com.hfad.egypttour.ui.screens
 
 import android.content.Intent
 import android.net.Uri
+import androidx.compose.animation.*
+import androidx.compose.animation.core.*
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -11,6 +14,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.gestures.detectVerticalDragGestures
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
@@ -18,11 +22,13 @@ import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
@@ -98,6 +104,61 @@ private fun LandmarkDetailContent(
 
     // 2. State to track which image is currently showing
     var currentImageIndex by remember { mutableIntStateOf(0) }
+
+    // 3. State management for unified expandable button
+    var isExpanded by remember { mutableStateOf(false) }
+    var hasTimedOut by remember { mutableStateOf(false) }
+    var isGlowing by remember { mutableStateOf(false) }
+    
+    // Combined expansion state: button expands when manually tapped OR timeout occurs
+    val showExpandedState = isExpanded || hasTimedOut
+    
+    // 4. State for expandable details section
+    var isDetailsExpanded by remember { mutableStateOf(false) }
+    
+    // Animated height for details section
+    val detailsHeightFraction by animateFloatAsState(
+        targetValue = if (isDetailsExpanded) 1f else 0.60f,
+        animationSpec = spring(dampingRatio = 0.75f, stiffness = 250f),
+        label = "detailsHeight"
+    )
+    
+    // Description state for timeout detection
+    val description = landmark.description
+    val isPlaceholderDescription = description.equals("No description available.", ignoreCase = true) || 
+                                    description.equals("building in Egypt", ignoreCase = true)
+    
+    // Timeout detection: Auto-expand button after 13 seconds if Wikipedia is loading
+    // FIXED: Moved to outer scope so it actually triggers
+    LaunchedEffect(landmark.id) {
+        if ((description.isNullOrBlank() || isPlaceholderDescription) && landmark.needsWikipediaDescription) {
+            delay(13000L) // 13 seconds
+            hasTimedOut = true
+        }
+    }
+    
+    // Animation: Chevron rotation (0° = down, 180° = up)
+    val chevronRotation by animateFloatAsState(
+        targetValue = if (showExpandedState) 180f else 0f,
+        animationSpec = spring(dampingRatio = 0.8f, stiffness = 400f),
+        label = "chevronRotation"
+    )
+    
+    // Animation: Glow effect for attention-grabbing
+    val glowAlpha by animateFloatAsState(
+        targetValue = if (isGlowing) 0.3f else 0f,
+        animationSpec = tween(800, easing = FastOutSlowInEasing),
+        label = "glowAlpha"
+    )
+    
+    // Trigger glow effect when button expands
+    LaunchedEffect(showExpandedState) {
+        if (showExpandedState) {
+            isGlowing = true
+            delay(2000L) // Glow for 2 seconds
+            isGlowing = false
+        }
+    }
 
     // Helper function to go to next/prev image safely
     fun cycleImage(direction: Int) {
@@ -199,12 +260,38 @@ private fun LandmarkDetailContent(
             }
         }
 
-        // 3. WHITE DETAILS SHEET
+        // 3. EXPANDABLE WHITE DETAILS SHEET
         Surface(
             modifier = Modifier
                 .fillMaxWidth()
-                .fillMaxHeight(0.60f) // Overlaps image
-                .align(Alignment.BottomCenter),
+                .fillMaxHeight(detailsHeightFraction) // Animated height
+                .align(Alignment.BottomCenter)
+                .clickable(enabled = false) { } // Prevent click-through
+                // Add bidirectional swipe gesture detection
+                .pointerInput(Unit) {
+                    var totalDrag = 0f
+                    detectVerticalDragGestures(
+                        onDragStart = { totalDrag = 0f },
+                        onDragEnd = {
+                            // Check total accumulated drag to determine action
+                            when {
+                                // Swipe down to collapse (when expanded)
+                                isDetailsExpanded && totalDrag > 150f -> {
+                                    isDetailsExpanded = false
+                                }
+                                // Swipe up to expand (when collapsed)
+                                !isDetailsExpanded && totalDrag < -150f -> {
+                                    isDetailsExpanded = true
+                                }
+                            }
+                            totalDrag = 0f
+                        },
+                        onVerticalDrag = { change, dragAmount ->
+                            totalDrag += dragAmount
+                            change.consume()
+                        }
+                    )
+                },
             shape = RoundedCornerShape(topStart = 32.dp, topEnd = 32.dp),
             color = PureWhite,
             shadowElevation = 16.dp
@@ -212,8 +299,45 @@ private fun LandmarkDetailContent(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(top = 32.dp, start = 24.dp, end = 24.dp, bottom = 16.dp)
             ) {
+                // Drag handle indicator - Visual indicator for swipe gestures
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 12.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.spacedBy(4.dp)
+                    ) {
+                        // Drag handle bar
+                        Box(
+                            modifier = Modifier
+                                .width(50.dp)
+                                .height(5.dp)
+                                .background(
+                                    if (isDetailsExpanded) EgyptGold.copy(alpha = 0.6f) 
+                                    else TextGray.copy(alpha = 0.4f), 
+                                    RoundedCornerShape(3.dp)
+                                )
+                        )
+                        
+                        // Hint text based on state
+                        Text(
+                            text = if (isDetailsExpanded) "Swipe down to collapse" else "Swipe up to expand",
+                            fontSize = 11.sp,
+                            color = TextGray.copy(alpha = 0.6f),
+                            fontStyle = androidx.compose.ui.text.font.FontStyle.Italic
+                        )
+                    }
+                }
+                
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(start = 24.dp, end = 24.dp, bottom = 16.dp)
+                ) {
                 // Title
                 Text(
                     text = landmark.name,
@@ -246,80 +370,12 @@ private fun LandmarkDetailContent(
                     Text("Details", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = EgyptGold, modifier = Modifier.align(Alignment.CenterHorizontally))
                     Spacer(modifier = Modifier.height(8.dp))
                     
-                     // Description with Wikipedia loading indicator + 20-second timeout
-                    val description = landmark.description
-                    val isPlaceholderDescription = description.equals("No description available.", ignoreCase = true) || 
-                                                    description.equals("building in Egypt", ignoreCase = true)
-                    
-                    // Client-side timeout: Force Google Search button after 20 seconds
-                    var hasTimedOut by remember { mutableStateOf(false) }
-                    
-                    LaunchedEffect(landmark.id) {
-                        if ((description.isNullOrBlank() || isPlaceholderDescription) && landmark.needsWikipediaDescription) {
-                            delay(13000L) // 20 seconds
-                            hasTimedOut = true
-                        }
-                    }
+                     // Description display logic
+                    // Note: description state and timeout detection moved to outer scope
                     
                     when {
-                        // Show Google Search button if timed out (20+ seconds)
-                        hasTimedOut -> {
-                            Column(
-                                modifier = Modifier.fillMaxWidth(),
-                                horizontalAlignment = Alignment.CenterHorizontally
-                            ) {
-                                Text(
-                                    text = "Wikipedia is taking longer than expected.",
-                                    fontSize = 15.sp,
-                                    color = TextBlack.copy(0.6f),
-                                    textAlign = TextAlign.Center,
-                                    lineHeight = 24.sp,
-                                    fontStyle = androidx.compose.ui.text.font.FontStyle.Italic
-                                )
-                                
-                                Spacer(modifier = Modifier.height(16.dp))
-                                
-                                // Google Search Button
-                                Button(
-                                    onClick = {
-                                        val searchQuery = "${landmark.name} Egypt"
-                                        val googleSearchUrl = "https://www.google.com/search?q=${java.net.URLEncoder.encode(searchQuery, "UTF-8")}"
-                                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(googleSearchUrl))
-                                        context.startActivity(intent)
-                                    },
-                                    colors = ButtonDefaults.buttonColors(
-                                        containerColor = EgyptGold
-                                    ),
-                                    shape = RoundedCornerShape(12.dp),
-                                    modifier = Modifier.wrapContentSize()
-                                ) {
-                                    Icon(
-                                        imageVector = Icons.Default.Search,
-                                        contentDescription = null,
-                                        tint = PureWhite,
-                                        modifier = Modifier.size(20.dp)
-                                    )
-                                    Spacer(modifier = Modifier.width(8.dp))
-                                    Text(
-                                        text = "Search google for ${landmark.name}",
-                                        color = PureWhite,
-                                        fontSize = 16.sp,
-                                        fontWeight = FontWeight.Medium
-                                    )
-                                }
-                                
-                                Spacer(modifier = Modifier.height(8.dp))
-                                
-                                Text(
-                                    text = "Learn more about ${landmark.name}",
-                                    fontSize = 13.sp,
-                                    color = TextGray,
-                                    fontStyle = androidx.compose.ui.text.font.FontStyle.Italic
-                                )
-                            }
-                        }
-                        // Show Wikipedia loading indicator if description is being fetched (< 20 seconds)
-                        (description.isNullOrBlank() || isPlaceholderDescription) && landmark.needsWikipediaDescription -> {
+                        // Show Wikipedia loading indicator ONLY if still loading AND not timed out
+                        (description.isNullOrBlank() || isPlaceholderDescription) && landmark.needsWikipediaDescription && !hasTimedOut -> {
                             Column(
                                 modifier = Modifier
                                     .fillMaxWidth()
@@ -350,82 +406,189 @@ private fun LandmarkDetailContent(
                                 lineHeight = 24.sp
                             )
                         }
-                        // Fallback: Show message + Google Search button if Wikipedia failed
-                        else -> {
+                        // Timeout occurred: Show centered message (buttons will be shown below)
+                        hasTimedOut -> {
                             Column(
-                                modifier = Modifier.fillMaxWidth(),
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(vertical = 32.dp),
                                 horizontalAlignment = Alignment.CenterHorizontally
                             ) {
-                                Text(
-                                    text = "Information about this landmark is limited in our database.",
-                                    fontSize = 15.sp,
-                                    color = TextBlack.copy(0.6f),
-                                    textAlign = TextAlign.Center,
-                                    lineHeight = 24.sp,
-                                    fontStyle = androidx.compose.ui.text.font.FontStyle.Italic
+                                Icon(
+                                    imageVector = Icons.Default.Info,
+                                    contentDescription = null,
+                                    tint = EgyptGold,
+                                    modifier = Modifier.size(48.dp)
                                 )
-                                
                                 Spacer(modifier = Modifier.height(16.dp))
-                                
-                                // Google Search Button
-                                Button(
-                                    onClick = {
-                                        val searchQuery = "${landmark.name} Egypt"
-                                        val googleSearchUrl = "https://www.google.com/search?q=${java.net.URLEncoder.encode(searchQuery, "UTF-8")}"
-                                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(googleSearchUrl))
-                                        context.startActivity(intent)
-                                    },
-                                    colors = ButtonDefaults.buttonColors(
-                                        containerColor = EgyptGold
-                                    ),
-                                    shape = RoundedCornerShape(12.dp),
-                                    modifier = Modifier
-                                        .fillMaxWidth(0.7f)
-                                        .height(48.dp)
-                                ) {
-                                    Icon(
-                                        imageVector = Icons.Default.Search,
-                                        contentDescription = null,
-                                        tint = PureWhite,
-                                        modifier = Modifier.size(20.dp)
-                                    )
-                                    Spacer(modifier = Modifier.width(8.dp))
-                                    Text(
-                                        text = "Search on Google",
-                                        color = PureWhite,
-                                        fontSize = 16.sp,
-                                        fontWeight = FontWeight.Medium
-                                    )
-                                }
-                                
-                                Spacer(modifier = Modifier.height(8.dp))
-                                
                                 Text(
-                                    text = "Learn more about ${landmark.name}",
-                                    fontSize = 13.sp,
+                                    text = "Wikipedia is taking longer than expected",
+                                    fontSize = 18.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    color = TextBlack,
+                                    textAlign = TextAlign.Center
+                                )
+                                Spacer(modifier = Modifier.height(8.dp))
+                                Text(
+                                    text = "Try searching on Google for more information about ${landmark.name}",
+                                    fontSize = 15.sp,
                                     color = TextGray,
-                                    fontStyle = androidx.compose.ui.text.font.FontStyle.Italic
+                                    textAlign = TextAlign.Center,
+                                    lineHeight = 22.sp,
+                                    modifier = Modifier.padding(horizontal = 16.dp)
                                 )
                             }
+                        }
+                        // Fallback: Show message if no description available
+                        else -> {
+                            Text(
+                                text = "Information about this landmark is limited in our database.",
+                                fontSize = 15.sp,
+                                color = TextBlack.copy(0.6f),
+                                textAlign = TextAlign.Center,
+                                lineHeight = 24.sp,
+                                fontStyle = androidx.compose.ui.text.font.FontStyle.Italic,
+                                modifier = Modifier.fillMaxWidth()
+                            )
                         }
                     }
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                Button(
-                    onClick = {
-                        val lat = landmark.lat ?: 0.0
-                        val lon = landmark.lon ?: 0.0
-                        val uri = Uri.parse("geo:$lat,$lon?q=$lat,$lon(${landmark.name})")
-                        val intent = Intent(Intent.ACTION_VIEW, uri)
-                        context.startActivity(intent)
-                    },
-                    modifier = Modifier.fillMaxWidth().height(56.dp).shadow(4.dp, RoundedCornerShape(12.dp)).padding(8.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = EgyptGold),
-                    shape = RoundedCornerShape(12.dp)
+                // Unified Expandable Button Section
+                // Bottom padding increases when expanded for better spacing
+                val bottomPadding by animateDpAsState(
+                    targetValue = if (showExpandedState) 24.dp else 12.dp,
+                    animationSpec = spring(dampingRatio = 0.8f, stiffness = 300f),
+                    label = "bottomPadding"
+                )
+                
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = bottomPadding),
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
-                    Text("Find Location on Map", fontSize = 18.sp, fontWeight = FontWeight.Bold, color = Color.White)
+                    // Primary button: Find Location on Map (always visible)
+                    // FIXED: Tapping toggles expansion, or executes map action when expanded
+                    Button(
+                        onClick = {
+                            if (!showExpandedState) {
+                                // Collapsed: expand to show both options
+                                isExpanded = true
+                            } else {
+                                // Expanded: toggle collapse OR execute map action
+                                // If user taps again while expanded, collapse it
+                                if (isExpanded) {
+                                    isExpanded = false
+                                } else {
+                                    // Auto-expanded (timeout): execute map action
+                                    val lat = landmark.lat ?: 0.0
+                                    val lon = landmark.lon ?: 0.0
+                                    val uri = Uri.parse("geo:$lat,$lon?q=$lat,$lon(${landmark.name})")
+                                    val intent = Intent(Intent.ACTION_VIEW, uri)
+                                    context.startActivity(intent)
+                                }
+                            }
+                        },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(64.dp)
+                            .shadow(
+                                elevation = if (isGlowing && !showExpandedState) 12.dp else 8.dp,
+                                shape = RoundedCornerShape(16.dp),
+                                ambientColor = EgyptGold.copy(alpha = if (!showExpandedState) glowAlpha else 0f),
+                                spotColor = EgyptGold.copy(alpha = if (!showExpandedState) glowAlpha else 0f)
+                            ),
+                        colors = ButtonDefaults.buttonColors(containerColor = EgyptGold),
+                        shape = RoundedCornerShape(16.dp)
+                    ) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.LocationOn,
+                                    contentDescription = null,
+                                    tint = Color.White
+                                )
+                                Spacer(modifier = Modifier.width(8.dp))
+                                Text(
+                                    text = "Find Location on Map",
+                                    fontSize = 18.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    color = Color.White
+                                )
+                            }
+                            
+                            // Chevron indicator (rotates when expanded)
+                            Icon(
+                                imageVector = Icons.Default.KeyboardArrowDown,
+                                contentDescription = if (showExpandedState) "Collapse" else "Expand",
+                                tint = Color.White,
+                                modifier = Modifier
+                                    .size(24.dp)
+                                    .graphicsLayer {
+                                        rotationZ = chevronRotation
+                                    }
+                            )
+                        }
+                    }
+                    
+                    // Google Search button (slides in when expanded)
+                    AnimatedVisibility(
+                        visible = showExpandedState,
+                        enter = slideInVertically(
+                            initialOffsetY = { it },
+                            animationSpec = spring(dampingRatio = 0.7f, stiffness = 250f)
+                        ) + fadeIn(tween(300)),
+                        exit = slideOutVertically(
+                            targetOffsetY = { it },
+                            animationSpec = spring(dampingRatio = 0.8f, stiffness = 300f)
+                        ) + fadeOut(tween(200))
+                    ) {
+                        OutlinedButton(
+                            onClick = {
+                                val searchQuery = "${landmark.name} Egypt"
+                                val googleSearchUrl = "https://www.google.com/search?q=${java.net.URLEncoder.encode(searchQuery, "UTF-8")}"
+                                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(googleSearchUrl))
+                                context.startActivity(intent)
+                            },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(56.dp)
+                                .shadow(
+                                    elevation = if (isGlowing) 12.dp else 6.dp,
+                                    shape = RoundedCornerShape(16.dp),
+                                    ambientColor = EgyptGold.copy(alpha = glowAlpha),
+                                    spotColor = EgyptGold.copy(alpha = glowAlpha)
+                                ),
+                            colors = ButtonDefaults.outlinedButtonColors(
+                                contentColor = EgyptGold
+                            ),
+                            border = BorderStroke(2.dp, EgyptGold),
+                            shape = RoundedCornerShape(16.dp)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Search,
+                                contentDescription = null,
+                                tint = EgyptGold
+                            )
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Text(
+                                text = "Search google for ${landmark.name}",
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight.Medium,
+                                color = EgyptGold
+                            )
+                        }
+                    }
+                }
                 }
             }
         }
