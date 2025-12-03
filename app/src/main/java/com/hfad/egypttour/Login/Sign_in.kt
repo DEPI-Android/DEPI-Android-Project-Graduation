@@ -59,15 +59,23 @@ class SignInActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             EgyptTourTheme {
-                SignInScreen(
-                    onNavigateToMain = {
-                        val intent = Intent(this, MainActivity::class.java)
-                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                        startActivity(intent)
-                    },
-                    onNavigateToSignUp = { startActivity(Intent(this, SignUpActivity::class.java)) },
-                    onNavigateToForgotPassword = { startActivity(Intent(this, ForgotPasswordActivity::class.java)) }
-                )
+                SignInScreen(onNavigateToMain = {
+                    val intent = Intent(this, MainActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(intent)
+                }, onNavigateToSignUp = {
+                    startActivity(
+                        Intent(
+                            this, SignUpActivity::class.java
+                        )
+                    )
+                }, onNavigateToForgotPassword = {
+                    startActivity(
+                        Intent(
+                            this, ForgotPasswordActivity::class.java
+                        )
+                    )
+                })
             }
         }
     }
@@ -102,7 +110,8 @@ class SignInViewModel : ViewModel() {
             try {
                 auth.signInWithEmailAndPassword(email, password).await()
                 if (rememberMe) {
-                    val sharedPreferences = context.getSharedPreferences("user_session", Context.MODE_PRIVATE)
+                    val sharedPreferences =
+                        context.getSharedPreferences("user_session", Context.MODE_PRIVATE)
                     with(sharedPreferences.edit()) {
                         putBoolean("isLoggedIn", true)
                         apply()
@@ -146,7 +155,9 @@ fun SignInScreen(
     )
 
     val lottieComposition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.loadin_lo))
-    val lottieProgress by animateLottieCompositionAsState(lottieComposition, iterations = LottieConstants.IterateForever)
+    val lottieProgress by animateLottieCompositionAsState(
+        lottieComposition, iterations = LottieConstants.IterateForever
+    )
 
     LaunchedEffect(uiState) {
         when (val state = uiState) {
@@ -155,10 +166,12 @@ fun SignInScreen(
                 onNavigateToMain()
                 viewModel.resetState()
             }
+
             is SignInUiState.Error -> {
                 Toast.makeText(context, state.message, Toast.LENGTH_LONG).show()
                 viewModel.resetState()
             }
+
             else -> Unit
         }
     }
@@ -170,8 +183,7 @@ fun SignInScreen(
         contentAlignment = Alignment.Center
     ) {
         Card(
-            modifier = Modifier
-                .fillMaxWidth(0.9f),
+            modifier = Modifier.fillMaxWidth(0.9f),
             shape = RoundedCornerShape(20.dp),
             colors = CardDefaults.cardColors(containerColor = Color.Transparent)
         ) {
@@ -210,10 +222,13 @@ fun SignInScreen(
                         modifier = Modifier.fillMaxWidth(),
                         shape = RoundedCornerShape(50),
                         keyboardOptions = KeyboardOptions(
-                            keyboardType = KeyboardType.Email,
-                            imeAction = ImeAction.Next
+                            keyboardType = KeyboardType.Email, imeAction = ImeAction.Next
                         ),
-                        keyboardActions = KeyboardActions(onNext = { focusManager.moveFocus(FocusDirection.Down) }),
+                        keyboardActions = KeyboardActions(onNext = {
+                            focusManager.moveFocus(
+                                FocusDirection.Down
+                            )
+                        }),
                         colors = OutlinedTextFieldDefaults.colors(
                             focusedTextColor = Color.White,
                             unfocusedTextColor = Color.White.copy(alpha = 0.7f),
@@ -231,15 +246,17 @@ fun SignInScreen(
                         label = { Text("Password") },
                         leadingIcon = { Icon(Icons.Default.Lock, contentDescription = null) },
                         trailingIcon = {
-                            val image = if (viewModel.passwordVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff
-                            IconButton(onClick = { viewModel.passwordVisible = !viewModel.passwordVisible }) {
+                            val image =
+                                if (viewModel.passwordVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff
+                            IconButton(onClick = {
+                                viewModel.passwordVisible = !viewModel.passwordVisible
+                            }) {
                                 Icon(imageVector = image, null)
                             }
                         },
                         visualTransformation = if (viewModel.passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                         keyboardOptions = KeyboardOptions(
-                            keyboardType = KeyboardType.Password,
-                            imeAction = ImeAction.Done
+                            keyboardType = KeyboardType.Password, imeAction = ImeAction.Done
                         ),
                         keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
                         modifier = Modifier.fillMaxWidth(),
@@ -265,8 +282,7 @@ fun SignInScreen(
                                 checked = viewModel.rememberMe,
                                 onCheckedChange = { viewModel.rememberMe = it },
                                 colors = CheckboxDefaults.colors(
-                                    checkedColor = Color.White,
-                                    checkmarkColor = Color(0xFFFF9800)
+                                    checkedColor = Color.White, checkmarkColor = Color(0xFFFF9800)
                                 )
                             )
                             Text("Remember me", color = Color.White.copy(alpha = 0.8f))
@@ -286,7 +302,12 @@ fun SignInScreen(
                         contentPadding = PaddingValues(),
                         enabled = uiState != SignInUiState.Loading
                     ) {
-                        Text("LOGIN", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Color.White)
+                        Text(
+                            "LOGIN",
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Color.White
+                        )
                     }
 
                     Row {
@@ -319,6 +340,9 @@ fun SignInScreen(
 @Composable
 fun SignInScreenPreview() {
     EgyptTourTheme {
-        SignInScreen(onNavigateToMain = {}, onNavigateToSignUp = {}, onNavigateToForgotPassword = {})
+        SignInScreen(
+            onNavigateToMain = {},
+            onNavigateToSignUp = {},
+            onNavigateToForgotPassword = {})
     }
 }

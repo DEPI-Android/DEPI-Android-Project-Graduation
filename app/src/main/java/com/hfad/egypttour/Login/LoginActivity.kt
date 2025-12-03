@@ -98,6 +98,7 @@ fun LoginScreen() {
         while (true) {
             delay(3000) // Switch image every 3 seconds
             currentImageIndex.value = (currentImageIndex.value + 1) % images.size
+            //loop in three images
         }
     }
 
