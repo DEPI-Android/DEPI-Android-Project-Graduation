@@ -8,6 +8,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -43,6 +44,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.airbnb.lottie.compose.*
 import com.google.firebase.auth.FirebaseAuth
 import com.hfad.egypttour.MainActivity
@@ -132,7 +134,7 @@ class SignInViewModel : ViewModel() {
 
 @Composable
 fun SignInScreen(
-    viewModel: SignInViewModel = androidx.lifecycle.viewmodel.compose.viewModel(),
+    viewModel: SignInViewModel = viewModel(),
     onNavigateToMain: () -> Unit,
     onNavigateToSignUp: () -> Unit,
     onNavigateToForgotPassword: () -> Unit
@@ -278,7 +280,14 @@ fun SignInScreen(
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier.clickable(
+                                true,
+
+                                onClick = { viewModel.rememberMe= !viewModel.rememberMe }
+                            )
+                        ) {
                             Checkbox(
                                 checked = viewModel.rememberMe,
                                 onCheckedChange = { viewModel.rememberMe = it },
@@ -286,7 +295,10 @@ fun SignInScreen(
                                     checkedColor = Color.White, checkmarkColor = Color(0xFFFF9800)
                                 )
                             )
-                            Text("Remember me", color = Color.White.copy(alpha = 0.8f))
+                            Text(
+                                "Remember me", color = Color.White.copy(alpha = 0.8f),
+
+                                )
                         }
                         TextButton(onClick = onNavigateToForgotPassword) {
                             Text("Forgot password?", color = Color.White.copy(alpha = 0.8f))
@@ -314,7 +326,12 @@ fun SignInScreen(
                     Row {
                         Text("Don\'t have account? ", color = Color.White.copy(alpha = 0.8f))
                         TextButton(onClick = onNavigateToSignUp) {
-                            Text("Sign up!", color = Color.White, fontWeight = FontWeight.Bold, textDecoration = TextDecoration.Underline)
+                            Text(
+                                "Sign up!",
+                                color = Color.White,
+                                fontWeight = FontWeight.Bold,
+                                textDecoration = TextDecoration.Underline
+                            )
                         }
                     }
                 }
