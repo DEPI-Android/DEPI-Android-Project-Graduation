@@ -10,6 +10,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -18,47 +20,250 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.hfad.egypttour.R
+import com.hfad.egypttour.data.model.User
 
 @Composable
 fun Profile(
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    onLogoutSuccess: () -> Unit = {},  // Callback when user logs out
+    viewModel: ProfileViewModel = viewModel()
 ) {
-    // Main container - fills entire screen with SoftWhite background
+    // Collect UI state from ViewModel
+    val uiState by viewModel.uiState.collectAsState()
+
+    // Main container
     Box(
         modifier = Modifier
             .background(Color(0xFFFAFAFA))
-            .fillMaxSize().padding(top = 16.dp)
+            .fillMaxSize()
+            .padding(top = 16.dp)
+    ) {
+        // Show different content based on state
+        when (val state = uiState) {
+            is ProfileUiState.Loading -> {
+                LoadingContent()
+            }
+            is ProfileUiState.Success -> {
+                ProfileContent(
+                    user = state.user,
+                    onBackClick = onBackClick,
+                    onLogout = {
+                        viewModel.signOut()
+                        onLogoutSuccess()
+                    }
+                )
+            }
+            is ProfileUiState.Error -> {
+                ErrorContent(
+                    message = state.message,
+                    onRetry = { viewModel.fetchUserData() },
+                    onBackClick = onBackClick
+                )
+            }
+            is ProfileUiState.NotAuthenticated -> {
+                NotAuthenticatedContent(onBackClick = onBackClick)
+            }
+        }
+    }
+}
+
+// ==================== LOADING STATE ====================
+@Composable
+fun LoadingContent() {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
     ) {
         Column(
-            modifier = Modifier.fillMaxSize()
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            // Top Bar (Back button and Edit button)
-            TopBar(onBackClick = onBackClick)
-            // Profile Header (Image, Name, Title, Contact Info)
-            ProfileHeader()
-            Spacer(modifier = Modifier.height(32.dp))
-            // Menu Items Section
-            MenuSection()
+            CircularProgressIndicator(
+                modifier = Modifier.size(48.dp),
+                color = Color(0xFFE4B643)
+            )
+            Text(
+                text = "Loading profile...",
+                fontSize = 16.sp,
+                color = Color(0xFF666666)
+            )
         }
+    }
+}
+
+// ==================== ERROR STATE ====================
+@Composable
+fun ErrorContent(
+    message: String,
+    onRetry: () -> Unit,
+    onBackClick: () -> Unit
+) {
+    Column(
+        modifier = Modifier.fillMaxSize()
+    ) {
+        // Top bar with back button
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.Start
+        ) {
+            Icon(
+                imageVector = Icons.Default.ArrowBack,
+                contentDescription = "Back button",
+                tint = Color(0xFF333333),
+                modifier = Modifier
+                    .size(28.dp)
+                    .clickable { onBackClick() }
+            )
+        }
+
+        // Error content
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                modifier = Modifier.padding(32.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Warning,
+                    contentDescription = "Error",
+                    tint = Color(0xFFB00020),
+                    modifier = Modifier.size(64.dp)
+                )
+
+                Text(
+                    text = "Oops! Something went wrong",
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color(0xFF333333)
+                )
+
+                Text(
+                    text = message,
+                    fontSize = 14.sp,
+                    color = Color(0xFF666666),
+                    textAlign = TextAlign.Center
+                )
+
+                Button(
+                    onClick = onRetry,
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xFFE4B643)
+                    ),
+                    modifier = Modifier.padding(top = 16.dp)
+                ) {
+                    Text("Retry", color = Color.White)
+                }
+            }
+        }
+    }
+}
+
+// ==================== NOT AUTHENTICATED STATE ====================
+@Composable
+fun NotAuthenticatedContent(onBackClick: () -> Unit) {
+    Column(
+        modifier = Modifier.fillMaxSize()
+    ) {
+        // Top bar with back button
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.Start
+        ) {
+            Icon(
+                imageVector = Icons.Default.ArrowBack,
+                contentDescription = "Back button",
+                tint = Color(0xFF333333),
+                modifier = Modifier
+                    .size(28.dp)
+                    .clickable { onBackClick() }
+            )
+        }
+
+        // Not authenticated content
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                modifier = Modifier.padding(32.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.AccountCircle,
+                    contentDescription = "Not logged in",
+                    tint = Color(0xFF666666),
+                    modifier = Modifier.size(64.dp)
+                )
+
+                Text(
+                    text = "Not Logged In",
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color(0xFF333333)
+                )
+
+                Text(
+                    text = "Please sign in to view your profile",
+                    fontSize = 14.sp,
+                    color = Color(0xFF666666),
+                    textAlign = TextAlign.Center
+                )
+            }
+        }
+    }
+}
+
+// ==================== SUCCESS STATE - PROFILE CONTENT ====================
+@Composable
+fun ProfileContent(
+    user: User,
+    onBackClick: () -> Unit,
+    onLogout: () -> Unit
+) {
+    Column(
+        modifier = Modifier.fillMaxSize()
+    ) {
+        // Top Bar
+        TopBar(onBackClick = onBackClick)
+
+        // Profile Header with user data
+        ProfileHeader(
+            username = user.username,
+            email = user.email
+        )
+
+        Spacer(modifier = Modifier.height(32.dp))
+
+        // Menu Section
+        MenuSection(onLogout = onLogout)
     }
 }
 
 // ==================== TOP BAR ====================
 @Composable
 fun TopBar(onBackClick: () -> Unit) {
-    // Row arranges items horizontally (left to right)
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,  // Space items to edges
+        horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        // Back button (left side)
+        // Back button
         Icon(
             imageVector = Icons.Default.ArrowBack,
             contentDescription = "Back button",
@@ -68,7 +273,7 @@ fun TopBar(onBackClick: () -> Unit) {
                 .clickable { onBackClick() }
         )
 
-        // Edit button (right side)
+        // Edit button
         Icon(
             imageVector = Icons.Default.Edit,
             contentDescription = "Edit profile",
@@ -82,75 +287,60 @@ fun TopBar(onBackClick: () -> Unit) {
 
 // ==================== PROFILE HEADER ====================
 @Composable
-fun ProfileHeader() {
+fun ProfileHeader(
+    username: String,
+    email: String
+) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 24.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // Profile Image in circular shape
+        // Profile Image
         Box(
             modifier = Modifier
                 .size(100.dp)
                 .clip(CircleShape)
-                .background(Color.LightGray)
+                .background(Color(0xFFE4B643))
         ) {
-            // Replace with actual image
-            // For now, shows a placeholder
-            Image(
-                painter = painterResource(id = R.drawable.ic_launcher_foreground),
-                contentDescription = "Profile picture",
-                contentScale = ContentScale.Crop,
-                modifier = Modifier.fillMaxSize()
+            // Display first letter of username
+            Text(
+                text = username.firstOrNull()?.uppercase() ?: "U",
+                fontSize = 48.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.White,
+                modifier = Modifier.align(Alignment.Center)
             )
         }
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Name
+        // Username (from Firebase)
         Text(
-            text = "Youssef Wahba",
+            text = username,
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
-            color = Color(0xFF333333) // Text black COLOR
-        )
-
-        Spacer(modifier = Modifier.height(4.dp))
-
-        // Title/Role
-        Text(
-            text = "Android Developer",
-            fontSize = 14.sp,
-            color = Color(0xFF666666) // Text gray COLOR
+            color = Color(0xFF333333)
         )
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        // Contact Information
-        ContactInfoRow()
+        // Email (from Firebase)
+        ContactInfoRow(email = email)
     }
 }
 
 // ==================== CONTACT INFO ====================
 @Composable
-fun ContactInfoRow() {
+fun ContactInfoRow(email: String) {
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.Start
     ) {
-        // Phone Number
-        ContactInfoItem(
-            icon = Icons.Default.Phone,
-            text = "01092723109"
-        )
-
-        Spacer(modifier = Modifier.height(12.dp))
-
-        // Email
         ContactInfoItem(
             icon = Icons.Default.Email,
-            text = "youssefwahba47@gmail.com"
+            text = email
         )
     }
 }
@@ -164,7 +354,7 @@ fun ContactInfoItem(icon: ImageVector, text: String) {
         Icon(
             imageVector = icon,
             contentDescription = null,
-            tint = Color(0xFF666666),  // Text gray COLOR
+            tint = Color(0xFF666666),
             modifier = Modifier.size(18.dp)
         )
 
@@ -173,14 +363,14 @@ fun ContactInfoItem(icon: ImageVector, text: String) {
         Text(
             text = text,
             fontSize = 14.sp,
-            color = Color(0xFF333333),  // Text black COLOR
+            color = Color(0xFF333333)
         )
     }
 }
 
 // ==================== MENU SECTION ====================
 @Composable
-fun MenuSection() {
+fun MenuSection(onLogout: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -189,7 +379,7 @@ fun MenuSection() {
         // My Favourites
         MenuItem(
             icon = Icons.Default.Favorite,
-            iconTint = Color(0xFFE4B643),  // Gold COLOR
+            iconTint = Color(0xFFE4B643),
             text = "My Favourites",
             onClick = { /* Navigate to favourites */ }
         )
@@ -199,7 +389,7 @@ fun MenuSection() {
         // Saves
         MenuItem(
             icon = Icons.Default.CheckCircle,
-            iconTint = Color(0xFFE4B643),  // Gold COLOR
+            iconTint = Color(0xFFE4B643),
             text = "Saves",
             onClick = { /* Navigate to saves */ }
         )
@@ -209,43 +399,42 @@ fun MenuSection() {
         // Settings
         MenuItem(
             icon = Icons.Default.Settings,
-            iconTint = Color(0xFFE4B643),  // Gold COLOR,
+            iconTint = Color(0xFFE4B643),
             text = "Settings",
             onClick = { /* Navigate to settings */ }
         )
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        // Log Out (Special styling - red text)
+        // Log Out
         MenuItem(
             icon = Icons.Default.ExitToApp,
-            iconTint = Color(0xFFB00020), // Error red COLOR
+            iconTint = Color(0xFFB00020),
             text = "Log out",
-            textColor = Color(0xFFB00020),  // Error red COLOR
-            onClick = { /* Handle logout */ }
+            textColor = Color(0xFFB00020),
+            onClick = onLogout
         )
     }
 }
 
-// ==================== MENU ITEM (REUSABLE) ====================
+// ==================== MENU ITEM ====================
 @Composable
 fun MenuItem(
     icon: ImageVector,
     iconTint: Color,
     text: String,
-    textColor: Color = Color(0xFF333333),  // Text black COLOR
+    textColor: Color = Color(0xFF333333),
     onClick: () -> Unit
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(12.dp))
-            .background(Color(0xFFFFFFFF))  // pure white COLOR
+            .background(Color(0xFFFFFFFF))
             .clickable { onClick() }
             .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        // Icon
         Icon(
             imageVector = icon,
             contentDescription = text,
@@ -255,19 +444,17 @@ fun MenuItem(
 
         Spacer(modifier = Modifier.width(16.dp))
 
-        // Text
         Text(
             text = text,
             fontSize = 16.sp,
             color = textColor,
-            modifier = Modifier.weight(1f)  // Takes up remaining space
+            modifier = Modifier.weight(1f)
         )
 
-        // Arrow icon (right side)
         Icon(
             imageVector = Icons.Default.KeyboardArrowRight,
             contentDescription = "Navigate",
-            tint = Color(0xFF333333),   // text gray COLOR
+            tint = Color(0xFF666666),
             modifier = Modifier.size(24.dp)
         )
     }
@@ -277,5 +464,8 @@ fun MenuItem(
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun ProfilePreview() {
-    Profile(onBackClick = {})
+    Profile(
+        onBackClick = {},
+        onLogoutSuccess = {}
+    )
 }
