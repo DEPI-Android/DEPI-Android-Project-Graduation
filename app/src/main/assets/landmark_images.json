@@ -1071,78 +1071,6 @@
       "has_images": true
     },
     {
-      "id": "283.0",
-      "name": "Wadi Degla",
-      "governorate": "Cairo Governorate",
-      "folder_name": "Wadi_Degla",
-      "image_directory": "images/Wadi_Degla",
-      "image_count": 12,
-      "csv_image_count": 67,
-      "images": [
-        {
-          "filename": "0.jpg",
-          "path": "images/Wadi_Degla/0.jpg",
-          "relative_path": "images/Wadi_Degla/0.jpg"
-        },
-        {
-          "filename": "1.jpg",
-          "path": "images/Wadi_Degla/1.jpg",
-          "relative_path": "images/Wadi_Degla/1.jpg"
-        },
-        {
-          "filename": "10.jpg",
-          "path": "images/Wadi_Degla/10.jpg",
-          "relative_path": "images/Wadi_Degla/10.jpg"
-        },
-        {
-          "filename": "11.jpg",
-          "path": "images/Wadi_Degla/11.jpg",
-          "relative_path": "images/Wadi_Degla/11.jpg"
-        },
-        {
-          "filename": "12.jpg",
-          "path": "images/Wadi_Degla/12.jpg",
-          "relative_path": "images/Wadi_Degla/12.jpg"
-        },
-        {
-          "filename": "13.jpg",
-          "path": "images/Wadi_Degla/13.jpg",
-          "relative_path": "images/Wadi_Degla/13.jpg"
-        },
-        {
-          "filename": "14.jpg",
-          "path": "images/Wadi_Degla/14.jpg",
-          "relative_path": "images/Wadi_Degla/14.jpg"
-        },
-        {
-          "filename": "15.jpg",
-          "path": "images/Wadi_Degla/15.jpg",
-          "relative_path": "images/Wadi_Degla/15.jpg"
-        },
-        {
-          "filename": "16.jpg",
-          "path": "images/Wadi_Degla/16.jpg",
-          "relative_path": "images/Wadi_Degla/16.jpg"
-        },
-        {
-          "filename": "17.jpg",
-          "path": "images/Wadi_Degla/17.jpg",
-          "relative_path": "images/Wadi_Degla/17.jpg"
-        },
-        {
-          "filename": "18.jpg",
-          "path": "images/Wadi_Degla/18.jpg",
-          "relative_path": "images/Wadi_Degla/18.jpg"
-        },
-        {
-          "filename": "19.jpg",
-          "path": "images/Wadi_Degla/19.jpg",
-          "relative_path": "images/Wadi_Degla/19.jpg"
-        }
-      ],
-      "has_images": true
-    },
-    {
       "id": "198217.0",
       "name": "Abu Haggag Mosque",
       "governorate": "Luxor",
@@ -14330,23 +14258,6 @@
           "filename": "0.jpg",
           "path": "images/Koubbeh_Palace/0.jpg",
           "relative_path": "images/Koubbeh_Palace/0.jpg"
-        }
-      ],
-      "has_images": true
-    },
-    {
-      "id": "38165.0",
-      "name": "Relations of Egypt and Italy",
-      "governorate": "Cairo Governorate",
-      "folder_name": "Relations_of_Egypt_and_Italy",
-      "image_directory": "images/Relations_of_Egypt_and_Italy",
-      "image_count": 1,
-      "csv_image_count": 1,
-      "images": [
-        {
-          "filename": "0.jpg",
-          "path": "images/Relations_of_Egypt_and_Italy/0.jpg",
-          "relative_path": "images/Relations_of_Egypt_and_Italy/0.jpg"
         }
       ],
       "has_images": true

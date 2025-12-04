@@ -174,18 +174,6 @@
     "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/b/bc/Contribs.jpg"
   },
   {
-    "id": "283.0",
-    "name": "Wadi Degla",
-    "description": "Egyptian football club based in Cairo",
-    "governorate": "Cairo Governorate",
-    "coordinates": {
-      "latitude": 29.957783333,
-      "longitude": 31.312927777
-    },
-    "imagePath": "landmark_images/Wadi_Degla.jpg",
-    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/b/b0/%D9%8BWadi_Degla_38.JPG"
-  },
-  {
     "id": "198217.0",
     "name": "Abu Haggag Mosque",
     "description": "mosque in Luxor, Egypt",
@@ -3010,15 +2998,6 @@
     },
     "imagePath": "landmark_images/Koubbeh_Palace.jpg",
     "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/8/8d/Yuri_Gagarin_and_Zakaria_Mohieddin_05-02-1962_Koubbeh_Palace_in_Egypt.jpg"
-  },
-  {
-    "id": "38165.0",
-    "name": "Relations of Egypt and Italy",
-    "description": "No description available.",
-    "governorate": "Cairo Governorate",
-    "coordinates": null,
-    "imagePath": "landmark_images/Relations_of_Egypt_and_Italy.jpg",
-    "wikiUrl": "https://upload.wikimedia.org/wikipedia/commons/1/1a/Egypt_Italy_locator.png"
   },
   {
     "id": "71596.0",
