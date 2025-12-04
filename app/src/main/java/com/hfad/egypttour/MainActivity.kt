@@ -30,7 +30,7 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun GreetingPreview() {
         EgyptTourTheme {
-             GovernorateListScreen {  }
+             GovernorateListScreen(onGovernorateClick = {  }, onProfileClick = {  })
         }
     }
 }

@@ -19,6 +19,7 @@ object NavigationDestinations {
     const val GOVERNORATE_LIST = "governorates"
     const val LANDMARK_LIST = "landmarks/{governorateId}"
     const val LANDMARK_DETAIL = "landmark/{landmarkId}"
+    const val PROFILE = "profile"
 }
 
 @Composable
@@ -32,6 +33,9 @@ fun AppNavigation(navController: NavHostController) {
             GovernorateListScreen(
                 onGovernorateClick = { governorateId ->
                     navController.navigate("landmarks/$governorateId")
+                },
+                onProfileClick = {
+                    navController.navigate(NavigationDestinations.PROFILE)
                 }
             )
         }
@@ -52,6 +56,14 @@ fun AppNavigation(navController: NavHostController) {
             )
         }
 
+        // Profile screen
+        composable(NavigationDestinations.PROFILE) {
+            Profile(
+                onBackClick = {
+                    navController.popBackStack()
+                }
+            )
+        }
 //        // Landmark detail screen
         composable(NavigationDestinations.LANDMARK_DETAIL) { backStackEntry ->
             val landmarkId = backStackEntry.arguments?.getString("landmarkId") ?: "0"

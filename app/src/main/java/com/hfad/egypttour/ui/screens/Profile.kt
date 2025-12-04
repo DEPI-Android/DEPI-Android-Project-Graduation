@@ -24,18 +24,20 @@ import androidx.compose.ui.unit.sp
 import com.hfad.egypttour.R
 
 @Composable
-fun Profile() {
+fun Profile(
+    onBackClick: () -> Unit
+) {
     // Main container - fills entire screen with SoftWhite background
     Box(
         modifier = Modifier
             .background(Color(0xFFFAFAFA))
-            .fillMaxSize()
+            .fillMaxSize().padding(top = 16.dp)
     ) {
         Column(
             modifier = Modifier.fillMaxSize()
         ) {
             // Top Bar (Back button and Edit button)
-            TopBar()
+            TopBar(onBackClick = onBackClick)
             // Profile Header (Image, Name, Title, Contact Info)
             ProfileHeader()
             Spacer(modifier = Modifier.height(32.dp))
@@ -47,7 +49,7 @@ fun Profile() {
 
 // ==================== TOP BAR ====================
 @Composable
-fun TopBar() {
+fun TopBar(onBackClick: () -> Unit) {
     // Row arranges items horizontally (left to right)
     Row(
         modifier = Modifier
@@ -63,7 +65,7 @@ fun TopBar() {
             tint = Color(0xFF333333),
             modifier = Modifier
                 .size(28.dp)
-                .clickable { /* Handle back navigation */ }
+                .clickable { onBackClick() }
         )
 
         // Edit button (right side)
@@ -275,5 +277,5 @@ fun MenuItem(
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun ProfilePreview() {
-    Profile()
+    Profile(onBackClick = {})
 }
