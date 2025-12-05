@@ -25,7 +25,9 @@ class SessionManager @Inject constructor(
         private const val KEY_EMAIL = "email"
         private const val KEY_FAVORITES = "cached_favorites"
         private const val KEY_SAVES = "cached_saves"
+        private const val KEY_DARK_MODE = "dark_mode"
     }
+
 
     /**
      * Save login session (called when "Remember me" is checked)
@@ -160,5 +162,23 @@ class SessionManager @Inject constructor(
      */
     fun removeSaveFromCache(id: Int) {
         cacheSaves(getCachedSaves().filter { it != id })
+    }
+
+    // ==================== DARK MODE ====================
+
+    /**
+     * Set dark mode preference
+     */
+    fun setDarkMode(enabled: Boolean) {
+        sharedPreferences.edit()
+            .putBoolean(KEY_DARK_MODE, enabled)
+            .apply()
+    }
+
+    /**
+     * Get dark mode preference
+     */
+    fun isDarkMode(): Boolean {
+        return sharedPreferences.getBoolean(KEY_DARK_MODE, false)
     }
 }

@@ -19,3 +19,10 @@ val TextWhite = Color(0xFFFFFFFF)          // Text on gold buttons
 
 // --- STATUS COLORS ---
 val ErrorRed = Color(0xFFB00020)
+
+// --- DARK THEME COLORS ---
+val DarkBackground = Color(0xFF121212)      // Main dark background
+val DarkSurface = Color(0xFF1E1E1E)         // Cards/surfaces in dark mode
+val DarkSurfaceLight = Color(0xFF2C2C2C)    // Lighter surface for elevation
+val DarkTextPrimary = Color(0xFFFFFFFF)     // Primary text in dark mode
+val DarkTextSecondary = Color(0xFFB3B3B3)   // Secondary text in dark mode

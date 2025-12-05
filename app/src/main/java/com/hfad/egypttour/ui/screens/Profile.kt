@@ -33,6 +33,8 @@ fun Profile(
     onBackClick: () -> Unit,
     onLogoutSuccess: () -> Unit = {},
     onNavigateToSaved: (String) -> Unit = {},
+    isDarkMode: Boolean = false,
+    onDarkModeChange: (Boolean) -> Unit = {},
     viewModel: ProfileViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
@@ -134,10 +136,11 @@ fun Profile(
     // Main container
     Box(
         modifier = Modifier
-            .background(Color(0xFFFAFAFA))
+            .background(MaterialTheme.colorScheme.background)
             .fillMaxSize()
             .padding(top = 16.dp)
     ) {
+
         // Show different content based on state
         when (val state = uiState) {
             is ProfileUiState.Loading -> {
@@ -148,7 +151,9 @@ fun Profile(
                     user = state.user,
                     onBackClick = onBackClick,
                     onLogout = { showLogoutDialog = true },
-                    onNavigateToSaved = onNavigateToSaved
+                    onNavigateToSaved = onNavigateToSaved,
+                    isDarkMode = isDarkMode,
+                    onDarkModeChange = onDarkModeChange
                 )
             }
             is ProfileUiState.Error -> {
@@ -325,7 +330,9 @@ fun ProfileContent(
     user: User,
     onBackClick: () -> Unit,
     onLogout: () -> Unit,
-    onNavigateToSaved: (String) -> Unit
+    onNavigateToSaved: (String) -> Unit,
+    isDarkMode: Boolean = false,
+    onDarkModeChange: (Boolean) -> Unit = {}
 ) {
     Column(
         modifier = Modifier.fillMaxSize()
@@ -342,7 +349,12 @@ fun ProfileContent(
         Spacer(modifier = Modifier.height(32.dp))
 
         // Menu Section
-        MenuSection(onLogout = onLogout, onNavigateToSaved = onNavigateToSaved)
+        MenuSection(
+            onLogout = onLogout, 
+            onNavigateToSaved = onNavigateToSaved,
+            isDarkMode = isDarkMode,
+            onDarkModeChange = onDarkModeChange
+        )
     }
 }
 
@@ -475,7 +487,12 @@ fun ContactInfoItem(icon: ImageVector, label: String, text: String) {
 
 // ==================== MENU SECTION ====================
 @Composable
-fun MenuSection(onLogout: () -> Unit, onNavigateToSaved: (String) -> Unit) {
+fun MenuSection(
+    onLogout: () -> Unit, 
+    onNavigateToSaved: (String) -> Unit,
+    isDarkMode: Boolean = false,
+    onDarkModeChange: (Boolean) -> Unit = {}
+) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -501,12 +518,13 @@ fun MenuSection(onLogout: () -> Unit, onNavigateToSaved: (String) -> Unit) {
 
         Spacer(modifier = Modifier.height(4.dp))
 
-        // Settings
-        MenuItem(
-            icon = Icons.Default.Settings,
+        // Dark Mode Toggle
+        SwitchMenuItem(
+            icon = Icons.Default.DarkMode,
             iconTint = Color(0xFFE4B643),
-            text = "Settings",
-            onClick = { /* Navigate to settings */ }
+            text = "Dark Mode",
+            checked = isDarkMode,
+            onCheckedChange = onDarkModeChange
         )
 
         Spacer(modifier = Modifier.height(24.dp))
@@ -528,14 +546,14 @@ fun MenuItem(
     icon: ImageVector,
     iconTint: Color,
     text: String,
-    textColor: Color = Color(0xFF333333),
+    textColor: Color = MaterialTheme.colorScheme.onSurface,
     onClick: () -> Unit
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(12.dp))
-            .background(Color(0xFFFFFFFF))
+            .background(MaterialTheme.colorScheme.surface)
             .clickable { onClick() }
             .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically
@@ -559,8 +577,52 @@ fun MenuItem(
         Icon(
             imageVector = Icons.Default.KeyboardArrowRight,
             contentDescription = "Navigate",
-            tint = Color(0xFF666666),
+            tint = MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier.size(24.dp)
+        )
+    }
+}
+
+// ==================== SWITCH MENU ITEM (for Dark Mode) ====================
+@Composable
+fun SwitchMenuItem(
+    icon: ImageVector,
+    iconTint: Color,
+    text: String,
+    checked: Boolean,
+    onCheckedChange: (Boolean) -> Unit
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(12.dp))
+            .background(MaterialTheme.colorScheme.surface)
+            .padding(16.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Icon(
+            imageVector = icon,
+            contentDescription = text,
+            tint = iconTint,
+            modifier = Modifier.size(24.dp)
+        )
+
+        Spacer(modifier = Modifier.width(16.dp))
+
+        Text(
+            text = text,
+            fontSize = 16.sp,
+            color = MaterialTheme.colorScheme.onSurface,
+            modifier = Modifier.weight(1f)
+        )
+
+        Switch(
+            checked = checked,
+            onCheckedChange = onCheckedChange,
+            colors = SwitchDefaults.colors(
+                checkedThumbColor = Color(0xFFE4B643),
+                checkedTrackColor = Color(0xFFF3D778)
+            )
         )
     }
 }

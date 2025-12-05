@@ -9,13 +9,9 @@ import com.hfad.egypttour.ui.screens.*
 import com.hfad.egypttour.ui.screens.LandmarksListScreen
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
+
 /**
  * Main navigation setup for Egypt Tour app
- *
- * Routes:
- * - governorates: Home screen with all governorates
- * - landmarks/{governorateId}: List of landmarks for a governorate
- * - landmark/{landmarkId}: Detail screen for a landmark (TODO)
  */
 object NavigationDestinations {
     const val GOVERNORATE_LIST = "governorates"
@@ -26,7 +22,11 @@ object NavigationDestinations {
 }
 
 @Composable
-fun AppNavigation(navController: NavHostController) {
+fun AppNavigation(
+    navController: NavHostController,
+    isDarkMode: Boolean = false,
+    onDarkModeChange: (Boolean) -> Unit = {}
+) {
     NavHost(
         navController = navController,
         startDestination = NavigationDestinations.GOVERNORATE_LIST
@@ -58,24 +58,24 @@ fun AppNavigation(navController: NavHostController) {
             )
         }
 
-        // Profile Screen (Updated)
+        // Profile Screen with Dark Mode toggle
         composable(NavigationDestinations.PROFILE) {
             Profile(
                 onBackClick = {
                     navController.popBackStack()
                 },
                 onLogoutSuccess = {
-                    // Navigate to Login (assuming you handle this in your main Activity or have a login route)
-                    // For now, popping back
                     navController.popBackStack()
                 },
                 onNavigateToSaved = { type ->
                     navController.navigate("saved_list/$type")
-                }
+                },
+                isDarkMode = isDarkMode,
+                onDarkModeChange = onDarkModeChange
             )
         }
 
-        // Saved Landmarks Screen (New)
+        // Saved Landmarks Screen
         composable(
             route = NavigationDestinations.SAVED_LIST,
             arguments = listOf(navArgument("type") { type = NavType.StringType })
@@ -90,11 +90,9 @@ fun AppNavigation(navController: NavHostController) {
             )
         }
 
-
-//        // Landmark detail screen
+        // Landmark detail screen
         composable(NavigationDestinations.LANDMARK_DETAIL) { backStackEntry ->
             val landmarkId = backStackEntry.arguments?.getString("landmarkId") ?: "0"
-
 
              LandmarkDetailScreen(
                  landmarkId = landmarkId.toInt(),
