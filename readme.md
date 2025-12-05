@@ -11,6 +11,18 @@ The app features a complete **Firebase Authentication** system (Sign Up, Sign In
     *   **User Profile Management:** Firestore is used to store and retrieve user profiles (username, email). The app includes a dedicated profile screen with options to "Logout" or "Logout from All Devices".
     *   **Session Persistence:** "Remember Me" functionality and local caching of user profiles for a seamless experience across app sessions.
 
+*   **Favorites & Saved Places:**
+    *   **Heart to Favorite:** Tap the ❤️ icon on any landmark detail screen to add it to your favorites.
+    *   **Bookmark to Save:** Tap the 🔖 icon to save places for later.
+    *   **Cloud Sync:** Favorites and saves are stored in Firebase Firestore and sync across devices.
+    *   **Local Caching:** Instant access with cache-first approach – data loads from local storage first, then syncs with cloud in background.
+    *   **Dedicated Lists:** View all your favorited and saved landmarks from the Profile screen.
+
+*   **Dark Mode Support:**
+    *   **Theme Toggle:** Switch between light and dark themes from the Profile settings.
+    *   **Persistent Preference:** Theme choice is saved locally and persists across app sessions.
+    *   **Full Theme Support:** All screens adapt to the selected theme with proper colors.
+
 *   **Dynamic Content & Smart Data Sourcing:**
     *   **Explore by Governorate:** Fetches unique landmark lists for 10 different Egyptian governorates.
     *   **Local-First Approach:** Instantly loads curated landmarks from a local JSON database for a fast, offline-first experience.
@@ -41,7 +53,9 @@ This project is a showcase of modern Android development best practices.
     *   **[Hilt](https://dagger.dev/hilt/):** For robust Dependency Injection across the application.
 *   **Firebase Integration:**
     *   **[Firebase Authentication](https://firebase.google.com/docs/auth):** For managing user sign-up and sign-in.
-    *   **[Cloud Firestore](https://firebase.google.com/docs/firestore):** As a cloud database for storing user profile information.
+    *   **[Cloud Firestore](https://firebase.google.com/docs/firestore):** As a cloud database for storing user profile information, favorites, and saved places.
+*   **Local Storage:**
+    *   **SharedPreferences:** For caching user preferences (dark mode), session data, and favorites/saves for instant access.
 *   **Libraries:**
     *   **[Retrofit](https://square.github.io/retrofit/):** For type-safe networking and communication with the Wikipedia API.
     *   **[OkHttp](https://square.github.io/okhttp/):** The underlying HTTP client, configured with interceptors for logging and adding required headers.
@@ -74,7 +88,6 @@ app
 │   │   │       └── hfad
 │   │   │           └── egypttour
 │   │   │               ├── EgyptTourApp.kt  (Application class / Hilt Entry Point)
-│   │   │               ├── MainActivity.kt
 │   │   │               │
 │   │   │               ├── Login  (Authentication Activities/Screens)
 │   │   │               │   ├── ForgotPassword.kt
@@ -110,13 +123,19 @@ app
 │   │   │               │   │
 │   │   │               │   ├── repository  (Business Logic)
 │   │   │               │   │   ├── AuthRepository.kt
-│   │   │               │   │   └── LandmarkRepository.kt
+│   │   │               │   │   ├── LandmarkRepository.kt
+│   │   │               │   │   └── UserRepository.kt  (NEW: Favorites/Saves)
+│   │   │               │   │
+│   │   │               │   ├── session  (Local Storage)
+│   │   │               │   │   └── SessionManager.kt  (User prefs, caching)
 │   │   │               │   │
 │   │   │               │   └── util  (Helpers)
 │   │   │               │       ├── Constants.kt
 │   │   │               │       └── PlaceholderImages.kt
 │   │   │               │
 │   │   │               └── ui  (Presentation Layer)
+│   │   │                   ├── MainActivity.kt
+│   │   │                   │
 │   │   │                   ├── navigation
 │   │   │                   │   └── AppNavigation.kt
 │   │   │                   │
@@ -124,16 +143,18 @@ app
 │   │   │                   │   ├── GovernorateListScreen.kt
 │   │   │                   │   ├── LandmarkDetailScreen.kt
 │   │   │                   │   ├── LandmarksListScreen.kt
-│   │   │                   │   └── Profile.kt
+│   │   │                   │   ├── Profile.kt
+│   │   │                   │   └── SavedLandmarksScreen.kt  (NEW: Favorites/Saves list)
 │   │   │                   │
 │   │   │                   ├── theme
-│   │   │                   │   ├── Color.kt
-│   │   │                   │   ├── Theme.kt
+│   │   │                   │   ├── Color.kt  (Light & Dark colors)
+│   │   │                   │   ├── Theme.kt  (Light & Dark schemes)
 │   │   │                   │   └── Type.kt
 │   │   │                   │
 │   │   │                   └── viewmodel
 │   │   │                       ├── LandmarkListViewModel.kt
-│   │   │                       └── ProfileViewModel.kt
+│   │   │                       ├── ProfileViewModel.kt
+│   │   │                       └── SavedLandmarksViewModel.kt  (NEW)
 │   │   │
 │   │   ├── res  (Resources)
 │   │   │   ├── drawable (Images like cairo.jpg, luxor.jpg, etc.)
@@ -149,6 +170,21 @@ app
 │
 └── build.gradle.kts (Module :app)
 ```
+
+## 🏗️ Key Data Flows
+
+### Favorites/Saves (Cache-First Pattern)
+```
+User taps ❤️ → UI updates instantly → Cache updated → Firestore sync (background)
+                                                    ↓
+Screen opens → Load from cache (instant) → Show UI → Firestore sync → Update if changed
+```
+
+### Dark Mode
+```
+User toggles switch → SessionManager saves preference → Theme recomposes → All screens update
+```
+
 ## 🚀 How to Build and Run
 
 1.  **Firebase Setup:**
