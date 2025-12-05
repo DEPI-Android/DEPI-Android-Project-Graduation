@@ -7,6 +7,8 @@ import androidx.navigation.compose.composable
 import com.hfad.egypttour.ui.screens.GovernorateListScreen
 import com.hfad.egypttour.ui.screens.*
 import com.hfad.egypttour.ui.screens.LandmarksListScreen
+import androidx.navigation.NavType
+import androidx.navigation.navArgument
 /**
  * Main navigation setup for Egypt Tour app
  *
@@ -20,6 +22,7 @@ object NavigationDestinations {
     const val LANDMARK_LIST = "landmarks/{governorateId}"
     const val LANDMARK_DETAIL = "landmark/{landmarkId}"
     const val PROFILE = "profile"
+    const val SAVED_LIST = "saved_list/{type}"
 }
 
 @Composable
@@ -49,21 +52,45 @@ fun AppNavigation(navController: NavHostController) {
                 onLandmarkClick = { landmarkId ->
                     navController.navigate("landmark/$landmarkId")
                 },
-                // You must add this line to handle the back button click
                 onBackClick = {
                     navController.popBackStack()
                 }
             )
         }
 
-        // Profile screen
+        // Profile Screen (Updated)
         composable(NavigationDestinations.PROFILE) {
             Profile(
                 onBackClick = {
                     navController.popBackStack()
+                },
+                onLogoutSuccess = {
+                    // Navigate to Login (assuming you handle this in your main Activity or have a login route)
+                    // For now, popping back
+                    navController.popBackStack()
+                },
+                onNavigateToSaved = { type ->
+                    navController.navigate("saved_list/$type")
                 }
             )
         }
+
+        // Saved Landmarks Screen (New)
+        composable(
+            route = NavigationDestinations.SAVED_LIST,
+            arguments = listOf(navArgument("type") { type = NavType.StringType })
+        ) { backStackEntry ->
+            val type = backStackEntry.arguments?.getString("type") ?: "favorites"
+            SavedLandmarksScreen(
+                type = type,
+                onBackClick = { navController.popBackStack() },
+                onLandmarkClick = { landmarkId ->
+                    navController.navigate("landmark/$landmarkId")
+                }
+            )
+        }
+
+
 //        // Landmark detail screen
         composable(NavigationDestinations.LANDMARK_DETAIL) { backStackEntry ->
             val landmarkId = backStackEntry.arguments?.getString("landmarkId") ?: "0"

@@ -26,10 +26,13 @@ import com.hfad.egypttour.Login.LoginActivity
 import com.hfad.egypttour.data.model.User
 import com.hfad.egypttour.ui.viewmodel.ProfileUiState
 import com.hfad.egypttour.ui.viewmodel.ProfileViewModel
+import androidx.compose.material.icons.filled.BookmarkBorder
 
 @Composable
 fun Profile(
     onBackClick: () -> Unit,
+    onLogoutSuccess: () -> Unit = {},
+    onNavigateToSaved: (String) -> Unit = {},
     viewModel: ProfileViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
@@ -144,7 +147,8 @@ fun Profile(
                 ProfileContent(
                     user = state.user,
                     onBackClick = onBackClick,
-                    onLogout = { showLogoutDialog = true }
+                    onLogout = { showLogoutDialog = true },
+                    onNavigateToSaved = onNavigateToSaved
                 )
             }
             is ProfileUiState.Error -> {
@@ -320,7 +324,8 @@ fun NotAuthenticatedContent(onBackClick: () -> Unit) {
 fun ProfileContent(
     user: User,
     onBackClick: () -> Unit,
-    onLogout: () -> Unit
+    onLogout: () -> Unit,
+    onNavigateToSaved: (String) -> Unit
 ) {
     Column(
         modifier = Modifier.fillMaxSize()
@@ -337,7 +342,7 @@ fun ProfileContent(
         Spacer(modifier = Modifier.height(32.dp))
 
         // Menu Section
-        MenuSection(onLogout = onLogout)
+        MenuSection(onLogout = onLogout, onNavigateToSaved = onNavigateToSaved)
     }
 }
 
@@ -359,16 +364,6 @@ fun TopBar(onBackClick: () -> Unit) {
             modifier = Modifier
                 .size(28.dp)
                 .clickable { onBackClick() }
-        )
-
-        // Edit button
-        Icon(
-            imageVector = Icons.Default.Edit,
-            contentDescription = "Edit profile",
-            tint = Color(0xFF333333),
-            modifier = Modifier
-                .size(24.dp)
-                .clickable { /* Handle edit profile */ }
         )
     }
 }
@@ -480,7 +475,7 @@ fun ContactInfoItem(icon: ImageVector, label: String, text: String) {
 
 // ==================== MENU SECTION ====================
 @Composable
-fun MenuSection(onLogout: () -> Unit) {
+fun MenuSection(onLogout: () -> Unit, onNavigateToSaved: (String) -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -491,17 +486,17 @@ fun MenuSection(onLogout: () -> Unit) {
             icon = Icons.Default.Favorite,
             iconTint = Color(0xFFE4B643),
             text = "My Favourites",
-            onClick = { /* Navigate to favourites */ }
+            onClick = { onNavigateToSaved("favorites") }
         )
 
         Spacer(modifier = Modifier.height(4.dp))
 
         // Saves
         MenuItem(
-            icon = Icons.Default.CheckCircle,
+            icon = Icons.Default.BookmarkBorder,
             iconTint = Color(0xFFE4B643),
             text = "Saves",
-            onClick = { /* Navigate to saves */ }
+            onClick = { onNavigateToSaved("saves") }
         )
 
         Spacer(modifier = Modifier.height(4.dp))
@@ -575,6 +570,8 @@ fun MenuItem(
 @Composable
 fun ProfilePreview() {
     Profile(
-        onBackClick = {}
+        onBackClick = {},
+        onLogoutSuccess = {},
+        onNavigateToSaved = {}
     )
 }

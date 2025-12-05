@@ -200,15 +200,23 @@ import kotlinx.coroutines.launch
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-
+import com.hfad.egypttour.data.repository.UserRepository
 /**
  * Hilt ViewModel
  */
 @HiltViewModel
 class LandmarkListViewModel @Inject constructor(
-    private val repository: LandmarkRepository
+    private val repository: LandmarkRepository,
+    private val userRepository: UserRepository
 ) : ViewModel() {
 
+    //========== New Code to handle Favourites & saves ===========
+    private val _isFavorite = MutableStateFlow(false)
+    val isFavorite = _isFavorite.asStateFlow()
+
+    private val _isSaved = MutableStateFlow(false)
+    val isSaved = _isSaved.asStateFlow()
+    // ============================================================
     private val _landmarksState = MutableStateFlow<Result<List<LandMark>>>(Result.Loading)
     val landmarksState: StateFlow<Result<List<LandMark>>> = _landmarksState.asStateFlow()
 
@@ -230,7 +238,36 @@ class LandmarkListViewModel @Inject constructor(
 
     val errorMessage: String?
         get() = (_landmarksState.value as? Result.Error)?.message
+    // ==========================Added by Wahba============================
+    // Check status when a landmark is selected
+    fun checkUserInteractions(landmarkId: Int) {
+        viewModelScope.launch {
+            val favorites = userRepository.getUserFavorites()
+            _isFavorite.value = favorites.contains(landmarkId)
 
+            val saves = userRepository.getUserSaves()
+            _isSaved.value = saves.contains(landmarkId)
+        }
+    }
+
+    fun toggleFavorite(landmarkId: Int) {
+        viewModelScope.launch {
+            // Optimistic update (update UI immediately)
+            _isFavorite.value = !_isFavorite.value
+            // Update DB
+            val newState = userRepository.toggleFavorite(landmarkId)
+            _isFavorite.value = newState // Ensure sync with DB result
+        }
+    }
+
+    fun toggleSave(landmarkId: Int) {
+        viewModelScope.launch {
+            _isSaved.value = !_isSaved.value
+            val newState = userRepository.toggleSave(landmarkId)
+            _isSaved.value = newState
+        }
+    }
+    // ===================================================================
     fun loadLandmarks(governorate: Governorate, forceRefresh: Boolean = false) {
         if (!forceRefresh && _currentGovernorate.value == governorate && _landmarksState.value is Result.Success) {
             Log.d(Constants.LOG_TAG, "Landmarks already loaded for ${governorate.displayName}")

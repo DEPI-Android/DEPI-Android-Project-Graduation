@@ -5,5 +5,7 @@ package com.hfad.egypttour.data.model
  */
 data class User(
     val username: String = "",
-    val email: String = ""
+    val email: String = "",
+    val favorites: List<Int> = emptyList(),
+    val saves: List<Int> = emptyList()
 )
