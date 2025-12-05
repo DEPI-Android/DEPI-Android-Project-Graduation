@@ -36,13 +36,16 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.airbnb.lottie.compose.*
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.firestore.FirebaseFirestore
 import com.hfad.egypttour.R
 import com.hfad.egypttour.ui.theme.EgyptTourTheme
@@ -87,6 +90,34 @@ class SignUpViewModel : ViewModel() {
     var passwordVisible by mutableStateOf(false)
     var confirmPasswordVisible by mutableStateOf(false)
 
+    private fun isPasswordStrong(password: String): Pair<Boolean, String> {
+        return when {
+            password.length < 8 -> Pair(false, "Password must be at least 8 characters")
+            !password.any { it.isUpperCase() } -> Pair(false, "Password must contain uppercase letter")
+            !password.any { it.isLowerCase() } -> Pair(false, "Password must contain lowercase letter")
+            !password.any { it.isDigit() } -> Pair(false, "Password must contain a number")
+            else -> Pair(true, "")
+        }
+    }
+
+    private fun getReadableError(exception: Exception): String {
+        return when (exception) {
+            is FirebaseAuthUserCollisionException -> "An account already exists with this email address."
+            else -> when {
+                exception.message?.contains("no user record") == true ->
+                    "No account found with this email"
+                exception.message?.contains("password is invalid") == true ->
+                    "Incorrect password"
+                exception.message?.contains("email address is badly formatted") == true ->
+                    "Invalid email format"
+                exception.message?.contains("network error") == true ->
+                    "No internet connection"
+                exception.message?.contains("too many requests") == true ->
+                    "Too many attempts. Please try again later"
+                else -> exception.message ?: "An error occurred"
+            }
+        }
+    }
 
     fun signUp() {
         if (username.isBlank() || email.isBlank() || password.isBlank() || confirmPassword.isBlank()) {
@@ -97,8 +128,9 @@ class SignUpViewModel : ViewModel() {
             _uiState.value = SignUpUiState.Error("Please enter a valid email.")
             return
         }
-        if (password.length < 8) {
-            _uiState.value = SignUpUiState.Error("Password must be at least 8 characters long.")
+        val (isStrong, message) = isPasswordStrong(password)
+        if (!isStrong) {
+            _uiState.value = SignUpUiState.Error(message)
             return
         }
         if (password != confirmPassword) {
@@ -108,29 +140,38 @@ class SignUpViewModel : ViewModel() {
 
         viewModelScope.launch {
             _uiState.value = SignUpUiState.Loading
-
             val originalUsername = username
             val originalEmail = email
             val originalPassword = password
-            clearFields()
 
             try {
                 val result = auth.createUserWithEmailAndPassword(originalEmail, originalPassword).await()
-                val userId = result.user?.uid
-                if (userId != null) {
+                val user = result.user ?: throw Exception("User creation failed, user is null.")
+                val userId = user.uid
+
+                try {
                     val userMap = hashMapOf(
-                        "username" to originalUsername,
-                        "email" to originalEmail
+                        "username" to username,
+                        "email" to originalEmail,
+                        "createdAt" to Timestamp.now()
                     )
                     db.collection("users").document(userId).set(userMap).await()
-                    _uiState.value = SignUpUiState.Success("Sign up successful!")
-                } else {
-                    restoreFields(originalUsername, originalEmail, originalPassword)
-                    _uiState.value = SignUpUiState.Error("Sign up failed. Please try again.")
+
+                    user.sendEmailVerification().await()
+                    _uiState.value = SignUpUiState.Success("Sign up successful! Please check your email to verify your account.")
+                    clearFields()
+
+                } catch (firestoreException: Exception) {
+                    user.delete().await()
+                    throw Exception("Failed to save user data. Please try again.")
                 }
+
             } catch (e: Exception) {
-                restoreFields(originalUsername, originalEmail, originalPassword)
-                _uiState.value = SignUpUiState.Error(e.message ?: "An unknown error occurred.")
+                _uiState.value = SignUpUiState.Error(getReadableError(e))
+                username = originalUsername
+                email = originalEmail
+                password = originalPassword
+                confirmPassword = originalPassword
             }
         }
     }
@@ -142,18 +183,23 @@ class SignUpViewModel : ViewModel() {
         confirmPassword = ""
     }
 
-    private fun restoreFields(originalUsername: String, originalEmail: String, originalPassword: String) {
-        username = originalUsername
-        email = originalEmail
-        password = originalPassword
-        confirmPassword = originalPassword
-    }
-
-     fun resetState() {
+    fun resetState() {
         _uiState.value = SignUpUiState.Idle
     }
 }
 
+@Composable
+fun customTextFieldColors(): TextFieldColors {
+    return OutlinedTextFieldDefaults.colors(
+        focusedTextColor = Color.White,
+        unfocusedTextColor = Color.White.copy(alpha = 0.7f),
+        focusedContainerColor = Color.Transparent,
+        unfocusedContainerColor = Color.Transparent,
+        focusedBorderColor = Color.White,
+        unfocusedBorderColor = Color.White.copy(alpha = 0.7f),
+        cursorColor = Color.White
+    )
+}
 
 @Composable
 fun SignUpScreen(
@@ -165,7 +211,6 @@ fun SignUpScreen(
     val uiState by viewModel.uiState.collectAsState()
     val signup_Font = FontFamily(Font(R.font.frijole_regular))
     val scrollState = rememberScrollState()
-
 
     val backgroundBrush = Brush.verticalGradient(
         colors = listOf(Color(0xFFA07503), Color(0xFF8E8E8E), Color(0xFFF9C58D))
@@ -188,7 +233,7 @@ fun SignUpScreen(
     LaunchedEffect(uiState) {
         when (val state = uiState) {
             is SignUpUiState.Success -> {
-                Toast.makeText(context, state.message, Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, state.message, Toast.LENGTH_LONG).show()
                 onNavigateToLogin()
                 viewModel.resetState()
             }
@@ -248,15 +293,7 @@ fun SignUpScreen(
                         shape = RoundedCornerShape(50),
                         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
                         keyboardActions = KeyboardActions(onNext = { focusManager.moveFocus(FocusDirection.Down) }),
-                        colors = OutlinedTextFieldDefaults.colors(
-                            focusedTextColor = Color.White,
-                            unfocusedTextColor = Color.White.copy(alpha = 0.7f),
-                            focusedContainerColor = Color.Transparent,
-                            unfocusedContainerColor = Color.Transparent,
-                            focusedBorderColor = Color.White,
-                            unfocusedBorderColor = Color.White.copy(alpha = 0.7f),
-                            cursorColor = Color.White
-                        )
+                        colors = customTextFieldColors()
                     )
 
                     OutlinedTextField(
@@ -271,15 +308,7 @@ fun SignUpScreen(
                             imeAction = ImeAction.Next
                         ),
                         keyboardActions = KeyboardActions(onNext = { focusManager.moveFocus(FocusDirection.Down) }),
-                        colors = OutlinedTextFieldDefaults.colors(
-                            focusedTextColor = Color.White,
-                            unfocusedTextColor = Color.White.copy(alpha = 0.7f),
-                            focusedContainerColor = Color.Transparent,
-                            unfocusedContainerColor = Color.Transparent,
-                            focusedBorderColor = Color.White,
-                            unfocusedBorderColor = Color.White.copy(alpha = 0.7f),
-                            cursorColor = Color.White
-                        )
+                        colors = customTextFieldColors()
                     )
 
                     OutlinedTextField(
@@ -301,15 +330,7 @@ fun SignUpScreen(
                         keyboardActions = KeyboardActions(onNext = { focusManager.moveFocus(FocusDirection.Down) }),
                         modifier = Modifier.fillMaxWidth(),
                         shape = RoundedCornerShape(50),
-                        colors = OutlinedTextFieldDefaults.colors(
-                            focusedTextColor = Color.White,
-                            unfocusedTextColor = Color.White.copy(alpha = 0.7f),
-                            focusedContainerColor = Color.Transparent,
-                            unfocusedContainerColor = Color.Transparent,
-                            focusedBorderColor = Color.White,
-                            unfocusedBorderColor = Color.White.copy(alpha = 0.7f),
-                            cursorColor = Color.White
-                        )
+                        colors = customTextFieldColors()
                     )
 
                     OutlinedTextField(
@@ -328,22 +349,20 @@ fun SignUpScreen(
                             keyboardType = KeyboardType.Password,
                             imeAction = ImeAction.Done
                         ),
-                        keyboardActions = KeyboardActions(onDone = { viewModel.signUp() }),
+                        keyboardActions = KeyboardActions(onDone = {
+                            focusManager.clearFocus()
+                            viewModel.signUp()
+                        }),
                         modifier = Modifier.fillMaxWidth(),
                         shape = RoundedCornerShape(50),
-                        colors = OutlinedTextFieldDefaults.colors(
-                            focusedTextColor = Color.White,
-                            unfocusedTextColor = Color.White.copy(alpha = 0.7f),
-                            focusedContainerColor = Color.Transparent,
-                            unfocusedContainerColor = Color.Transparent,
-                            focusedBorderColor = Color.White,
-                            unfocusedBorderColor = Color.White.copy(alpha = 0.7f),
-                            cursorColor = Color.White
-                        )
+                        colors = customTextFieldColors()
                     )
 
                     Button(
-                        onClick = { viewModel.signUp() },
+                        onClick = {
+                            focusManager.clearFocus()
+                            viewModel.signUp()
+                        },
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(50.dp)
@@ -361,10 +380,8 @@ fun SignUpScreen(
 
                     Row {
                         Text("Already have an account? ", color = Color.White.copy(alpha = 0.8f))
-                        TextButton(onClick = {
-                            context.startActivity(Intent(context, SignInActivity::class.java))
-                        }) {
-                            Text("Sign in!", color = Color.White, fontWeight = FontWeight.Bold)
+                        TextButton(onClick = onNavigateToLogin) {
+                            Text("Sign in!", color = Color.White, fontWeight = FontWeight.Bold, textDecoration = TextDecoration.Underline)
                         }
                     }
                 }

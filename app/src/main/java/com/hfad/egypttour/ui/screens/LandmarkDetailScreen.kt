@@ -14,6 +14,10 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material.icons.filled.Bookmark
+import androidx.compose.material.icons.filled.BookmarkBorder
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -40,6 +44,8 @@ import com.hfad.egypttour.ui.theme.TextBlack
 import com.hfad.egypttour.ui.theme.TextGray
 import com.hfad.egypttour.ui.viewmodel.LandmarkListViewModel
 import kotlinx.coroutines.delay
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 
 @Composable
 fun LandmarkDetailScreen(
@@ -49,6 +55,7 @@ fun LandmarkDetailScreen(
 ) {
     LaunchedEffect(landmarkId) {
         viewModel.loadLandmarkDetails(landmarkId)
+        viewModel.checkUserInteractions(landmarkId)
     }
 
     // Observe State
@@ -83,8 +90,14 @@ fun LandmarkDetailScreen(
 @Composable
 private fun LandmarkDetailContent(
     landmark: LandMark,
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    viewModel: LandmarkListViewModel = hiltViewModel()
 ) {
+    //=======================Profile related==========================
+    val isFavorite by viewModel.isFavorite.collectAsState()
+    val isSaved by viewModel.isSaved.collectAsState()
+    //================================================================
+
     val context = LocalContext.current
     val scrollState = rememberScrollState()
 
@@ -179,22 +192,47 @@ private fun LandmarkDetailContent(
 
         // 2. ICONS (Back, Save, Fav)
         Row(
-            modifier = Modifier.fillMaxWidth().padding(top = 48.dp, start = 16.dp, end = 16.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 48.dp, start = 16.dp, end = 16.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
+            // Back Button
             IconButton(
                 onClick = onBackClick,
                 modifier = Modifier.background(Color.White.copy(0.8f), CircleShape)
             ) {
-                Icon(Icons.Default.ArrowBack, "Back", tint = EgyptGold)
+                Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back", tint = EgyptGold)
             }
 
+            // Action Buttons Column
             Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                IconButton(onClick = {}, modifier = Modifier.background(Color.White.copy(0.8f), CircleShape)) {
-                    Icon(Icons.Default.BookmarkBorder, "Save", tint = EgyptGold)
+
+                // SAVE (BOOKMARK) BUTTON
+                IconButton(
+                    onClick = { viewModel.toggleSave(landmark.id) },
+                    modifier = Modifier.background(Color.White.copy(0.8f), CircleShape)
+                ) {
+                    Icon(
+                        // Logic: If saved -> Filled Icon, Else -> Border Icon
+                        imageVector = if (isSaved) Icons.Default.Bookmark else Icons.Default.BookmarkBorder,
+                        contentDescription = "Save",
+                        tint = EgyptGold
+                    )
                 }
-                IconButton(onClick = {}, modifier = Modifier.background(Color.White.copy(0.8f), CircleShape)) {
-                    Icon(Icons.Default.FavoriteBorder, "Fav", tint = EgyptGold)
+
+                // FAVORITE (HEART) BUTTON
+                IconButton(
+                    onClick = { viewModel.toggleFavorite(landmark.id) },
+                    modifier = Modifier.background(Color.White.copy(0.8f), CircleShape)
+                ) {
+                    Icon(
+                        // Logic: If favorite -> Filled Icon, Else -> Border Icon
+                        imageVector = if (isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+                        contentDescription = "Fav",
+                        // Logic: If favorite -> Red Color, Else -> Gold Color
+                        tint = if (isFavorite) Color.Red else EgyptGold
+                    )
                 }
             }
         }
