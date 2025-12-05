@@ -184,24 +184,4 @@ Screen opens → Load from cache (instant) → Show UI → Firestore sync → Up
 ```
 User toggles switch → SessionManager saves preference → Theme recomposes → All screens update
 ```
-
-## 🚀 How to Build and Run
-
-1.  **Firebase Setup:**
-    *   Create a new project on the [Firebase Console](https://console.firebase.google.com/).
-    *   Add an Android app to your Firebase project with the package name `com.hfad.egypttour`.
-    *   Download the `google-services.json` file and place it in the `app/` directory of the project.
-    *   In the Firebase console, enable **Email/Password** authentication in the "Authentication" section.
-    *   Enable **Cloud Firestore** in the "Firestore Database" section.
-
-2.  **Clone the repository:**
-    *   git clone https://github.com/your-username/egypt-tour.git
-
-3. **Open in Android Studio:**
-    *   Open the project in a recent version of Android Studio.
-
-4. **Build the project:**
-    *   Let Gradle sync and download all the required dependencies.
-
-4. **Run the app:**
-    *   Select a device or emulator and click the "Run" button.
+ 
