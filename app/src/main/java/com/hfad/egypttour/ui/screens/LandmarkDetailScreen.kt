@@ -51,6 +51,7 @@ import androidx.core.net.toUri
 
 @Composable
 fun LandmarkDetailScreen(
+
     landmarkId: Int,
     onBackClick: () -> Unit,
     viewModel: LandmarkListViewModel = hiltViewModel()

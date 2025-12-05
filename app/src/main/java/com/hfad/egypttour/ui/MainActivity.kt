@@ -1,4 +1,4 @@
-package com.hfad.egypttour
+package com.hfad.egypttour.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -7,8 +7,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
-import com.hfad.egypttour.ui.navigation.AppNavigation
-import com.hfad.egypttour.ui.screens.*
+import com.hfad.egypttour.navigation.AppNavigation
+import com.hfad.egypttour.ui.screens.GovernorateListScreen
 import com.hfad.egypttour.ui.theme.EgyptTourTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -30,7 +30,7 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun GreetingPreview() {
         EgyptTourTheme {
-             GovernorateListScreen {  }
+            GovernorateListScreen(onGovernorateClick = { }, onProfileClick = { })
         }
     }
 }

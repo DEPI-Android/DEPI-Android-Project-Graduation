@@ -8,6 +8,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Person
 //import androidx.compose.material.icons.filled.Image
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -28,7 +29,8 @@ import com.hfad.egypttour.ui.theme.PureWhite
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GovernorateListScreen(
-    onGovernorateClick: (String) -> Unit
+    onGovernorateClick: (String) -> Unit,
+    onProfileClick: () -> Unit
 ) {
     // Using Kotlin 1.9+ 'entries'. If you are on older Kotlin, change to .values().toList()
     val governorates = Governorate.entries.toList()
@@ -47,6 +49,18 @@ fun GovernorateListScreen(
                             fontSize = 24.sp,
                             fontWeight = FontWeight.Bold,
                             color = TextBlack
+                        )
+                    }
+                },
+                actions = {
+                    IconButton(
+                        onClick = onProfileClick
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Person,
+                            contentDescription = "Profile",
+                            tint = TextBlack,
+                            modifier = Modifier.size(28.dp)
                         )
                     }
                 },
