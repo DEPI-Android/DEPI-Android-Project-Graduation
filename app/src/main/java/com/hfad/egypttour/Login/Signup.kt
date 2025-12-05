@@ -1,5 +1,6 @@
 package com.hfad.egypttour.Login
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
@@ -43,15 +44,22 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.airbnb.lottie.compose.*
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.firestore.FirebaseFirestore
 import com.hfad.egypttour.R
 import com.hfad.egypttour.ui.theme.EgyptTourTheme
+import com.hfad.egypttour.utils.NetworkUtils
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withTimeoutOrNull
 
+/**
+ * SignUpActivity - Entry point for the signup screen
+ */
 class SignUpActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,6 +75,9 @@ class SignUpActivity : ComponentActivity() {
     }
 }
 
+/**
+ * UI State for signup process
+ */
 sealed class SignUpUiState {
     object Idle : SignUpUiState()
     object Loading : SignUpUiState()
@@ -74,6 +85,9 @@ sealed class SignUpUiState {
     data class Error(val message: String) : SignUpUiState()
 }
 
+/**
+ * ViewModel for signup - handles Firebase Auth and Firestore operations
+ */
 class SignUpViewModel : ViewModel() {
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
@@ -89,21 +103,65 @@ class SignUpViewModel : ViewModel() {
     var confirmPasswordVisible by mutableStateOf(false)
 
     /**
-     * Sign up with email and password, then cache profile locally
+     * Validates password strength
      */
-    fun signUp(context: android.content.Context) {
+    private fun isPasswordStrong(password: String): Pair<Boolean, String> {
+        return when {
+            password.length < 8 -> Pair(false, "Password must be at least 8 characters")
+            !password.any { it.isUpperCase() } -> Pair(false, "Password must contain uppercase letter")
+            !password.any { it.isLowerCase() } -> Pair(false, "Password must contain lowercase letter")
+            !password.any { it.isDigit() } -> Pair(false, "Password must contain a number")
+            else -> Pair(true, "")
+        }
+    }
+
+    /**
+     * Converts Firebase exceptions to user-friendly messages
+     */
+    private fun getReadableError(exception: Exception): String {
+        return when (exception) {
+            is FirebaseAuthUserCollisionException -> "An account already exists with this email address."
+            else -> when {
+                exception.message?.contains("no user record") == true ->
+                    "No account found with this email"
+                exception.message?.contains("password is invalid") == true ->
+                    "Incorrect password"
+                exception.message?.contains("email address is badly formatted") == true ->
+                    "Invalid email format"
+                exception.message?.contains("network error") == true ->
+                    "No internet connection"
+                exception.message?.contains("too many requests") == true ->
+                    "Too many attempts. Please try again later"
+                else -> exception.message ?: "An error occurred"
+            }
+        }
+    }
+
+    /**
+     * Sign up with email and password
+     * Creates Firebase Auth user, saves to Firestore, and caches locally
+     */
+    fun signUp(context: Context) {
+        // Validate all fields are filled
         if (username.isBlank() || email.isBlank() || password.isBlank() || confirmPassword.isBlank()) {
             _uiState.value = SignUpUiState.Error("Please fill all fields.")
             return
         }
+
+        // Validate email format
         if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             _uiState.value = SignUpUiState.Error("Please enter a valid email.")
             return
         }
-        if (password.length < 8) {
-            _uiState.value = SignUpUiState.Error("Password must be at least 8 characters long.")
+
+        // Validate password strength
+        val (isStrong, errorMessage) = isPasswordStrong(password)
+        if (!isStrong) {
+            _uiState.value = SignUpUiState.Error(errorMessage)
             return
         }
+
+        // Validate passwords match
         if (password != confirmPassword) {
             _uiState.value = SignUpUiState.Error("Passwords do not match.")
             return
@@ -111,38 +169,70 @@ class SignUpViewModel : ViewModel() {
 
         viewModelScope.launch {
             _uiState.value = SignUpUiState.Loading
-
             val originalUsername = username
             val originalEmail = email
-            val originalPassword = password
-            clearFields()
 
             try {
-                val result = auth.createUserWithEmailAndPassword(originalEmail, originalPassword).await()
-                val userId = result.user?.uid
-                if (userId != null) {
-                    // Save to Firestore
-                    val userMap = hashMapOf(
-                        "username" to originalUsername,
-                        "email" to originalEmail
-                    )
-                    db.collection("users").document(userId).set(userMap).await()
-                    
-                    // Cache profile locally (no need to fetch - we have the data!)
-                    val sharedPreferences = context.getSharedPreferences("user_session", android.content.Context.MODE_PRIVATE)
-                    sharedPreferences.edit()
-                        .putString("username", originalUsername)
-                        .putString("email", originalEmail)
-                        .apply()
-                    
-                    _uiState.value = SignUpUiState.Success("Sign up successful!")
-                } else {
-                    restoreFields(originalUsername, originalEmail, originalPassword)
-                    _uiState.value = SignUpUiState.Error("Sign up failed. Please try again.")
+                // Step 1: Create Firebase Auth user with timeout
+                val result = withTimeoutOrNull(6000) {
+                    auth.createUserWithEmailAndPassword(originalEmail, password).await()
                 }
+
+                if (result == null) {
+                    _uiState.value = SignUpUiState.Error("Request timed out while creating account. Please try again.")
+                    username = originalUsername
+                    email = originalEmail
+                    password = ""
+                    confirmPassword = ""
+                    return@launch
+                }
+
+                val user = result.user ?: throw Exception("User creation failed, user is null.")
+                val userId = user.uid
+
+                // Step 2: Save user profile to Firestore
+                val userMap = hashMapOf(
+                    "username" to originalUsername,
+                    "email" to originalEmail,
+                    "createdAt" to Timestamp.now()
+                )
+
+                val firestoreResult = withTimeoutOrNull(10000) {
+                    db.collection("users").document(userId).set(userMap).await()
+                }
+
+                // Step 3: Cache profile locally regardless of Firestore result
+                val sharedPreferences = context.getSharedPreferences("user_session", Context.MODE_PRIVATE)
+                sharedPreferences.edit()
+                    .putString("username", originalUsername)
+                    .putString("email", originalEmail)
+                    .apply()
+
+                if (firestoreResult == null) {
+                    // Account created but Firestore timed out - still a success!
+                    _uiState.value = SignUpUiState.Success("Account created! Please sign in to continue.")
+                    clearFields()
+                    return@launch
+                }
+
+                // Step 4: Send email verification
+                val emailVerificationResult = withTimeoutOrNull(10000) {
+                    user.sendEmailVerification().await()
+                }
+
+                if (emailVerificationResult == null) {
+                    _uiState.value = SignUpUiState.Success("Sign up successful, but failed to send verification email. Please try resending verification later.")
+                } else {
+                    _uiState.value = SignUpUiState.Success("Sign up successful! A verification link has been sent. Please check your inbox and spam folder.")
+                }
+                clearFields()
+
             } catch (e: Exception) {
-                restoreFields(originalUsername, originalEmail, originalPassword)
-                _uiState.value = SignUpUiState.Error(e.message ?: "An unknown error occurred.")
+                _uiState.value = SignUpUiState.Error(getReadableError(e))
+                username = originalUsername
+                email = originalEmail
+                password = ""
+                confirmPassword = ""
             }
         }
     }
@@ -154,18 +244,14 @@ class SignUpViewModel : ViewModel() {
         confirmPassword = ""
     }
 
-    private fun restoreFields(originalUsername: String, originalEmail: String, originalPassword: String) {
-        username = originalUsername
-        email = originalEmail
-        password = originalPassword
-        confirmPassword = originalPassword
-    }
-
-     fun resetState() {
+    fun resetState() {
         _uiState.value = SignUpUiState.Idle
     }
 }
 
+/**
+ * Custom text field colors for the signup form
+ */
 @Composable
 fun customTextFieldColors(): TextFieldColors {
     return OutlinedTextFieldDefaults.colors(
@@ -179,7 +265,9 @@ fun customTextFieldColors(): TextFieldColors {
     )
 }
 
-
+/**
+ * Signup screen composable
+ */
 @Composable
 fun SignUpScreen(
     viewModel: SignUpViewModel = androidx.lifecycle.viewmodel.compose.viewModel(),
@@ -190,7 +278,8 @@ fun SignUpScreen(
     val uiState by viewModel.uiState.collectAsState()
     val signup_Font = FontFamily(Font(R.font.frijole_regular))
     val scrollState = rememberScrollState()
-
+    val showSuccessDialog = remember { mutableStateOf<String?>(null) }
+    val showErrorDialog = remember { mutableStateOf<String?>(null) }
 
     val backgroundBrush = Brush.verticalGradient(
         colors = listOf(Color(0xFFA07503), Color(0xFF8E8E8E), Color(0xFFF9C58D))
@@ -210,19 +299,59 @@ fun SignUpScreen(
         iterations = LottieConstants.IterateForever
     )
 
+    // Handle UI state changes
     LaunchedEffect(uiState) {
         when (val state = uiState) {
             is SignUpUiState.Success -> {
-                Toast.makeText(context, state.message, Toast.LENGTH_SHORT).show()
-                onNavigateToLogin()
-                viewModel.resetState()
+                showSuccessDialog.value = state.message
             }
             is SignUpUiState.Error -> {
-                Toast.makeText(context, state.message, Toast.LENGTH_SHORT).show()
-                viewModel.resetState() // <-- قم بإضافة هذا السطر
+                showErrorDialog.value = state.message
             }
-            else -> Unit // للحالات الأخرى مثل Idle و Loading
+            else -> Unit
         }
+    }
+
+    // Success Dialog
+    showSuccessDialog.value?.let { message ->
+        AlertDialog(
+            onDismissRequest = {
+                showSuccessDialog.value = null
+                viewModel.resetState()
+                onNavigateToLogin()
+            },
+            title = { Text("Success", fontWeight = FontWeight.Bold) },
+            text = { Text(message) },
+            confirmButton = {
+                TextButton(onClick = {
+                    showSuccessDialog.value = null
+                    viewModel.resetState()
+                    onNavigateToLogin()
+                }) {
+                    Text("OK")
+                }
+            }
+        )
+    }
+
+    // Error Dialog
+    showErrorDialog.value?.let { message ->
+        AlertDialog(
+            onDismissRequest = {
+                showErrorDialog.value = null
+                viewModel.resetState()
+            },
+            title = { Text("Error", fontWeight = FontWeight.Bold, color = Color.Red) },
+            text = { Text(message) },
+            confirmButton = {
+                TextButton(onClick = {
+                    showErrorDialog.value = null
+                    viewModel.resetState()
+                }) {
+                    Text("OK")
+                }
+            }
+        )
     }
 
     Box(
@@ -245,6 +374,7 @@ fun SignUpScreen(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
+                    // User icon
                     Icon(
                         imageVector = Icons.Default.Person,
                         contentDescription = "User Icon",
@@ -256,6 +386,7 @@ fun SignUpScreen(
                         tint = Color(0xFFFFC107)
                     )
 
+                    // Title
                     Text(
                         "Sign Up",
                         fontSize = 24.sp,
@@ -264,6 +395,7 @@ fun SignUpScreen(
                         fontFamily = signup_Font
                     )
 
+                    // Username field
                     OutlinedTextField(
                         value = viewModel.username,
                         onValueChange = { viewModel.username = it },
@@ -276,6 +408,7 @@ fun SignUpScreen(
                         colors = customTextFieldColors()
                     )
 
+                    // Email field
                     OutlinedTextField(
                         value = viewModel.email,
                         onValueChange = { viewModel.email = it },
@@ -291,6 +424,7 @@ fun SignUpScreen(
                         colors = customTextFieldColors()
                     )
 
+                    // Password field
                     OutlinedTextField(
                         value = viewModel.password,
                         onValueChange = { viewModel.password = it },
@@ -313,6 +447,7 @@ fun SignUpScreen(
                         colors = customTextFieldColors()
                     )
 
+                    // Confirm Password field
                     OutlinedTextField(
                         value = viewModel.confirmPassword,
                         onValueChange = { viewModel.confirmPassword = it },
@@ -329,14 +464,21 @@ fun SignUpScreen(
                             keyboardType = KeyboardType.Password,
                             imeAction = ImeAction.Done
                         ),
-                        keyboardActions = KeyboardActions(onDone = { viewModel.signUp(context) }),
+                        keyboardActions = KeyboardActions(onDone = {
+                            focusManager.clearFocus()
+                            viewModel.signUp(context)
+                        }),
                         modifier = Modifier.fillMaxWidth(),
                         shape = RoundedCornerShape(50),
                         colors = customTextFieldColors()
                     )
 
+                    // Sign Up button
                     Button(
-                        onClick = { viewModel.signUp(context) },
+                        onClick = {
+                            focusManager.clearFocus()
+                            viewModel.signUp(context)
+                        },
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(50.dp)
@@ -352,18 +494,20 @@ fun SignUpScreen(
                         }
                     }
 
+                    // Navigate to Sign In
                     Row {
                         Text("Already have an account? ", color = Color.White.copy(alpha = 0.8f))
                         TextButton(onClick = {
                             context.startActivity(Intent(context, SignInActivity::class.java))
                         }) {
-                            Text("Sign in!", color = Color.White, fontWeight = FontWeight.Bold, textDecoration = TextDecoration.Underline)
+                            Text("Sign in!", color = Color.White, fontWeight = FontWeight.Bold)
                         }
                     }
                 }
             }
         }
 
+        // Loading overlay
         if (uiState == SignUpUiState.Loading) {
             Box(
                 modifier = Modifier
