@@ -1,4 +1,4 @@
-package com.hfad.egypttour.ui.navigation
+package com.hfad.egypttour.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController

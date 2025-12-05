@@ -134,10 +134,8 @@ class LandmarkRepository(
         return result
     }
 
-    // ============= STRATEGY IMPLEMENTATIONS =============
-
     /**
-     * STRATEGY 1: Known landmarks (HIGHEST QUALITY)
+     *  : Known landmarks (HIGHEST QUALITY)
      */
     private suspend fun fetchKnownLandmarks(governorate: Governorate): List<LandMark> {
         return try {

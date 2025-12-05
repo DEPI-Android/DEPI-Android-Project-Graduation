@@ -1,6 +1,6 @@
 package com.hfad.egypttour.ui.screens
 
-import androidx.compose.foundation.Image
+import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -9,33 +9,124 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.hfad.egypttour.R
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.hfad.egypttour.Login.LoginActivity
 import com.hfad.egypttour.data.model.User
+import com.hfad.egypttour.ui.viewmodel.ProfileUiState
+import com.hfad.egypttour.ui.viewmodel.ProfileViewModel
 
 @Composable
 fun Profile(
     onBackClick: () -> Unit,
-    onLogoutSuccess: () -> Unit = {},  // Callback when user logs out
-    viewModel: ProfileViewModel = viewModel()
+    viewModel: ProfileViewModel = hiltViewModel()
 ) {
-    // Collect UI state from ViewModel
+    val context = LocalContext.current
     val uiState by viewModel.uiState.collectAsState()
+    val logoutEvent by viewModel.logoutEvent.collectAsState()
+    val isLoggingOutFromAllDevices by viewModel.isLoggingOutFromAllDevices.collectAsState()
+    var showLogoutDialog by remember { mutableStateOf(false) }
+
+    // Fetch user data when screen is first displayed
+    LaunchedEffect(Unit) {
+        viewModel.fetchUserData()
+    }
+
+    // Handle logout event - navigate to LoginActivity
+    LaunchedEffect(logoutEvent) {
+        if (logoutEvent) {
+            val intent = Intent(context, LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            context.startActivity(intent)
+            viewModel.onLogoutEventHandled()
+        }
+    }
+
+    // Enhanced logout dialog with two options
+    if (showLogoutDialog) {
+        AlertDialog(
+            onDismissRequest = { showLogoutDialog = false },
+            title = { 
+                Text(
+                    "Log Out",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 20.sp
+                ) 
+            },
+            text = { 
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Text(
+                        "Choose logout option:",
+                        fontSize = 14.sp,
+                        color = Color(0xFF666666)
+                    )
+                }
+            },
+            confirmButton = {
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    // Option 1: Logout from this device only
+                    Button(
+                        onClick = {
+                            showLogoutDialog = false
+                            viewModel.signOut()
+                        },
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color(0xFFE4B643)
+                        ),
+                        enabled = !isLoggingOutFromAllDevices
+                    ) {
+                        Text("Logout (This Device Only)")
+                    }
+
+                    // Option 2: Logout from all devices
+                    Button(
+                        onClick = {
+                            showLogoutDialog = false
+                            viewModel.signOutFromAllDevices()
+                        },
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color(0xFFB00020)
+                        ),
+                        enabled = !isLoggingOutFromAllDevices
+                    ) {
+                        if (isLoggingOutFromAllDevices) {
+                            CircularProgressIndicator(
+                                modifier = Modifier.size(16.dp),
+                                color = Color.White
+                            )
+                        } else {
+                            Text("Logout from All Devices")
+                        }
+                    }
+
+                    // Cancel button
+                    TextButton(
+                        onClick = { showLogoutDialog = false },
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text("Cancel")
+                    }
+                }
+            },
+            dismissButton = null
+        )
+    }
 
     // Main container
     Box(
@@ -53,10 +144,7 @@ fun Profile(
                 ProfileContent(
                     user = state.user,
                     onBackClick = onBackClick,
-                    onLogout = {
-                        viewModel.signOut()
-                        onLogoutSuccess()
-                    }
+                    onLogout = { showLogoutDialog = true }
                 )
             }
             is ProfileUiState.Error -> {
@@ -316,9 +404,9 @@ fun ProfileHeader(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Username (from Firebase)
+        // Display name (show username if available, otherwise 'Welcome')
         Text(
-            text = username,
+            text = if (username.isNotEmpty()) username else "Welcome!",
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
             color = Color(0xFF333333)
@@ -326,45 +414,67 @@ fun ProfileHeader(
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        // Email (from Firebase)
-        ContactInfoRow(email = email)
+        // Email and Username (from Firebase)
+        ContactInfoRow(email = email, username = username)
     }
 }
 
 // ==================== CONTACT INFO ====================
 @Composable
-fun ContactInfoRow(email: String) {
+fun ContactInfoRow(email: String, username: String) {
     Column(
         modifier = Modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.Start
+        horizontalAlignment = Alignment.Start,
+        verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
+        // Email row
         ContactInfoItem(
             icon = Icons.Default.Email,
+            label = "Email",
             text = email
+        )
+        
+        // Username row
+        ContactInfoItem(
+            icon = Icons.Default.Person,
+            label = "Username",
+            text = if (username.isNotEmpty()) username else "Not set"
         )
     }
 }
 
 @Composable
-fun ContactInfoItem(icon: ImageVector, text: String) {
+fun ContactInfoItem(icon: ImageVector, label: String, text: String) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.padding(horizontal = 8.dp)
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 8.dp, vertical = 4.dp)
     ) {
+        // Icon
         Icon(
             imageVector = icon,
             contentDescription = null,
-            tint = Color(0xFF666666),
-            modifier = Modifier.size(18.dp)
+            tint = Color(0xFFE4B643),
+            modifier = Modifier.size(20.dp)
         )
 
         Spacer(modifier = Modifier.width(12.dp))
 
-        Text(
-            text = text,
-            fontSize = 14.sp,
-            color = Color(0xFF333333)
-        )
+        // Label and Value
+        Column {
+            Text(
+                text = label,
+                fontSize = 12.sp,
+                color = Color(0xFF999999)
+            )
+            Text(
+                text = text,
+                fontSize = 14.sp,
+                color = Color(0xFF333333),
+                fontWeight = FontWeight.Medium
+            )
+        }
     }
 }
 
@@ -465,7 +575,6 @@ fun MenuItem(
 @Composable
 fun ProfilePreview() {
     Profile(
-        onBackClick = {},
-        onLogoutSuccess = {}
+        onBackClick = {}
     )
 }

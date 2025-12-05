@@ -57,6 +57,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withTimeoutOrNull
 
+/**
+ * SignUpActivity - Entry point for the signup screen
+ */
 class SignUpActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,6 +75,9 @@ class SignUpActivity : ComponentActivity() {
     }
 }
 
+/**
+ * UI State for signup process
+ */
 sealed class SignUpUiState {
     object Idle : SignUpUiState()
     object Loading : SignUpUiState()
@@ -79,6 +85,9 @@ sealed class SignUpUiState {
     data class Error(val message: String) : SignUpUiState()
 }
 
+/**
+ * ViewModel for signup - handles Firebase Auth and Firestore operations
+ */
 class SignUpViewModel : ViewModel() {
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
@@ -93,6 +102,9 @@ class SignUpViewModel : ViewModel() {
     var passwordVisible by mutableStateOf(false)
     var confirmPasswordVisible by mutableStateOf(false)
 
+    /**
+     * Validates password strength
+     */
     private fun isPasswordStrong(password: String): Pair<Boolean, String> {
         return when {
             password.length < 8 -> Pair(false, "Password must be at least 8 characters")
@@ -103,6 +115,9 @@ class SignUpViewModel : ViewModel() {
         }
     }
 
+    /**
+     * Converts Firebase exceptions to user-friendly messages
+     */
     private fun getReadableError(exception: Exception): String {
         return when (exception) {
             is FirebaseAuthUserCollisionException -> "An account already exists with this email address."
@@ -122,26 +137,33 @@ class SignUpViewModel : ViewModel() {
         }
     }
 
+    /**
+     * Sign up with email and password
+     * Creates Firebase Auth user, saves to Firestore, and caches locally
+     */
     fun signUp(context: Context) {
+        // Validate all fields are filled
         if (username.isBlank() || email.isBlank() || password.isBlank() || confirmPassword.isBlank()) {
             _uiState.value = SignUpUiState.Error("Please fill all fields.")
             return
         }
+
+        // Validate email format
         if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             _uiState.value = SignUpUiState.Error("Please enter a valid email.")
             return
         }
-        val (isStrong, message) = isPasswordStrong(password)
+
+        // Validate password strength
+        val (isStrong, errorMessage) = isPasswordStrong(password)
         if (!isStrong) {
-            _uiState.value = SignUpUiState.Error(message)
+            _uiState.value = SignUpUiState.Error(errorMessage)
             return
         }
+
+        // Validate passwords match
         if (password != confirmPassword) {
             _uiState.value = SignUpUiState.Error("Passwords do not match.")
-            return
-        }
-        if (!NetworkUtils.isNetworkAvailable(context)) {
-            _uiState.value = SignUpUiState.Error("No internet connection. Please check your network.")
             return
         }
 
@@ -151,6 +173,7 @@ class SignUpViewModel : ViewModel() {
             val originalEmail = email
 
             try {
+                // Step 1: Create Firebase Auth user with timeout
                 val result = withTimeoutOrNull(6000) {
                     auth.createUserWithEmailAndPassword(originalEmail, password).await()
                 }
@@ -167,6 +190,7 @@ class SignUpViewModel : ViewModel() {
                 val user = result.user ?: throw Exception("User creation failed, user is null.")
                 val userId = user.uid
 
+                // Step 2: Save user profile to Firestore
                 val userMap = hashMapOf(
                     "username" to originalUsername,
                     "email" to originalEmail,
@@ -177,15 +201,22 @@ class SignUpViewModel : ViewModel() {
                     db.collection("users").document(userId).set(userMap).await()
                 }
 
+                // Cache profile locally regardless of Firestore result
+                val sharedPreferences = context.getSharedPreferences("user_session", Context.MODE_PRIVATE)
+                sharedPreferences.edit()
+                    .putString("username", originalUsername)
+                    .putString("email", originalEmail)
+                    .apply()
+
                 if (firestoreResult == null) {
-                    _uiState.value = SignUpUiState.Error("Account created, Go to Sign in. Failed to save user data. Please try Sign in.")
-                    username = originalUsername
-                    email = originalEmail
-                    password = ""
-                    confirmPassword = ""
+                    // Account created but Firestore timed out - still a success!
+                    // Cache was saved, user can sign in
+                    _uiState.value = SignUpUiState.Success("Account created! Please sign in to continue.")
+                    clearFields()
                     return@launch
                 }
 
+                // Step 3: Send email verification
                 val emailVerificationResult = withTimeoutOrNull(10000) {
                     user.sendEmailVerification().await()
                 }
@@ -219,6 +250,9 @@ class SignUpViewModel : ViewModel() {
     }
 }
 
+/**
+ * Custom text field colors for the signup form
+ */
 @Composable
 fun customTextFieldColors(): TextFieldColors {
     return OutlinedTextFieldDefaults.colors(
@@ -232,6 +266,9 @@ fun customTextFieldColors(): TextFieldColors {
     )
 }
 
+/**
+ * Signup screen composable
+ */
 @Composable
 fun SignUpScreen(
     viewModel: SignUpViewModel = androidx.lifecycle.viewmodel.compose.viewModel(),
@@ -263,6 +300,7 @@ fun SignUpScreen(
         iterations = LottieConstants.IterateForever
     )
 
+    // Handle UI state changes
     LaunchedEffect(uiState) {
         when (val state = uiState) {
             is SignUpUiState.Success -> {
@@ -275,56 +313,43 @@ fun SignUpScreen(
         }
     }
 
+    // Success Dialog
     showSuccessDialog.value?.let { message ->
         AlertDialog(
             onDismissRequest = {
                 showSuccessDialog.value = null
                 viewModel.resetState()
-                Toast.makeText(context, "Redirecting to Login...", Toast.LENGTH_SHORT).show()
                 onNavigateToLogin()
             },
-            title = { Text("Registration Successful") },
+            title = { Text("Success", fontWeight = FontWeight.Bold) },
             text = { Text(message) },
             confirmButton = {
-                TextButton(
-                    onClick = {
-                        showSuccessDialog.value = null
-                        viewModel.resetState()
-                        Toast.makeText(context, "Redirecting to Login...", Toast.LENGTH_SHORT).show()
-                        onNavigateToLogin()
-                    }
-                ) {
-                    Text("Go to Login")
+                TextButton(onClick = {
+                    showSuccessDialog.value = null
+                    viewModel.resetState()
+                    onNavigateToLogin()
+                }) {
+                    Text("OK")
                 }
             }
         )
     }
 
+    // Error Dialog
     showErrorDialog.value?.let { message ->
-        val isPartialSuccess = message.contains("Account created")
         AlertDialog(
             onDismissRequest = {
                 showErrorDialog.value = null
                 viewModel.resetState()
-                if (isPartialSuccess) {
-                    Toast.makeText(context, "Redirecting to Login...", Toast.LENGTH_SHORT).show()
-                    onNavigateToLogin()
-                }
             },
-            title = { Text(if (isPartialSuccess) "Registration completed" else "Registration Failed") },
+            title = { Text("Error", fontWeight = FontWeight.Bold, color = Color.Red) },
             text = { Text(message) },
             confirmButton = {
-                TextButton(
-                    onClick = {
-                        showErrorDialog.value = null
-                        viewModel.resetState()
-                        if (isPartialSuccess) {
-                            Toast.makeText(context, "Redirecting to Login...", Toast.LENGTH_SHORT).show()
-                            onNavigateToLogin()
-                        }
-                    }
-                ) {
-                    Text(if (isPartialSuccess) "Go to Sign In" else "OK")
+                TextButton(onClick = {
+                    showErrorDialog.value = null
+                    viewModel.resetState()
+                }) {
+                    Text("OK")
                 }
             }
         )
@@ -350,6 +375,7 @@ fun SignUpScreen(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
+                    // User icon
                     Icon(
                         imageVector = Icons.Default.Person,
                         contentDescription = "User Icon",
@@ -361,6 +387,7 @@ fun SignUpScreen(
                         tint = Color(0xFFFFC107)
                     )
 
+                    // Title
                     Text(
                         "Sign Up",
                         fontSize = 24.sp,
@@ -369,6 +396,7 @@ fun SignUpScreen(
                         fontFamily = signup_Font
                     )
 
+                    // Username field
                     OutlinedTextField(
                         value = viewModel.username,
                         onValueChange = { viewModel.username = it },
@@ -381,6 +409,7 @@ fun SignUpScreen(
                         colors = customTextFieldColors()
                     )
 
+                    // Email field
                     OutlinedTextField(
                         value = viewModel.email,
                         onValueChange = { viewModel.email = it },
@@ -396,6 +425,7 @@ fun SignUpScreen(
                         colors = customTextFieldColors()
                     )
 
+                    // Password field
                     OutlinedTextField(
                         value = viewModel.password,
                         onValueChange = { viewModel.password = it },
@@ -418,6 +448,7 @@ fun SignUpScreen(
                         colors = customTextFieldColors()
                     )
 
+                    // Confirm Password field
                     OutlinedTextField(
                         value = viewModel.confirmPassword,
                         onValueChange = { viewModel.confirmPassword = it },
@@ -443,6 +474,7 @@ fun SignUpScreen(
                         colors = customTextFieldColors()
                     )
 
+                    // Sign Up button
                     Button(
                         onClick = {
                             focusManager.clearFocus()
@@ -463,16 +495,20 @@ fun SignUpScreen(
                         }
                     }
 
+                    // Navigate to Sign In
                     Row {
                         Text("Already have an account? ", color = Color.White.copy(alpha = 0.8f))
-                        TextButton(onClick = onNavigateToLogin) {
-                            Text("Sign in!", color = Color.White, fontWeight = FontWeight.Bold, textDecoration = TextDecoration.Underline)
+                        TextButton(onClick = {
+                            context.startActivity(Intent(context, SignInActivity::class.java))
+                        }) {
+                            Text("Sign in!", color = Color.White, fontWeight = FontWeight.Bold)
                         }
                     }
                 }
             }
         }
 
+        // Loading overlay
         if (uiState == SignUpUiState.Loading) {
             Box(
                 modifier = Modifier
@@ -480,21 +516,11 @@ fun SignUpScreen(
                     .background(Color.Black.copy(alpha = 0.5f)),
                 contentAlignment = Alignment.Center
             ) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    LottieAnimation(
-                        composition = lottieComposition,
-                        progress = { lottieProgress },
-                        modifier = Modifier.size(200.dp)
-                    )
-                    Spacer(modifier = Modifier.height(16.dp))
-                    Button(
-                        onClick = { viewModel.resetState() },
-                        colors = ButtonDefaults.buttonColors(containerColor = Color.Yellow),
-                        modifier = Modifier.padding(16.dp)
-                    ) {
-                        Text("Cancel", color = Color.White)
-                    }
-                }
+                LottieAnimation(
+                    composition = lottieComposition,
+                    progress = { lottieProgress },
+                    modifier = Modifier.size(200.dp)
+                )
             }
         }
     }
