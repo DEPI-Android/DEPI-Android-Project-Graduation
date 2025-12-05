@@ -43,6 +43,7 @@ import kotlinx.coroutines.delay
 
 @Composable
 fun LandmarkDetailScreen(
+
     landmarkId: Int,
     onBackClick: () -> Unit,
     viewModel: LandmarkListViewModel = hiltViewModel()

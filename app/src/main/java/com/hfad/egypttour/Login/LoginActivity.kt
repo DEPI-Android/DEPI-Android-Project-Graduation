@@ -35,7 +35,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.hfad.egypttour.MainActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.hfad.egypttour.ui.MainActivity
 import com.hfad.egypttour.R
 import com.hfad.egypttour.ui.theme.EgyptGoldDark
 import com.hfad.egypttour.ui.theme.EgyptTourTheme
@@ -46,15 +47,25 @@ class LoginActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
+        // Check if user is already logged in
         val sharedPreferences = getSharedPreferences("user_session", MODE_PRIVATE)
         val isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false)
+        val currentUser = FirebaseAuth.getInstance().currentUser
 
-        if (isLoggedIn) {
+        // Only auto-login if both SharedPreferences and Firebase Auth agree
+        if (isLoggedIn && currentUser != null) {
+            // Both agree: user is logged in
             val intent = Intent(this, MainActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
             finish()
             return
+        } else if (isLoggedIn && currentUser == null) {
+            // Clear stale session if Firebase Auth is null but SharedPreferences says logged in
+            with(sharedPreferences.edit()) {
+                putBoolean("isLoggedIn", false)
+                apply()
+            }
         }
 
         setContent {

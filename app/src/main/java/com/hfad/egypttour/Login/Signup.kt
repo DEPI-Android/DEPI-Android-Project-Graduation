@@ -87,8 +87,10 @@ class SignUpViewModel : ViewModel() {
     var passwordVisible by mutableStateOf(false)
     var confirmPasswordVisible by mutableStateOf(false)
 
-
-    fun signUp() {
+    /**
+     * Sign up with email and password, then cache profile locally
+     */
+    fun signUp(context: android.content.Context) {
         if (username.isBlank() || email.isBlank() || password.isBlank() || confirmPassword.isBlank()) {
             _uiState.value = SignUpUiState.Error("Please fill all fields.")
             return
@@ -118,11 +120,20 @@ class SignUpViewModel : ViewModel() {
                 val result = auth.createUserWithEmailAndPassword(originalEmail, originalPassword).await()
                 val userId = result.user?.uid
                 if (userId != null) {
+                    // Save to Firestore
                     val userMap = hashMapOf(
                         "username" to originalUsername,
                         "email" to originalEmail
                     )
                     db.collection("users").document(userId).set(userMap).await()
+                    
+                    // Cache profile locally (no need to fetch - we have the data!)
+                    val sharedPreferences = context.getSharedPreferences("user_session", android.content.Context.MODE_PRIVATE)
+                    sharedPreferences.edit()
+                        .putString("username", originalUsername)
+                        .putString("email", originalEmail)
+                        .apply()
+                    
                     _uiState.value = SignUpUiState.Success("Sign up successful!")
                 } else {
                     restoreFields(originalUsername, originalEmail, originalPassword)
@@ -328,7 +339,7 @@ fun SignUpScreen(
                             keyboardType = KeyboardType.Password,
                             imeAction = ImeAction.Done
                         ),
-                        keyboardActions = KeyboardActions(onDone = { viewModel.signUp() }),
+                        keyboardActions = KeyboardActions(onDone = { viewModel.signUp(context) }),
                         modifier = Modifier.fillMaxWidth(),
                         shape = RoundedCornerShape(50),
                         colors = OutlinedTextFieldDefaults.colors(
@@ -343,7 +354,7 @@ fun SignUpScreen(
                     )
 
                     Button(
-                        onClick = { viewModel.signUp() },
+                        onClick = { viewModel.signUp(context) },
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(50.dp)

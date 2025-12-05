@@ -44,7 +44,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.airbnb.lottie.compose.*
 import com.google.firebase.auth.FirebaseAuth
-import com.hfad.egypttour.MainActivity
+import com.hfad.egypttour.ui.MainActivity
 import com.hfad.egypttour.R
 import com.hfad.egypttour.ui.theme.EgyptGoldDark
 import com.hfad.egypttour.ui.theme.EgyptTourTheme
@@ -90,6 +90,8 @@ sealed class SignInUiState {
 
 class SignInViewModel : ViewModel() {
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
+    private val db: com.google.firebase.firestore.FirebaseFirestore = 
+        com.google.firebase.firestore.FirebaseFirestore.getInstance()
 
     private val _uiState = MutableStateFlow<SignInUiState>(SignInUiState.Idle)
     val uiState = _uiState.asStateFlow()
@@ -99,6 +101,9 @@ class SignInViewModel : ViewModel() {
     var passwordVisible by mutableStateOf(false)
     var rememberMe by mutableStateOf(false)
 
+    /**
+     * Sign in with email and password, then fetch and cache user profile
+     */
     fun signIn(context: Context) {
         if (email.isBlank() || password.isBlank()) {
             _uiState.value = SignInUiState.Error("Please fill all fields.")
@@ -109,14 +114,37 @@ class SignInViewModel : ViewModel() {
             _uiState.value = SignInUiState.Loading
             try {
                 auth.signInWithEmailAndPassword(email, password).await()
+                
+                val sharedPreferences = context.getSharedPreferences("user_session", Context.MODE_PRIVATE)
+                
+                // Save login session if "Remember me" is checked
                 if (rememberMe) {
-                    val sharedPreferences =
-                        context.getSharedPreferences("user_session", Context.MODE_PRIVATE)
-                    with(sharedPreferences.edit()) {
-                        putBoolean("isLoggedIn", true)
-                        apply()
+                    sharedPreferences.edit().putBoolean("isLoggedIn", true).apply()
+                }
+                
+                // Fetch and cache user profile from Firestore
+                val userId = auth.currentUser?.uid
+                if (userId != null) {
+                    try {
+                        val doc = db.collection("users").document(userId).get().await()
+                        if (doc.exists()) {
+                            val username = doc.getString("username") ?: ""
+                            val userEmail = doc.getString("email") ?: email
+                            // Cache profile locally
+                            sharedPreferences.edit()
+                                .putString("username", username)
+                                .putString("email", userEmail)
+                                .apply()
+                        }
+                    } catch (e: Exception) {
+                        // If Firestore fetch fails, still allow login
+                        // Profile will show email from Firebase Auth as fallback
+                        sharedPreferences.edit()
+                            .putString("email", email)
+                            .apply()
                     }
                 }
+                
                 _uiState.value = SignInUiState.Success("Login Successful")
             } catch (e: Exception) {
                 _uiState.value = SignInUiState.Error(e.message ?: "An unknown error occurred.")
