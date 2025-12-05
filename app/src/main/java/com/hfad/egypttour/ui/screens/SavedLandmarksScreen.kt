@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
+import com.hfad.egypttour.data.model.LandMark
 import com.hfad.egypttour.ui.theme.EgyptGold
 import com.hfad.egypttour.ui.viewmodel.SavedLandmarksViewModel
 
@@ -76,7 +77,7 @@ fun SavedLandmarksScreen(
 }
 
 @Composable
-fun SavedItemCard(landmark: com.hfad.egypttour.data.model.LandMark, onClick: (Int) -> Unit) {
+fun SavedItemCard(landmark: LandMark, onClick: (Int) -> Unit) {
     Card(
         modifier = Modifier.fillMaxWidth().height(100.dp).clickable { onClick(landmark.id) },
         shape = RoundedCornerShape(12.dp),
@@ -84,7 +85,8 @@ fun SavedItemCard(landmark: com.hfad.egypttour.data.model.LandMark, onClick: (In
     ) {
         Row {
             AsyncImage(
-                model = landmark.imageUrl,
+                //what url ?
+                model = landmark.imageUrl, // ??????
                 contentDescription = null,
                 modifier = Modifier.width(100.dp).fillMaxHeight(),
                 contentScale = ContentScale.Crop

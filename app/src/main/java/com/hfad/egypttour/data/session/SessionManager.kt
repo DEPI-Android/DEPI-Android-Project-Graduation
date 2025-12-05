@@ -23,6 +23,8 @@ class SessionManager @Inject constructor(
         private const val KEY_IS_LOGGED_IN = "isLoggedIn"
         private const val KEY_USERNAME = "username"
         private const val KEY_EMAIL = "email"
+        private const val KEY_FAVORITES = "cached_favorites"
+        private const val KEY_SAVES = "cached_saves"
     }
 
     /**
@@ -85,6 +87,78 @@ class SessionManager @Inject constructor(
             .putBoolean(KEY_IS_LOGGED_IN, false)
             .remove(KEY_USERNAME)
             .remove(KEY_EMAIL)
+            .remove(KEY_FAVORITES)
+            .remove(KEY_SAVES)
             .apply()
+    }
+
+    // ==================== FAVORITES/SAVES CACHING ====================
+
+    /**
+     * Cache favorites list
+     */
+    fun cacheFavorites(ids: List<Int>) {
+        sharedPreferences.edit()
+            .putString(KEY_FAVORITES, ids.joinToString(","))
+            .apply()
+    }
+
+    /**
+     * Get cached favorites
+     */
+    fun getCachedFavorites(): List<Int> {
+        val str = sharedPreferences.getString(KEY_FAVORITES, "") ?: ""
+        return if (str.isEmpty()) emptyList()
+        else str.split(",").mapNotNull { it.toIntOrNull() }
+    }
+
+    /**
+     * Add single favorite to cache
+     */
+    fun addFavoriteToCache(id: Int) {
+        val current = getCachedFavorites().toMutableList()
+        if (!current.contains(id)) current.add(id)
+        cacheFavorites(current)
+    }
+
+    /**
+     * Remove single favorite from cache
+     */
+    fun removeFavoriteFromCache(id: Int) {
+        cacheFavorites(getCachedFavorites().filter { it != id })
+    }
+
+    /**
+     * Cache saves list
+     */
+    fun cacheSaves(ids: List<Int>) {
+        sharedPreferences.edit()
+            .putString(KEY_SAVES, ids.joinToString(","))
+            .apply()
+    }
+
+    /**
+     * Get cached saves
+     */
+    fun getCachedSaves(): List<Int> {
+        val str = sharedPreferences.getString(KEY_SAVES, "") ?: ""
+        return if (str.isEmpty()) emptyList()
+        else str.split(",").mapNotNull { it.toIntOrNull() }
+    }
+
+    /**
+     * Add single save to cache
+     */
+    fun addSaveToCache(id: Int) {
+        val current = getCachedSaves().toMutableList()
+        if (!current.contains(id)) current.add(id)
+        cacheSaves(current)
+    }
+
+    /**
+     * Remove single save from cache
+     */
+    fun removeSaveFromCache(id: Int) {
+        cacheSaves(getCachedSaves().filter { it != id })
     }
 }

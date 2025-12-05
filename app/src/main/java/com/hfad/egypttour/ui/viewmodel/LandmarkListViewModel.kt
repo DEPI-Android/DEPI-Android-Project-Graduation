@@ -239,35 +239,56 @@ class LandmarkListViewModel @Inject constructor(
     val errorMessage: String?
         get() = (_landmarksState.value as? Result.Error)?.message
     // ==========================Added by Wahba============================
-    // Check status when a landmark is selected
+    // Check status when a landmark is selected (cache-first approach)
     fun checkUserInteractions(landmarkId: Int) {
         viewModelScope.launch {
-            val favorites = userRepository.getUserFavorites()
-            _isFavorite.value = favorites.contains(landmarkId)
-
-            val saves = userRepository.getUserSaves()
-            _isSaved.value = saves.contains(landmarkId)
+            // Step 1: Check cache immediately (instant UI)
+            val cachedFavs = userRepository.getCachedFavorites()
+            _isFavorite.value = cachedFavs.contains(landmarkId)
+            
+            val cachedSaves = userRepository.getCachedSaves()
+            _isSaved.value = cachedSaves.contains(landmarkId)
+            
+            // Step 2: Background sync with Firestore (updates cache)
+            try {
+                val freshFavs = userRepository.syncFavoritesFromFirestore()
+                _isFavorite.value = freshFavs.contains(landmarkId)
+                
+                val freshSaves = userRepository.syncSavesFromFirestore()
+                _isSaved.value = freshSaves.contains(landmarkId)
+            } catch (e: Exception) {
+                // Keep cached values on error - already set above
+                Log.e(Constants.LOG_TAG, "Firestore sync failed, using cache: ${e.message}")
+            }
         }
     }
 
     fun toggleFavorite(landmarkId: Int) {
+        // Optimistic update - instant UI feedback
+        _isFavorite.value = !_isFavorite.value
+        
         viewModelScope.launch {
-            // Optimistic update (update UI immediately)
-            _isFavorite.value = !_isFavorite.value
-            // Update DB
+            // UserRepository updates cache + syncs to Firestore
             val newState = userRepository.toggleFavorite(landmarkId)
-            _isFavorite.value = newState // Ensure sync with DB result
+            // Sync UI with actual result (in case of error)
+            _isFavorite.value = newState
         }
     }
 
     fun toggleSave(landmarkId: Int) {
+        // Optimistic update - instant UI feedback
+        _isSaved.value = !_isSaved.value
+        
         viewModelScope.launch {
-            _isSaved.value = !_isSaved.value
+            // UserRepository updates cache + syncs to Firestore
             val newState = userRepository.toggleSave(landmarkId)
+            // Sync UI with actual result
             _isSaved.value = newState
         }
     }
     // ===================================================================
+
+
     fun loadLandmarks(governorate: Governorate, forceRefresh: Boolean = false) {
         if (!forceRefresh && _currentGovernorate.value == governorate && _landmarksState.value is Result.Success) {
             Log.d(Constants.LOG_TAG, "Landmarks already loaded for ${governorate.displayName}")
