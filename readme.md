@@ -51,17 +51,17 @@ This project is a showcase of modern Android development best practices.
     *   **[Lifecycle Components](https://developer.android.com/jetpack/lifecycle):** `ViewModel`, `viewModelScope`, and `SavedStateHandle` for creating lifecycle-aware and highly resilient UI components.
 
 ## 🖼️ App Screenshots
-<img width="300" alt="Screenshot 2025-12-05 063852" src="https://github.com/user-attachments/assets/3bec9d3e-ac7b-4dd5-bc03-e60cc1048433" />
-<img width="300" alt="Screenshot 2025-12-05 063924" src="https://github.com/user-attachments/assets/3be60234-31d3-4359-b9f0-6a3b8246a961" />
-<img width="300" alt="Screenshot 2025-12-05 063935" src="https://github.com/user-attachments/assets/edcc17aa-cb1a-46c9-887b-8afcfcda7f0e" />
-<img width="300" alt="Screenshot 2025-12-05 063208" src="https://github.com/user-attachments/assets/52828bac-0cc1-493a-92c7-08e4101f9695" />
-<img width="300" alt="Screenshot 2025-12-05 063401" src="https://github.com/user-attachments/assets/62a5b17a-c2dd-4b21-89e3-c34d5cc85069" />
-<img width="300" alt="Screenshot 2025-12-05 063421" src="https://github.com/user-attachments/assets/cca71148-f001-4875-a756-bb32dd22b9c1" />
-<img width="300" alt="Screenshot 2025-12-05 063455" src="https://github.com/user-attachments/assets/3bf6796b-4365-48ad-afcb-eed1660f83d1" />
-<img width="300" alt="Screenshot 2025-12-05 063541" src="https://github.com/user-attachments/assets/44e9ae12-a979-45d1-a352-131c7593fbc1" />
-<img width="300" alt="Screenshot 2025-12-05 063625" src="https://github.com/user-attachments/assets/fb76e866-d010-45e3-8336-30261808f531" />
-<img width="300" alt="Screenshot 2025-12-05 063654" src="https://github.com/user-attachments/assets/6dca68e8-d2b9-4ada-afc4-5268a61a4714" />
-<img width="300" alt="Screenshot 2025-12-05 063842" src="https://github.com/user-attachments/assets/087cd4f1-2f68-4ebe-af3e-d88c5d796495" />
+<img width="270" alt="Screenshot 2025-12-05 063852" src="https://github.com/user-attachments/assets/3bec9d3e-ac7b-4dd5-bc03-e60cc1048433" />
+<img width="270" alt="Screenshot 2025-12-05 063924" src="https://github.com/user-attachments/assets/3be60234-31d3-4359-b9f0-6a3b8246a961" />
+<img width="270" alt="Screenshot 2025-12-05 063935" src="https://github.com/user-attachments/assets/edcc17aa-cb1a-46c9-887b-8afcfcda7f0e" />
+<img width="270" alt="Screenshot 2025-12-05 063208" src="https://github.com/user-attachments/assets/52828bac-0cc1-493a-92c7-08e4101f9695" />
+<img width="270" alt="Screenshot 2025-12-05 063401" src="https://github.com/user-attachments/assets/62a5b17a-c2dd-4b21-89e3-c34d5cc85069" />
+<img width="270" alt="Screenshot 2025-12-05 063421" src="https://github.com/user-attachments/assets/cca71148-f001-4875-a756-bb32dd22b9c1" />
+<img width="270" alt="Screenshot 2025-12-05 063455" src="https://github.com/user-attachments/assets/3bf6796b-4365-48ad-afcb-eed1660f83d1" />
+<img width="270" alt="Screenshot 2025-12-05 063541" src="https://github.com/user-attachments/assets/44e9ae12-a979-45d1-a352-131c7593fbc1" />
+<img width="270" alt="Screenshot 2025-12-05 063625" src="https://github.com/user-attachments/assets/fb76e866-d010-45e3-8336-30261808f531" />
+<img width="270" alt="Screenshot 2025-12-05 063654" src="https://github.com/user-attachments/assets/6dca68e8-d2b9-4ada-afc4-5268a61a4714" />
+<img width="270" alt="Screenshot 2025-12-05 063842" src="https://github.com/user-attachments/assets/087cd4f1-2f68-4ebe-af3e-d88c5d796495" />
 
 
 ## 📂 Folder Structure
