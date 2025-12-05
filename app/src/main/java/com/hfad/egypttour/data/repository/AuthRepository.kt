@@ -122,11 +122,7 @@ class AuthRepository @Inject constructor(
         sessionManager.clearAllUserData()  // Clears login session + cached profile
     }
 
-    /**
-     * Sign out user from ALL DEVICES
-     * TODO: Implement Cloud Function to revoke refresh tokens
-     * For now, this just logs out locally
-     */
+// will be done in the future next update
     suspend fun signOutFromAllDevices(): Result<Unit> {
         return try {
             val userId = getCurrentUserId()
@@ -150,14 +146,14 @@ class AuthRepository @Inject constructor(
     /**
      * Save login session (for "Remember me" feature)
      */
-    fun saveLoginSession() {
-        sessionManager.saveLoginSession()
-    }
-
-    /**
-     * Check if session exists in SharedPreferences
-     */
-    fun hasSession(): Boolean {
-        return sessionManager.isLoggedIn()
-    }
+//    fun saveLoginSession() {
+//        sessionManager.saveLoginSession()
+//    }
+//
+//    /**
+//     * Check if session exists in SharedPreferences
+//     */
+//    fun hasSession(): Boolean {
+//        return sessionManager.isLoggedIn()
+//    }
 }

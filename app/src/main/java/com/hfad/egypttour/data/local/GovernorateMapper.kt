@@ -68,19 +68,19 @@ object GovernorateMapper {
     
     /**
      * Get all database governorate strings mapped to a specific app Governorate
-     */
-    fun getVariantsFor(governorate: Governorate): List<String> {
-        return when (governorate) {
-            Governorate.CAIRO -> listOf("Cairo", "Cairo Governorate", "Nasr City", "Rhoda Island")
-            Governorate.ALEXANDRIA -> listOf("Alexandria", "Alexandria Governorate")
-            Governorate.GIZA -> listOf("Giza", "Giza Governorate", "Markaz al Badrashayn")
-            Governorate.LUXOR -> listOf("Luxor", "Luxor Governorate", "Thebes", "Karnak", "Dendera")
-            Governorate.ASWAN -> listOf("Aswan", "Aswan Governorate", "Elephantine")
-            Governorate.FAIYUM -> listOf("Faiyum Governorate", "Faiyum")
-            Governorate.PORT_SAID -> listOf("Port Said")
-            Governorate.SUEZ -> listOf("Suez Governorate", "Ismailia", "El-Qantarah al-Sharqiya")
-            Governorate.SHARM_EL_SHEIKH -> listOf("South Sinai Governorate", "Sharm El Sheikh")
-            Governorate.HURGHADA -> listOf("Red Sea Governorate", "Hurghada")
-        }
-    }
+//     */
+//    fun getVariantsFor(governorate: Governorate): List<String> {
+//        return when (governorate) {
+//            Governorate.CAIRO -> listOf("Cairo", "Cairo Governorate", "Nasr City", "Rhoda Island")
+//            Governorate.ALEXANDRIA -> listOf("Alexandria", "Alexandria Governorate")
+//            Governorate.GIZA -> listOf("Giza", "Giza Governorate", "Markaz al Badrashayn")
+//            Governorate.LUXOR -> listOf("Luxor", "Luxor Governorate", "Thebes", "Karnak", "Dendera")
+//            Governorate.ASWAN -> listOf("Aswan", "Aswan Governorate", "Elephantine")
+//            Governorate.FAIYUM -> listOf("Faiyum Governorate", "Faiyum")
+//            Governorate.PORT_SAID -> listOf("Port Said")
+//            Governorate.SUEZ -> listOf("Suez Governorate", "Ismailia", "El-Qantarah al-Sharqiya")
+//            Governorate.SHARM_EL_SHEIKH -> listOf("South Sinai Governorate", "Sharm El Sheikh")
+//            Governorate.HURGHADA -> listOf("Red Sea Governorate", "Hurghada")
+//        }
+//    }
 }

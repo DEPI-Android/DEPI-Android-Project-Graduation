@@ -50,7 +50,6 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.firestore.FirebaseFirestore
 import com.hfad.egypttour.R
 import com.hfad.egypttour.ui.theme.EgyptTourTheme
-import com.hfad.egypttour.utils.NetworkUtils
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
