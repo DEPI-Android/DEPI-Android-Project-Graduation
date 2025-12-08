@@ -89,11 +89,12 @@ sealed class SignInUiState {
     object Loading : SignInUiState()
     data class Success(val message: String) : SignInUiState()
     data class Error(val message: String) : SignInUiState()
+    data class EmailNotVerified(val message: String) : SignInUiState()
 }
 
 class SignInViewModel : ViewModel() {
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
-    private val db: com.google.firebase.firestore.FirebaseFirestore = 
+    private val db: com.google.firebase.firestore.FirebaseFirestore =
         com.google.firebase.firestore.FirebaseFirestore.getInstance()
 
     private val _uiState = MutableStateFlow<SignInUiState>(SignInUiState.Idle)
@@ -104,9 +105,7 @@ class SignInViewModel : ViewModel() {
     var passwordVisible by mutableStateOf(false)
     var rememberMe by mutableStateOf(false)
 
-    /**
-     * Sign in with email and password, then fetch and cache user profile
-     */
+
     fun signIn(context: Context) {
         if (email.isBlank() || password.isBlank()) {
             _uiState.value = SignInUiState.Error("Please fill all fields.")
@@ -116,42 +115,103 @@ class SignInViewModel : ViewModel() {
         viewModelScope.launch {
             _uiState.value = SignInUiState.Loading
             try {
+
                 auth.signInWithEmailAndPassword(email, password).await()
-                
+
+
+                val user = auth.currentUser
+
+                if (user == null) {
+                    _uiState.value = SignInUiState.Error("Login failed. Please try again.")
+                    return@launch
+                }
+
+
+                user.reload().await()
+
+                if (!user.isEmailVerified) {
+
+                    auth.signOut()
+                    _uiState.value = SignInUiState.EmailNotVerified(
+                        "Your email is not verified. Please check your inbox and click the verification link."
+                    )
+                    return@launch
+                }
+
+
                 val sharedPreferences = context.getSharedPreferences("user_session", Context.MODE_PRIVATE)
-                
-                // Save login session if "Remember me" is checked
+
                 if (rememberMe) {
                     sharedPreferences.edit().putBoolean("isLoggedIn", true).apply()
                 }
-                
-                // Fetch and cache user profile from Firestore
-                val userId = auth.currentUser?.uid
-                if (userId != null) {
-                    try {
-                        val doc = db.collection("users").document(userId).get().await()
-                        if (doc.exists()) {
-                            val username = doc.getString("username") ?: ""
-                            val userEmail = doc.getString("email") ?: email
-                            // Cache profile locally
-                            sharedPreferences.edit()
-                                .putString("username", username)
-                                .putString("email", userEmail)
-                                .apply()
-                        }
-                    } catch (e: Exception) {
-                        // If Firestore fetch fails, still allow login
-                        // Profile will show email from Firebase Auth as fallback
+
+
+                val userId = user.uid
+                try {
+                    val doc = db.collection("users").document(userId).get().await()
+                    if (doc.exists()) {
+                        val username = doc.getString("username") ?: ""
+                        val userEmail = doc.getString("email") ?: email
                         sharedPreferences.edit()
-                            .putString("email", email)
+                            .putString("username", username)
+                            .putString("email", userEmail)
                             .apply()
                     }
+                } catch (e: Exception) {
+                    sharedPreferences.edit()
+                        .putString("email", email)
+                        .apply()
                 }
-                
+
                 _uiState.value = SignInUiState.Success("Login Successful")
+
             } catch (e: Exception) {
-                _uiState.value = SignInUiState.Error(e.message ?: "An unknown error occurred.")
+                _uiState.value = SignInUiState.Error(getReadableError(e))
             }
+        }
+    }
+
+
+    fun resendVerificationEmail() {
+        viewModelScope.launch {
+            _uiState.value = SignInUiState.Loading
+            try {
+
+                auth.signInWithEmailAndPassword(email, password).await()
+                val user = auth.currentUser
+
+                if (user != null) {
+                    user.sendEmailVerification().await()
+                    auth.signOut()
+                    _uiState.value = SignInUiState.Success(
+                        "Verification email sent! Please check your inbox and spam folder."
+                    )
+                } else {
+                    _uiState.value = SignInUiState.Error("Failed to send verification email.")
+                }
+            } catch (e: Exception) {
+                _uiState.value = SignInUiState.Error("Failed to send email: ${e.message}")
+            }
+        }
+    }
+
+
+    private fun getReadableError(exception: Exception): String {
+        return when {
+            exception.message?.contains("no user record") == true ||
+                    exception.message?.contains("INVALID_LOGIN_CREDENTIALS") == true ->
+                "Invalid email or password"
+            exception.message?.contains("password is invalid") == true ->
+                "Incorrect password"
+            exception.message?.contains("email address is badly formatted") == true ->
+                "Invalid email format"
+            exception.message?.contains("network error") == true ->
+                "No internet connection. Please check your network."
+            exception.message?.contains("too many requests") == true ->
+                "Too many failed attempts. Please try again later."
+            exception.message?.contains("user has been disabled") == true ->
+                "This account has been disabled."
+            else -> exception.message ?: "An unknown error occurred."
         }
     }
 
@@ -173,6 +233,11 @@ fun SignInScreen(
     val signin_Font = FontFamily(Font(R.font.frijole_regular))
     val scrollState = rememberScrollState()
 
+    // متغيرات للـ Dialogs
+    val showSuccessDialog = remember { mutableStateOf<String?>(null) }
+    val showErrorDialog = remember { mutableStateOf<String?>(null) }
+    val showEmailNotVerifiedDialog = remember { mutableStateOf<String?>(null) }
+
     val backgroundBrush = Brush.verticalGradient(
         colors = listOf(Color(0xFF333333), Color(0xFF895100), Color(0xFFE4B643))
     )
@@ -193,18 +258,118 @@ fun SignInScreen(
     LaunchedEffect(uiState) {
         when (val state = uiState) {
             is SignInUiState.Success -> {
-                Toast.makeText(context, state.message, Toast.LENGTH_SHORT).show()
-                onNavigateToMain()
-                viewModel.resetState()
+                if (state.message == "Login Successful") {
+                    Toast.makeText(context, state.message, Toast.LENGTH_SHORT).show()
+                    onNavigateToMain()
+                    viewModel.resetState()
+                } else {
+                    showSuccessDialog.value = state.message
+                }
             }
-
             is SignInUiState.Error -> {
-                Toast.makeText(context, state.message, Toast.LENGTH_LONG).show()
-                viewModel.resetState()
+                showErrorDialog.value = state.message
             }
-
+            is SignInUiState.EmailNotVerified -> {
+                showEmailNotVerifiedDialog.value = state.message
+            }
             else -> Unit
         }
+    }
+
+    // Success Dialog
+    showSuccessDialog.value?.let { message ->
+        AlertDialog(
+            onDismissRequest = {
+                showSuccessDialog.value = null
+                viewModel.resetState()
+            },
+            title = {
+                Text(
+                    "Success",
+                    fontWeight = FontWeight.Bold,
+                    color = Color(0xFF4CAF50)
+                )
+            },
+            text = { Text(message) },
+            confirmButton = {
+                TextButton(onClick = {
+                    showSuccessDialog.value = null
+                    viewModel.resetState()
+                }) {
+                    Text("OK")
+                }
+            }
+        )
+    }
+
+    // Error Dialog
+    showErrorDialog.value?.let { message ->
+        AlertDialog(
+            onDismissRequest = {
+                showErrorDialog.value = null
+                viewModel.resetState()
+            },
+            title = {
+                Text(
+                    "Error",
+                    fontWeight = FontWeight.Bold,
+                    color = Color.Red
+                )
+            },
+            text = { Text(message) },
+            confirmButton = {
+                TextButton(onClick = {
+                    showErrorDialog.value = null
+                    viewModel.resetState()
+                }) {
+                    Text("OK")
+                }
+            }
+        )
+    }
+
+    // Email Not Verified Dialog
+    showEmailNotVerifiedDialog.value?.let { message ->
+        AlertDialog(
+            onDismissRequest = {
+                showEmailNotVerifiedDialog.value = null
+                viewModel.resetState()
+            },
+            title = {
+                Text(
+                    "Email Not Verified",
+                    fontWeight = FontWeight.Bold,
+                    color = Color(0xFFFF9800)
+                )
+            },
+            text = {
+                Column {
+                    Text(message)
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(
+                        "Please  Click 'send' to get a  verification link, or check your spam folder .",
+                        fontSize = 12.sp,
+                        color = Color.Gray
+                    )
+                }
+            },
+            confirmButton = {
+                TextButton(onClick = {
+                    showEmailNotVerifiedDialog.value = null
+                    viewModel.resendVerificationEmail()
+                }) {
+                    Text("send Email", color = Color(0xFF2196F3))
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = {
+                    showEmailNotVerifiedDialog.value = null
+                    viewModel.resetState()
+                }) {
+                    Text("cancel")
+                }
+            }
+        )
     }
 
     Box(
@@ -256,9 +421,7 @@ fun SignInScreen(
                             keyboardType = KeyboardType.Email, imeAction = ImeAction.Next
                         ),
                         keyboardActions = KeyboardActions(onNext = {
-                            focusManager.moveFocus(
-                                FocusDirection.Down
-                            )
+                            focusManager.moveFocus(FocusDirection.Down)
                         }),
                         colors = OutlinedTextFieldDefaults.colors(
                             focusedTextColor = Color.White,
@@ -289,7 +452,10 @@ fun SignInScreen(
                         keyboardOptions = KeyboardOptions(
                             keyboardType = KeyboardType.Password, imeAction = ImeAction.Done
                         ),
-                        keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
+                        keyboardActions = KeyboardActions(onDone = {
+                            focusManager.clearFocus()
+                            viewModel.signIn(context)
+                        }),
                         modifier = Modifier.fillMaxWidth(),
                         shape = RoundedCornerShape(50),
                         colors = OutlinedTextFieldDefaults.colors(
@@ -312,8 +478,7 @@ fun SignInScreen(
                             verticalAlignment = Alignment.CenterVertically,
                             modifier = Modifier.clickable(
                                 true,
-
-                                onClick = { viewModel.rememberMe= !viewModel.rememberMe }
+                                onClick = { viewModel.rememberMe = !viewModel.rememberMe }
                             )
                         ) {
                             Checkbox(
@@ -325,8 +490,7 @@ fun SignInScreen(
                             )
                             Text(
                                 "Remember me", color = Color.White.copy(alpha = 0.8f),
-
-                                )
+                            )
                         }
                         TextButton(onClick = onNavigateToForgotPassword) {
                             Text("Forgot password?", color = Color.White.copy(alpha = 0.8f))
@@ -365,6 +529,8 @@ fun SignInScreen(
                 }
             }
         }
+
+
         if (uiState == SignInUiState.Loading) {
             Box(
                 modifier = Modifier
